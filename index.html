@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🔥 Infinite Meme Feed</title>
+    <title>🔥 Infinite Meme Feed 2.0</title>
     <script src="https://cdn.jsdelivr.net/npm/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
     <style>
         body {
@@ -16,7 +16,6 @@
         #feed {
             max-width: 600px;
             margin: auto;
-            column-count: 1;
         }
         .meme {
             position: relative;
@@ -56,29 +55,38 @@
 </head>
 <body>
 
-    <h1>🔥 Infinite Meme Feed</h1>
+    <h1>🔥 Infinite Meme Feed 2.0</h1>
     <div id="feed"></div>
 
     <script>
         const feed = document.getElementById("feed");
         let memeTemplates = [];
         let captions = [
-            "When you realize it's Monday... 😭",
-            "POV: You just checked your bank account 💀",
-            "That one friend who always has a wild story 😂",
-            "Me pretending to work but actually scrolling memes 🤡",
-            "When the group chat is popping off but you're at work 😭",
-            "Every cat at 3 AM: *parkour noises*",
-            "Nobody: Me at 2 AM watching conspiracy theories 👀",
-            "This meme was generated specifically for you 🔥"
+            "Me realizing I spent 3 hours scrolling memes 😭",
+            "POV: You just saw a meme so funny you choked 💀",
+            "That one friend who sends memes at 3 AM 😂",
+            "When you're 5 minutes into studying and already need a break 🤡",
+            "Every dog ever: *Runs at full speed for no reason*",
+            "Nobody: Me at 2 AM looking up useless facts 👀",
+            "When the WiFi goes out and you have to face reality 😱",
+            "This meme was curated just for you 🔥"
         ];
         let stickers = ["🔥", "😂", "💀", "🤡", "😱", "🎉", "🥶", "👀"];
 
         async function fetchMemes() {
             try {
-                const response = await fetch("https://api.imgflip.com/get_memes");
-                const data = await response.json();
-                memeTemplates = data.data.memes;
+                const imgflipResponse = await fetch("https://api.imgflip.com/get_memes");
+                const imgflipData = await imgflipResponse.json();
+                memeTemplates = imgflipData.data.memes;
+                
+                const redditResponse = await fetch("https://www.reddit.com/r/memes/hot.json?limit=10");
+                const redditData = await redditResponse.json();
+                redditData.data.children.forEach(post => {
+                    if (post.data.url.endsWith(".jpg") || post.data.url.endsWith(".png")) {
+                        memeTemplates.push({ url: post.data.url });
+                    }
+                });
+
                 loadMoreMemes(5);
             } catch (error) {
                 console.error("Error fetching memes:", error);
@@ -103,12 +111,13 @@
                 <div class="overlay">${overlayText}</div>
                 <div class="caption">${captionText}</div>
                 <div class="reaction-bar">
-                    <span onclick="react('${memeTemplate.id}', '😂')">😂</span>
-                    <span onclick="react('${memeTemplate.id}', '🔥')">🔥</span>
-                    <span onclick="react('${memeTemplate.id}', '🤡')">🤡</span>
-                    <span onclick="react('${memeTemplate.id}', '💀')">💀</span>
+                    <span onclick="react('${memeTemplate.url}', '😂')">😂</span>
+                    <span onclick="react('${memeTemplate.url}', '🔥')">🔥</span>
+                    <span onclick="react('${memeTemplate.url}', '🤡')">🤡</span>
+                    <span onclick="react('${memeTemplate.url}', '💀')">💀</span>
                 </div>
             `;
+            memeDiv.addEventListener("mouseenter", () => trackEngagement(memeTemplate.url));
             feed.appendChild(memeDiv);
         }
 
@@ -118,8 +127,26 @@
             }
         }
 
-        function react(memeId, reaction) {
-            alert(`You reacted with ${reaction}!`);
+        function react(memeUrl, reaction) {
+            console.log(`Reaction: ${reaction} on ${memeUrl}`);
+            trackEngagement(memeUrl, reaction);
+        }
+
+        let engagementData = {};
+
+        function trackEngagement(memeUrl, reaction = null) {
+            if (!engagementData[memeUrl]) {
+                engagementData[memeUrl] = { views: 0, reactions: {} };
+            }
+            engagementData[memeUrl].views += 1;
+            if (reaction) {
+                if (!engagementData[memeUrl].reactions[reaction]) {
+                    engagementData[memeUrl].reactions[reaction] = 0;
+                }
+                engagementData[memeUrl].reactions[reaction] += 1;
+            }
+
+            console.log("Engagement Data:", engagementData);
         }
 
         window.addEventListener("scroll", () => {
