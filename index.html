@@ -3,175 +3,315 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🔥 Infinite Meme Feed 4.1</title>
+    <title>🔥 Infinite Meme Feed 4.2 - Enhanced!</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #121212;
             color: white;
             text-align: center;
             margin: 0;
+            padding: 0;
         }
+
         #feed {
             max-width: 600px;
             margin: auto;
         }
+
         .meme {
             position: relative;
             background: #222;
             margin: 20px 0;
-            border-radius: 10px;
-            padding: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+            overflow: hidden;
+            transition: transform 0.2s ease;
         }
+        .meme:hover {
+          transform: scale(1.03);
+        }
+
         .meme img {
             width: 100%;
             border-radius: 10px;
+            display: block;
         }
+
         .caption {
-            font-size: 18px;
+            font-size: 1.2rem;
             font-weight: bold;
             text-align: center;
-            margin-top: 10px;
+            margin-top: 12px;
+            color: #eee;
         }
+
         .reaction-bar {
             display: flex;
             justify-content: space-around;
-            padding: 10px;
+            padding: 15px 10px 10px;
+            flex-wrap: wrap;
         }
+
         .reaction-bar button {
             cursor: pointer;
-            font-size: 18px;
-            padding: 5px 10px;
+            font-size: 1rem;
+            padding: 8px 16px;
             border: none;
             background: rgba(255, 255, 255, 0.1);
             color: white;
-            border-radius: 5px;
+            border-radius: 20px;
+            margin: 5px;
+            transition: background-color 0.2s ease;
+            flex-grow: 1;
+            min-width: 60px;
         }
+
         .reaction-bar button:hover {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.3);
         }
+
         .overlay {
             position: absolute;
             top: 10px;
             right: 10px;
-            font-size: 30px;
+            font-size: 2rem;
             opacity: 0.8;
+            transition: transform 0.2s ease;
+        }
+        .overlay:hover {
+            transform: scale(1.2);
+        }
+
+        .loading {
+            display: none;
+            margin: 30px auto;
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #3498db;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error-message {
+            color: #ff6347;
+            font-weight: bold;
+            margin: 20px;
+            display: none;
+        }
+
+        .share-button {
+          margin-top: 5px;
+          font-size: 0.9rem;
+          background-color: #1da1f2;
+          color: white;
+        }
+        .reacted {
+          animation: pulse 0.3s ease;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
         }
     </style>
 </head>
 <body>
 
-    <h1>🔥 Infinite Meme Feed 4.1</h1>
+    <h1>🔥 Infinite Meme Feed 4.2 - Enhanced!</h1>
     <div id="feed"></div>
+    <div class="loading"></div>
+    <div class="error-message">Oops! Something went wrong loading memes.</div>
 
     <script>
-        const feed = document.getElementById("feed");
-        let memeTemplates = [];
-        let captions = [
-            "Me realizing I've been scrolling memes for 5 hours 😭",
-            "POV: You just saw the funniest meme of your life 💀",
-            "When your WiFi dies and you have to face reality 😱",
-            "That one friend who sends 50 memes at once 😂",
-            "Every cat at 3 AM: *Chaos noises*",
-            "Nobody: Me at 2 AM watching conspiracy videos 👀",
-            "When you see a meme so good you ascend to another plane of existence 🔥",
-            "The internet is undefeated at making me laugh 🤡",
-            "Me: One more meme before bed. Also me at 3 AM: 🤣🤣🤣",
-            "That one coworker who sends memes instead of working 👀",
-            "Your FBI agent watching you laugh at memes all day 🕵️",
-            "When you send a meme and they reply with 'seen' 💀",
-            "Twitter drama in one meme: 🤡🔥👀",
-            "That moment when you realize you forgot to do your assignment 😱",
-            "My brain at 2 AM: What if pigeons are actually government spies? 🤔",
-            "Memes > Therapy. Change my mind. 🤷",
-            "Boomers: 'Memes aren’t funny.' Millennials & Gen Z: *laughing uncontrollably*",
-            "This meme is scientifically proven to increase happiness. Trust me bro. 🧪",
-            "Me: Laughs at my own meme. Also me: I'm hilarious. 🤣"
-        ];
-        let stickers = ["🔥", "😂", "💀", "🤡", "😱", "🎉", "🥶", "👀"];
+      const feed = document.getElementById("feed");
+      const loadingIndicator = document.querySelector(".loading");
+      const errorMessage = document.querySelector(".error-message");
 
-        async function fetchMemes() {
-            try {
-                const imgflipResponse = await fetch("https://api.imgflip.com/get_memes");
-                const imgflipData = await imgflipResponse.json();
-                memeTemplates = imgflipData.data.memes.map(m => ({ url: m.url }));
+      let memeTemplates = [];
+      let captions = [
+          "Me realizing I've been scrolling memes for 5 hours 😭",
+          "POV: You just saw the funniest meme of your life 💀",
+          "When your WiFi dies and you have to face reality 😱",
+          "That one friend who sends 50 memes at once 😂",
+          "Every cat at 3 AM: *Chaos noises*",
+          "Nobody: Me at 2 AM watching conspiracy videos 👀",
+          "When you see a meme so good you ascend to another plane of existence 🔥",
+          "The internet is undefeated at making me laugh 🤡",
+          "Me: One more meme before bed. Also me at 3 AM: 🤣🤣🤣",
+          "That one coworker who sends memes instead of working 👀",
+          "Your FBI agent watching you laugh at memes all day 🕵️",
+          "When you send a meme and they reply with 'seen' 💀",
+          "Twitter drama in one meme: 🤡🔥👀",
+          "That moment when you realize you forgot to do your assignment 😱",
+          "My brain at 2 AM: What if pigeons are actually government spies? 🤔",
+          "Memes > Therapy. Change my mind. 🤷",
+          "Boomers: 'Memes aren’t funny.' Millennials & Gen Z: *laughing uncontrollably*",
+          "This meme is scientifically proven to increase happiness. Trust me bro. 🧪",
+          "Me: Laughs at my own meme. Also me: I'm hilarious. 🤣",
+          "When you find a meme that perfectly describes your life 👌",
+          "Trying to adult but failing miserably like... 😅",
+          "My face when someone says they don't like memes 🤨",
+          "Is it Friday yet? Asking for a friend... and myself. 😴",
+          "When the coffee finally kicks in 🚀",
+          "Brain cells during an exam: *dial-up noises*",
+          "This meme is so relatable it hurts 🤕",
+          "Me trying to stay positive in 2023 like... 😬",
+          "When your pet does something meme-worthy 📸",
+          "That feeling when you get the joke three days later 🤦‍♂️",
+          "My bank account looking at me after I buy one (1) thing 📉",
+          "Expectation vs. Reality: Meme Edition 😂",
+          "When someone tells you a spoiler 😠",
+          "The 'I'm fine' starter pack 😅",
+          "Accidentally opening the front camera like... 🤳",
+          "If 2023 was a meme, it would be this one 🤦‍♀️",
+          "Tag a friend who would do this 😂",
+          "Trying to keep it together... but the memes are too strong 💪",
+          "My last two brain cells fighting for dominance 🧠💥",
+          "Send this to your crush with no context 😏",
+          "When your code compiles without errors... 🤯",
+          "Waiting for the weekend like... ⏳",
+      ];
 
-                const redditResponse = await fetch("https://www.reddit.com/r/memes/hot.json?limit=10");
-                const redditData = await redditResponse.json();
-                redditData.data.children.forEach(post => {
-                    if (post.data.url.endsWith(".jpg") || post.data.url.endsWith(".png")) {
-                        memeTemplates.push({ url: post.data.url });
-                    }
-                });
+      let stickers = ["🔥", "😂", "💀", "🤡", "😱", "🎉", "🥶", "👀", "💯", "🤔", "🤣", "👍", "❤️", "✨", "🚀"];
 
-                loadMoreMemes(5);
-            } catch (error) {
-                console.error("Error fetching memes:", error);
+      async function fetchMemes() {
+        loadingIndicator.style.display = "block";
+        errorMessage.style.display = "none";
+
+        try {
+            const imgflipResponse = await fetch("https://api.imgflip.com/get_memes");
+            const imgflipData = await imgflipResponse.json();
+            if (imgflipData.success) {
+                memeTemplates = memeTemplates.concat(imgflipData.data.memes.map(m => ({ url: m.url })));
+            } else {
+              throw new Error("Imgflip API error: " + imgflipData.error_message);
             }
-        }
 
-        function getRandomItem(arr) {
-            return arr[Math.floor(Math.random() * arr.length)];
-        }
-
-        function generateMemeImage() {
-            let memeTemplate = getRandomItem(memeTemplates);
-            const memeDiv = document.createElement("div");
-            memeDiv.className = "meme";
-
-            let overlayText = getRandomItem(stickers);
-            let captionText = getRandomItem(captions);
-
-            memeDiv.innerHTML = `
-                <img src="${memeTemplate.url}" alt="Meme">
-                <div class="overlay">${overlayText}</div>
-                <div class="caption">${captionText}</div>
-                <div class="reaction-bar">
-                    <button onclick="react('${memeTemplate.url}', '😂')">😂 Laugh</button>
-                    <button onclick="react('${memeTemplate.url}', '🔥')">🔥 Fire</button>
-                    <button onclick="react('${memeTemplate.url}', '🤡')">🤡 Clown</button>
-                    <button onclick="react('${memeTemplate.url}', '💀')">💀 Dead</button>
-                </div>
-            `;
-            memeDiv.addEventListener("mouseenter", () => trackEngagement(memeTemplate.url));
-            feed.appendChild(memeDiv);
-        }
-
-        function loadMoreMemes(count) {
-            for (let i = 0; i < count; i++) {
-                generateMemeImage();
-            }
-        }
-
-        function react(memeUrl, reaction) {
-            console.log(`Reaction: ${reaction} on ${memeUrl}`);
-            trackEngagement(memeUrl, reaction);
-        }
-
-        let engagementData = {};
-
-        function trackEngagement(memeUrl, reaction = null) {
-            if (!engagementData[memeUrl]) {
-                engagementData[memeUrl] = { views: 0, reactions: {} };
-            }
-            engagementData[memeUrl].views += 1;
-            if (reaction) {
-                if (!engagementData[memeUrl].reactions[reaction]) {
-                    engagementData[memeUrl].reactions[reaction] = 0;
+            const redditResponse = await fetch("https://www.reddit.com/r/memes/hot.json?limit=25");
+            const redditData = await redditResponse.json();
+            redditData.data.children.forEach(post => {
+                if (post.data.url.endsWith(".jpg") || post.data.url.endsWith(".png")) {
+                    memeTemplates.push({ url: post.data.url });
                 }
-                engagementData[memeUrl].reactions[reaction] += 1;
-            }
-            console.log("Engagement Data:", engagementData);
+            });
+
+            const giphyApiKey = "dc6zaTOxFJmzC"; //  Replace with your *real* Giphy API Key.  This is a public test key.
+            const giphyResponse = await fetch(`https://api.giphy.com/v1/gifs/trending?api_key=${giphyApiKey}&limit=10&rating=pg-13`);
+            const giphyData = await giphyResponse.json();
+            giphyData.data.forEach(gif => {
+              memeTemplates.push({url: gif.images.downsized_medium.url});
+            });
+
+            loadMoreMemes(8);
+        } catch (error) {
+            console.error("Error fetching memes:", error);
+            errorMessage.style.display = "block";
+        } finally {
+            loadingIndicator.style.display = "none";
         }
+    }
 
-        window.addEventListener("scroll", () => {
-            if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 200) {
-                loadMoreMemes(3);
-            }
-        });
+      function getRandomItem(arr) {
+          return arr[Math.floor(Math.random() * arr.length)];
+      }
 
-        fetchMemes();
+      function generateMemeImage() {
+          if (memeTemplates.length === 0) return;
+
+          let memeTemplate = getRandomItem(memeTemplates);
+          const memeDiv = document.createElement("div");
+          memeDiv.className = "meme";
+
+          let overlayText = getRandomItem(stickers);
+          let captionText = getRandomItem(captions);
+
+          memeDiv.innerHTML = `
+              <img src="${memeTemplate.url}" alt="Meme" loading="lazy">
+              <div class="overlay">${overlayText}</div>
+              <div class="caption">${captionText}</div>
+              <div class="reaction-bar">
+                  <button onclick="react('${memeTemplate.url}', '😂')">😂 Laugh</button>
+                  <button onclick="react('${memeTemplate.url}', '🔥')">🔥 Fire</button>
+                  <button onclick="react('${memeTemplate.url}', '🤡')">🤡 Clown</button>
+                  <button onclick="react('${memeTemplate.url}', '💀')">💀 Dead</button>
+                  <button onclick="react('${memeTemplate.url}', '👍')">👍 Lit</button>
+                  <button onclick="react('${memeTemplate.url}', '🤯')">🤯 Mindblown</button>
+                  <button onclick="react('${memeTemplate.url}', '🤔')">🤔 Thinking</button>
+                  <button class="share-button" onclick="shareMeme('${memeTemplate.url}')">Share</button>
+              </div>
+          `;
+          memeDiv.addEventListener("mouseenter", () => trackEngagement(memeTemplate.url));
+          feed.appendChild(memeDiv);
+          memeTemplates = memeTemplates.filter(m => m.url != memeTemplate.url)
+      }
+
+      function loadMoreMemes(count) {
+          for (let i = 0; i < count; i++) {
+              generateMemeImage();
+          }
+      }
+
+      function react(memeUrl, reaction) {
+          console.log(`Reaction: ${reaction} on ${memeUrl}`);
+          trackEngagement(memeUrl, reaction);
+          event.target.classList.add("reacted");
+          setTimeout(() => event.target.classList.remove("reacted"), 300);
+      }
+
+    async function shareMeme(memeUrl) {
+        if (navigator.share) {
+          try{
+            await navigator.share({
+                title: 'Check out this meme!',
+                url: memeUrl
+              });
+            console.log('Meme shared successfully');
+          } catch(err) {
+              console.error('Error sharing:', err);
+          }
+        } else {
+            navigator.clipboard.writeText(memeUrl).then(() => {
+              alert("Meme URL copied to clipboard!");
+            }).catch(err => {
+              console.error('Failed to copy meme URL: ', err);
+              alert("Could not copy URL.  Please copy it manually.");
+            });
+        }
+      }
+
+      let engagementData = {};
+
+      function trackEngagement(memeUrl, reaction = null) {
+          if (!engagementData[memeUrl]) {
+              engagementData[memeUrl] = { views: 0, reactions: {} };
+          }
+          engagementData[memeUrl].views += 1;
+          if (reaction) {
+              if (!engagementData[memeUrl].reactions[reaction]) {
+                  engagementData[memeUrl].reactions[reaction] = 0;
+              }
+              engagementData[memeUrl].reactions[reaction] += 1;
+          }
+        console.log("Engagement Data:", engagementData);
+      }
+
+      window.addEventListener("scroll", () => {
+          if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 500) {
+              loadMoreMemes(5);
+          }
+      });
+
+      fetchMemes();
+
     </script>
 
 </body>
