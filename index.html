@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🔥 Infinite Meme Feed 4.0</title>
+    <title>🔥 Infinite Meme Feed 4.1</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -24,7 +24,7 @@
             padding: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
         }
-        .meme img, .meme video {
+        .meme img {
             width: 100%;
             border-radius: 10px;
         }
@@ -39,9 +39,17 @@
             justify-content: space-around;
             padding: 10px;
         }
-        .reaction-bar span {
+        .reaction-bar button {
             cursor: pointer;
-            font-size: 24px;
+            font-size: 18px;
+            padding: 5px 10px;
+            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 5px;
+        }
+        .reaction-bar button:hover {
+            background: rgba(255, 255, 255, 0.2);
         }
         .overlay {
             position: absolute;
@@ -54,7 +62,7 @@
 </head>
 <body>
 
-    <h1>🔥 Infinite Meme Feed 4.0</h1>
+    <h1>🔥 Infinite Meme Feed 4.1</h1>
     <div id="feed"></div>
 
     <script>
@@ -68,7 +76,18 @@
             "Every cat at 3 AM: *Chaos noises*",
             "Nobody: Me at 2 AM watching conspiracy videos 👀",
             "When you see a meme so good you ascend to another plane of existence 🔥",
-            "The internet is undefeated at making me laugh 🤡"
+            "The internet is undefeated at making me laugh 🤡",
+            "Me: One more meme before bed. Also me at 3 AM: 🤣🤣🤣",
+            "That one coworker who sends memes instead of working 👀",
+            "Your FBI agent watching you laugh at memes all day 🕵️",
+            "When you send a meme and they reply with 'seen' 💀",
+            "Twitter drama in one meme: 🤡🔥👀",
+            "That moment when you realize you forgot to do your assignment 😱",
+            "My brain at 2 AM: What if pigeons are actually government spies? 🤔",
+            "Memes > Therapy. Change my mind. 🤷",
+            "Boomers: 'Memes aren’t funny.' Millennials & Gen Z: *laughing uncontrollably*",
+            "This meme is scientifically proven to increase happiness. Trust me bro. 🧪",
+            "Me: Laughs at my own meme. Also me: I'm hilarious. 🤣"
         ];
         let stickers = ["🔥", "😂", "💀", "🤡", "😱", "🎉", "🥶", "👀"];
 
@@ -76,20 +95,14 @@
             try {
                 const imgflipResponse = await fetch("https://api.imgflip.com/get_memes");
                 const imgflipData = await imgflipResponse.json();
-                memeTemplates = imgflipData.data.memes;
-                
+                memeTemplates = imgflipData.data.memes.map(m => ({ url: m.url }));
+
                 const redditResponse = await fetch("https://www.reddit.com/r/memes/hot.json?limit=10");
                 const redditData = await redditResponse.json();
                 redditData.data.children.forEach(post => {
                     if (post.data.url.endsWith(".jpg") || post.data.url.endsWith(".png")) {
                         memeTemplates.push({ url: post.data.url });
                     }
-                });
-
-                const tenorResponse = await fetch("https://g.tenor.com/v1/trending?key=LIVDSRZULELA&limit=10");
-                const tenorData = await tenorResponse.json();
-                tenorData.results.forEach(gif => {
-                    memeTemplates.push({ url: gif.media[0].gif.url, type: "gif" });
                 });
 
                 loadMoreMemes(5);
@@ -110,22 +123,15 @@
             let overlayText = getRandomItem(stickers);
             let captionText = getRandomItem(captions);
 
-            let mediaContent;
-            if (memeTemplate.type === "gif") {
-                mediaContent = `<video autoplay loop muted><source src="${memeTemplate.url}" type="video/mp4"></video>`;
-            } else {
-                mediaContent = `<img src="${memeTemplate.url}" alt="Meme">`;
-            }
-
             memeDiv.innerHTML = `
-                ${mediaContent}
+                <img src="${memeTemplate.url}" alt="Meme">
                 <div class="overlay">${overlayText}</div>
                 <div class="caption">${captionText}</div>
                 <div class="reaction-bar">
-                    <span onclick="react('${memeTemplate.url}', '😂')">😂</span>
-                    <span onclick="react('${memeTemplate.url}', '🔥')">🔥</span>
-                    <span onclick="react('${memeTemplate.url}', '🤡')">🤡</span>
-                    <span onclick="react('${memeTemplate.url}', '💀')">💀</span>
+                    <button onclick="react('${memeTemplate.url}', '😂')">😂 Laugh</button>
+                    <button onclick="react('${memeTemplate.url}', '🔥')">🔥 Fire</button>
+                    <button onclick="react('${memeTemplate.url}', '🤡')">🤡 Clown</button>
+                    <button onclick="react('${memeTemplate.url}', '💀')">💀 Dead</button>
                 </div>
             `;
             memeDiv.addEventListener("mouseenter", () => trackEngagement(memeTemplate.url));
