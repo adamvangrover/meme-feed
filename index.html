@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🔥 Infinite Meme Feed 2.0</title>
+    <title>🔥 Infinite Meme Feed 3.0</title>
     <script src="https://cdn.jsdelivr.net/npm/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
     <style>
         body {
@@ -25,7 +25,7 @@
             padding: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
         }
-        .meme img {
+        .meme img, .meme video {
             width: 100%;
             border-radius: 10px;
         }
@@ -55,21 +55,21 @@
 </head>
 <body>
 
-    <h1>🔥 Infinite Meme Feed 2.0</h1>
+    <h1>🔥 Infinite Meme Feed 3.0</h1>
     <div id="feed"></div>
 
     <script>
         const feed = document.getElementById("feed");
         let memeTemplates = [];
         let captions = [
-            "Me realizing I spent 3 hours scrolling memes 😭",
-            "POV: You just saw a meme so funny you choked 💀",
-            "That one friend who sends memes at 3 AM 😂",
-            "When you're 5 minutes into studying and already need a break 🤡",
-            "Every dog ever: *Runs at full speed for no reason*",
-            "Nobody: Me at 2 AM looking up useless facts 👀",
-            "When the WiFi goes out and you have to face reality 😱",
-            "This meme was curated just for you 🔥"
+            "Me realizing I've been scrolling memes for 5 hours 😭",
+            "POV: You just saw the funniest meme of your life 💀",
+            "When your WiFi dies and you have to face reality 😱",
+            "That one friend who sends 50 memes at once 😂",
+            "Every cat at 3 AM: *Chaos noises*",
+            "Nobody: Me at 2 AM watching conspiracy videos 👀",
+            "When you see a meme so good you ascend to another plane of existence 🔥",
+            "The internet is undefeated at making me laugh 🤡"
         ];
         let stickers = ["🔥", "😂", "💀", "🤡", "😱", "🎉", "🥶", "👀"];
 
@@ -87,6 +87,12 @@
                     }
                 });
 
+                const tenorResponse = await fetch("https://g.tenor.com/v1/trending?key=LIVDSRZULELA&limit=10");
+                const tenorData = await tenorResponse.json();
+                tenorData.results.forEach(gif => {
+                    memeTemplates.push({ url: gif.media[0].gif.url, type: "gif" });
+                });
+
                 loadMoreMemes(5);
             } catch (error) {
                 console.error("Error fetching memes:", error);
@@ -99,15 +105,21 @@
 
         function generateMemeImage() {
             let memeTemplate = getRandomItem(memeTemplates);
-
             const memeDiv = document.createElement("div");
             memeDiv.className = "meme";
 
             let overlayText = getRandomItem(stickers);
             let captionText = getRandomItem(captions);
 
+            let mediaContent;
+            if (memeTemplate.type === "gif") {
+                mediaContent = `<video autoplay loop muted><source src="${memeTemplate.url}" type="video/mp4"></video>`;
+            } else {
+                mediaContent = `<img src="${memeTemplate.url}" alt="Meme">`;
+            }
+
             memeDiv.innerHTML = `
-                <img src="${memeTemplate.url}" alt="Meme">
+                ${mediaContent}
                 <div class="overlay">${overlayText}</div>
                 <div class="caption">${captionText}</div>
                 <div class="reaction-bar">
@@ -145,7 +157,6 @@
                 }
                 engagementData[memeUrl].reactions[reaction] += 1;
             }
-
             console.log("Engagement Data:", engagementData);
         }
 
