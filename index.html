@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔥 Ultimate Meme Feed</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #121212;
+            color: white;
+        }
+        #feed {
+            width: 100%;
+            max-width: 500px;
+        }
+        .meme {
+            width: 100%;
+            margin: 20px 0;
+            background: #222;
+            border-radius: 10px;
+            padding: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+            overflow: hidden;
+            transition: transform 0.2s ease-in-out;
+        }
+        .meme:hover {
+            transform: scale(1.03);
+        }
+        .meme img {
+            width: 100%;
+            display: block;
+            border-radius: 10px;
+        }
+        .caption {
+            font-size: 18px;
+            text-align: center;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        .reaction-bar {
+            display: flex;
+            justify-content: space-around;
+            padding: 10px;
+        }
+        .reaction-bar span {
+            cursor: pointer;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🔥 Ultimate Meme Feed</h1>
+    <div id="feed"></div>
+
+    <script>
+        const feed = document.getElementById("feed");
+        let memeTemplates = [];
+        let userPreferences = JSON.parse(localStorage.getItem("memePrefs")) || {};
+
+        // Fetch popular meme templates from Imgflip API
+        async function fetchMemes() {
+            try {
+                const response = await fetch("https://api.imgflip.com/get_memes");
+                const data = await response.json();
+                memeTemplates = data.data.memes;
+                loadMoreMemes(5);
+            } catch (error) {
+                console.error("Error fetching memes:", error);
+            }
+        }
+
+        // Generate AI-like funny captions
+        function generateCaption() {
+            const formats = [
+                "When you {verb} but {twist}",
+                "{person} be like: {reaction}",
+                "Nobody: {empty} / {thing}: {reaction}",
+                "POV: {situation}",
+                "{goal} in a nutshell",
+                "Me: {struggle} / Also me: {badChoice}"
+            ];
+
+            const verbs = ["wake up", "try to diet", "check my bank account", "try to code"];
+            const twists = ["it's Monday", "the WiFi is down", "I'm broke", "I forget everything"];
+            const persons = ["Me", "My cat", "Boomers", "Gen Z"];
+            const reactions = ["😭", "💀", "😂", "🤡", "🔥"];
+            const situations = ["When you're overthinking", "Midnight snack cravings"];
+            const goals = ["Saving money", "Being productive"];
+            const struggles = ["procrastination", "overthinking", "laziness"];
+            const badChoices = ["Netflix", "doomscrolling", "eating junk food"];
+
+            let format = formats[Math.floor(Math.random() * formats.length)];
+            return format
+                .replace("{verb}", verbs[Math.floor(Math.random() * verbs.length)])
+                .replace("{twist}", twists[Math.floor(Math.random() * twists.length)])
+                .replace("{person}", persons[Math.floor(Math.random() * persons.length)])
+                .replace("{reaction}", reactions[Math.floor(Math.random() * reactions.length)])
+                .replace("{situation}", situations[Math.floor(Math.random() * situations.length)])
+                .replace("{goal}", goals[Math.floor(Math.random() * goals.length)])
+                .replace("{struggle}", struggles[Math.floor(Math.random() * struggles.length)])
+                .replace("{badChoice}", badChoices[Math.floor(Math.random() * badChoices.length)])
+                .replace("{thing}", persons[Math.floor(Math.random() * persons.length)])
+                .replace("{empty}", " ");
+        }
+
+        // Add a new meme to the feed
+        function addMeme() {
+            const memeDiv = document.createElement("div");
+            memeDiv.className = "meme";
+
+            let memeTemplate = memeTemplates.length > 0 ? memeTemplates[Math.floor(Math.random() * memeTemplates.length)] : null;
+            let caption = generateCaption();
+
+            if (memeTemplate) {
+                memeDiv.innerHTML = `
+                    <img src="${memeTemplate.url}" alt="Meme">
+                    <div class="caption">${caption}</div>
+                    <div class="reaction-bar">
+                        <span onclick="react('${memeTemplate.id}', '😂')">😂</span>
+                        <span onclick="react('${memeTemplate.id}', '🔥')">🔥</span>
+                        <span onclick="react('${memeTemplate.id}', '🤡')">🤡</span>
+                        <span onclick="react('${memeTemplate.id}', '💀')">💀</span>
+                    </div>
+                `;
+            } else {
+                memeDiv.innerHTML = `
+                    <div class="caption">${caption}</div>
+                `;
+            }
+
+            memeDiv.addEventListener("click", () => {
+                trackMemeEngagement(memeTemplate);
+                loadMoreMemes(3);
+            });
+
+            feed.appendChild(memeDiv);
+        }
+
+        // Load multiple memes
+        function loadMoreMemes(count) {
+            for (let i = 0; i < count; i++) {
+                addMeme();
+            }
+        }
+
+        // Track engagement and update preferences
+        function trackMemeEngagement(meme) {
+            if (!meme || !meme.id) return;
+            userPreferences[meme.id] = (userPreferences[meme.id] || 0) + 1;
+            localStorage.setItem("memePrefs", JSON.stringify(userPreferences));
+        }
+
+        // React to a meme (saves preferences)
+        function react(memeId, reaction) {
+            alert(`You reacted with ${reaction}!`);
+            userPreferences[memeId] = (userPreferences[memeId] || 0) + 2; 
+            localStorage.setItem("memePrefs", JSON.stringify(userPreferences));
+        }
+
+        // Infinite scrolling logic
+        window.addEventListener("scroll", () => {
+            if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 200) {
+                loadMoreMemes(3);
+            }
+        });
+
+        // Start the meme feed
+        fetchMemes();
+    </script>
+
+</body>
+</html>
