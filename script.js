@@ -6,10 +6,13 @@ class MemeApp {
         this.errorMessage = document.querySelector(".error-message");
         this.feedContainer = document.getElementById("feed-container");
         this.savedContainer = document.getElementById("saved-container");
+        this.personalitiesContainer = document.getElementById("personalities-container");
+        this.personalitiesFeed = document.getElementById("personalities-feed");
 
         this.state = {
             memes: [],
             savedMemes: [],
+            importedPersonalities: [],
             preferences: {
                 darkMode: true,
                 source: 'all',
@@ -20,7 +23,7 @@ class MemeApp {
                 redditAfter: null,
                 giphyOffset: 0
             },
-            view: 'feed' // 'feed' or 'saved'
+            view: 'feed' // 'feed' or 'saved' or 'personalities'
         };
 
         this.captions = [
@@ -100,6 +103,7 @@ class MemeApp {
         if (saved) {
             const parsed = JSON.parse(saved);
             this.state.savedMemes = parsed.savedMemes || [];
+            this.state.importedPersonalities = parsed.importedPersonalities || [];
             this.state.preferences = { ...this.state.preferences, ...parsed.preferences };
             this.state.engagement = parsed.engagement || {};
             // Don't restore view state, always start at feed or last usage logic can be debated.
@@ -109,6 +113,7 @@ class MemeApp {
     saveState() {
         const stateToSave = {
             savedMemes: this.state.savedMemes,
+            importedPersonalities: this.state.importedPersonalities,
             preferences: this.state.preferences,
             engagement: this.state.engagement
         };
@@ -135,15 +140,21 @@ class MemeApp {
         this.state.view = viewName;
         document.getElementById('btn-feed').classList.toggle('active', viewName === 'feed');
         document.getElementById('btn-saved').classList.toggle('active', viewName === 'saved');
+        document.getElementById('btn-personalities').classList.toggle('active', viewName === 'personalities');
+
+        this.feedContainer.classList.add('hidden');
+        this.savedContainer.classList.add('hidden');
+        this.personalitiesContainer.classList.add('hidden');
 
         if (viewName === 'feed') {
-            this.savedContainer.classList.add('hidden');
             this.feedContainer.classList.remove('hidden');
             if (this.feed.children.length === 0) this.renderFeed(5);
-        } else {
-            this.feedContainer.classList.add('hidden');
+        } else if (viewName === 'saved') {
             this.savedContainer.classList.remove('hidden');
             this.renderSavedMemes();
+        } else if (viewName === 'personalities') {
+            this.personalitiesContainer.classList.remove('hidden');
+            this.renderPersonalities();
         }
     }
 
@@ -252,6 +263,51 @@ class MemeApp {
         [...this.state.savedMemes].reverse().forEach(meme => {
             this.createMemeCard(meme, this.savedFeed, true);
         });
+    }
+
+    renderPersonalities() {
+        this.personalitiesFeed.innerHTML = '';
+        if (this.state.importedPersonalities.length === 0) {
+            document.getElementById('no-personalities-msg').style.display = 'block';
+            return;
+        } else {
+            document.getElementById('no-personalities-msg').style.display = 'none';
+        }
+
+        this.state.importedPersonalities.forEach(p => {
+            const card = document.createElement('div');
+            card.className = 'personality-card';
+            card.innerHTML = `
+                <img src="${p.image}" alt="${p.name}">
+                <button class="remove-personality-btn" onclick="app.removePersonality('${p.id}')"><i class="fas fa-times"></i></button>
+                <div class="personality-info">
+                    <div class="personality-name">${p.name}</div>
+                    <div class="personality-text">"${p.text}"</div>
+                    <button class="nav-btn" onclick="app.speakPersonality('${p.id}')"><i class="fas fa-volume-up"></i> Speak</button>
+                </div>
+            `;
+            this.personalitiesFeed.appendChild(card);
+        });
+    }
+
+    removePersonality(id) {
+        this.state.importedPersonalities = this.state.importedPersonalities.filter(p => p.id !== id);
+        this.saveState();
+        this.renderPersonalities();
+    }
+
+    speakPersonality(id) {
+        const p = this.state.importedPersonalities.find(item => item.id === id);
+        if (p) {
+            const utterance = new SpeechSynthesisUtterance(p.text);
+            if(p.voice) {
+                utterance.pitch = p.voice.pitch || 1;
+                utterance.rate = p.voice.rate || 1;
+                // Language selection is more complex as it depends on available voices, but we can try
+                if(p.voice.lang) utterance.lang = p.voice.lang;
+            }
+            speechSynthesis.speak(utterance);
+        }
     }
 
     createMemeCard(meme, container, isSaved = false) {

@@ -1,0 +1,46 @@
+[
+  {
+    "id": "p1",
+    "name": "Doge",
+    "image": "https://i.imgflip.com/4t0m5.jpg",
+    "text": "Much wow. Such meme. Very personality.",
+    "voice": {
+        "lang": "en-US",
+        "pitch": 1.2,
+        "rate": 0.8
+    }
+  },
+  {
+    "id": "p2",
+    "name": "Grumpy Cat",
+    "image": "https://i.imgflip.com/8p0a.jpg",
+    "text": "I had fun once. It was awful.",
+    "voice": {
+        "lang": "en-US",
+        "pitch": 0.5,
+        "rate": 0.5
+    }
+  },
+  {
+    "id": "p3",
+    "name": "Pepe",
+    "image": "https://i.imgflip.com/1h7in3.jpg",
+    "text": "Feels good man.",
+    "voice": {
+        "lang": "en-US",
+        "pitch": 1.0,
+        "rate": 1.0
+    }
+  },
+  {
+    "id": "p4",
+    "name": "Success Kid",
+    "image": "https://i.imgflip.com/1bhk.jpg",
+    "text": "Task added to backlog. Done.",
+    "voice": {
+        "lang": "en-US",
+        "pitch": 1.5,
+        "rate": 1.2
+    }
+  }
+]

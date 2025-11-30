@@ -22,6 +22,7 @@
                 </select>
                 <button class="nav-btn active" id="btn-feed" onclick="app.switchView('feed')">Feed</button>
                 <button class="nav-btn" id="btn-saved" onclick="app.switchView('saved')">Saved</button>
+                <button class="nav-btn" id="btn-personalities" onclick="app.switchView('personalities')">Personalities</button>
                 <button class="nav-btn" onclick="app.toggleTheme()">
                     <i class="fas fa-adjust"></i>
                 </button>
@@ -39,6 +40,15 @@
         <h2>Saved Memes 💾</h2>
         <div id="saved-feed"></div>
         <p id="no-saved-msg" style="display:none; color: #777;">No saved memes yet. Go save some! 👇</p>
+    </div>
+
+    <div id="personalities-container" class="hidden">
+        <h2>My Personalities 🤖</h2>
+        <div style="text-align: center; margin-bottom: 20px;">
+            <a href="personalities.html" class="nav-btn" style="background: #ff4b2b; color: white; padding: 10px 20px; text-decoration: none; border-radius: 20px;">Browse & Import New Personalities</a>
+        </div>
+        <div id="personalities-feed" class="personalities-grid"></div> <!-- Reusing grid class from personalities.html if possible, or define in css -->
+        <p id="no-personalities-msg" style="display:none; color: #777;">No personalities imported yet.</p>
     </div>
 
     <script src="script.js"></script>

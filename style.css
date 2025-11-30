@@ -222,3 +222,68 @@ body.light-mode select#source-filter {
     color: #333;
     border: 1px solid #ccc;
 }
+
+/* Personalities */
+.personalities-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.personality-card {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+    text-align: center;
+    padding-bottom: 15px;
+    position: relative;
+}
+
+body:not(.light-mode) .personality-card {
+    background: #2a2a2a;
+    color: #fff;
+}
+
+.personality-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.personality-info {
+    padding: 15px;
+}
+
+.personality-name {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.personality-text {
+    font-size: 0.9rem;
+    opacity: 0.8;
+    margin-bottom: 15px;
+    font-style: italic;
+}
+
+.remove-personality-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(0,0,0,0.5);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
