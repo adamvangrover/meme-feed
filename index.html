@@ -23,6 +23,10 @@
                 <button class="nav-btn active" id="btn-feed" onclick="app.switchView('feed')">Feed</button>
                 <button class="nav-btn" id="btn-saved" onclick="app.switchView('saved')">Saved</button>
                 <button class="nav-btn" id="btn-personalities" onclick="app.switchView('personalities')">Personalities</button>
+                <button class="nav-btn" onclick="app.triggerUpload()" title="Upload Meme">
+                    <i class="fas fa-upload"></i>
+                </button>
+                <input type="file" id="file-upload" accept="image/*" style="display: none;" onchange="app.handleFileUpload(this)">
                 <button class="nav-btn" onclick="app.toggleTheme()">
                     <i class="fas fa-adjust"></i>
                 </button>
@@ -50,6 +54,10 @@
         <div id="personalities-feed" class="personalities-grid"></div> <!-- Reusing grid class from personalities.html if possible, or define in css -->
         <p id="no-personalities-msg" style="display:none; color: #777;">No personalities imported yet.</p>
     </div>
+
+    <button id="scroll-to-top" class="hidden" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">
+        <i class="fas fa-arrow-up"></i>
+    </button>
 
     <script src="script.js"></script>
 

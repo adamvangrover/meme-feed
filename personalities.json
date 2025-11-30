@@ -42,5 +42,49 @@
         "pitch": 1.5,
         "rate": 1.2
     }
+  },
+  {
+    "id": "p5",
+    "name": "SpongeBob",
+    "image": "https://i.imgflip.com/1otk96.jpg",
+    "text": "ImAgInE nOt UsInG tHiS mEmE.",
+    "voice": {
+        "lang": "en-US",
+        "pitch": 1.8,
+        "rate": 1.1
+    }
+  },
+  {
+    "id": "p6",
+    "name": "Yoda",
+    "image": "https://i.imgflip.com/2p4q.jpg",
+    "text": "Meme, you must. Funny, it is.",
+    "voice": {
+        "lang": "en-US",
+        "pitch": 0.8,
+        "rate": 0.7
+    }
+  },
+  {
+    "id": "p7",
+    "name": "Drake",
+    "image": "https://i.imgflip.com/30b1gx.jpg",
+    "text": "Old memes? Nah. New memes? Yeah.",
+    "voice": {
+        "lang": "en-US",
+        "pitch": 1.0,
+        "rate": 1.0
+    }
+  },
+  {
+    "id": "p8",
+    "name": "Distracted Boyfriend",
+    "image": "https://i.imgflip.com/1ur9b0.jpg",
+    "text": "Me looking at other memes while this one is right here.",
+    "voice": {
+        "lang": "en-US",
+        "pitch": 1.0,
+        "rate": 1.1
+    }
   }
 ]

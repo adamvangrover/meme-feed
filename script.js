@@ -125,7 +125,136 @@ class MemeApp {
             if (this.state.view === 'feed' && window.innerHeight + window.scrollY >= document.body.offsetHeight - 800) {
                 this.renderFeed(5);
             }
+            this.toggleScrollToTopBtn();
         });
+
+        window.addEventListener("keydown", (e) => this.handleKeydown(e));
+
+        // Use IntersectionObserver for active meme tracking
+        this.observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Find the index of the intersecting meme
+                    const children = Array.from(this.feed.children);
+                    const index = children.indexOf(entry.target);
+                    if (index !== -1) {
+                        this.activeMemeIndex = index;
+                    }
+                }
+            });
+        }, { threshold: 0.5 });
+    }
+
+    toggleScrollToTopBtn() {
+        const btn = document.getElementById('scroll-to-top');
+        if (window.scrollY > 300) {
+            btn.classList.remove('hidden');
+        } else {
+            btn.classList.add('hidden');
+        }
+    }
+
+    handleKeydown(e) {
+        if (e.target.tagName === 'INPUT' || e.target.isContentEditable) return;
+
+        switch(e.key) {
+            case 'j':
+            case 'ArrowDown':
+                this.scrollToNextMeme();
+                break;
+            case 'k':
+            case 'ArrowUp':
+                this.scrollToPrevMeme();
+                break;
+            case 'l':
+                this.likeActiveMeme();
+                break;
+            case 's':
+                this.saveActiveMeme();
+                break;
+            case 'm':
+                this.toggleMute();
+                break;
+        }
+    }
+
+
+    scrollToNextMeme() {
+        const memes = document.querySelectorAll('.meme');
+        if (this.activeMemeIndex < memes.length - 1) {
+            memes[this.activeMemeIndex + 1].scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    }
+
+    scrollToPrevMeme() {
+        const memes = document.querySelectorAll('.meme');
+        if (this.activeMemeIndex > 0) {
+            memes[this.activeMemeIndex - 1].scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    }
+
+    likeActiveMeme() {
+        const memes = document.querySelectorAll('.meme');
+        if (this.activeMemeIndex >= 0 && memes[this.activeMemeIndex]) {
+            const meme = memes[this.activeMemeIndex];
+            const img = meme.querySelector('img');
+            // Assuming url is in src, or we can look up in state.
+            // Easier to trigger the like button click.
+            const likeBtn = meme.querySelector("button[onclick*='❤️']");
+            // The reaction buttons are using characters directly in onclick.
+            // Let's find the specific button: <button onclick="app.react('${meme.url}', '❤️')">
+            // Actually, we can just call app.react if we extract the URL.
+            // But triggering click gives visual feedback.
+            // Let's try to find the button with '🔥' or '❤️' (wait, double click is heart, reaction bar has heart?? No, reaction bar has 😂🔥🤡💀)
+            // Double click is heart. Reaction bar doesn't have heart in the HTML I saw earlier...
+            // Wait, looking at createMemeCard:
+            // ondblclick="app.react('${meme.url}', '❤️')"
+            // Reaction bar: 😂, 🔥, 💀, 🤡.
+            // So 'l' should probably trigger '🔥' or we can add '❤️' to the bar or just trigger the internal react.
+            // Let's trigger '🔥' as "Like".
+            const fireBtn = meme.querySelector(".reaction-bar button:nth-child(2)"); // 🔥 is 2nd
+            if(fireBtn) fireBtn.click();
+        }
+    }
+
+    saveActiveMeme() {
+        const memes = document.querySelectorAll('.meme');
+        if (this.activeMemeIndex >= 0 && memes[this.activeMemeIndex]) {
+            const meme = memes[this.activeMemeIndex];
+            const saveBtn = meme.querySelector(".reaction-bar button[title='Save']");
+            if(saveBtn) saveBtn.click();
+        }
+    }
+
+    toggleMute() {
+         this.state.preferences.muted = !this.state.preferences.muted;
+         this.saveState();
+         this.showToast(this.state.preferences.muted ? "Muted 🔇" : "Unmuted 🔊");
+    }
+
+    showToast(message) {
+        let toast = document.getElementById('toast-notification');
+        if (!toast) {
+            toast = document.createElement('div');
+            toast.id = 'toast-notification';
+            toast.style.position = 'fixed';
+            toast.style.bottom = '100px';
+            toast.style.left = '50%';
+            toast.style.transform = 'translateX(-50%)';
+            toast.style.backgroundColor = 'rgba(0,0,0,0.8)';
+            toast.style.color = 'white';
+            toast.style.padding = '10px 20px';
+            toast.style.borderRadius = '20px';
+            toast.style.zIndex = '2000';
+            toast.style.transition = 'opacity 0.3s';
+            document.body.appendChild(toast);
+        }
+        toast.innerText = message;
+        toast.style.opacity = '1';
+        clearTimeout(this.toastTimeout);
+        this.toastTimeout = setTimeout(() => {
+            toast.style.opacity = '0';
+        }, 2000);
     }
 
     setSource(source) {
@@ -314,6 +443,11 @@ class MemeApp {
         const memeDiv = document.createElement("div");
         memeDiv.className = "meme";
 
+        // Observe this meme if it's in the feed
+        if (!isSaved && this.observer) {
+            this.observer.observe(memeDiv);
+        }
+
         // If it's a saved meme, it has a stored caption. Otherwise, generate/use title.
         let captionText = meme.caption || meme.title || this.getRandomItem(this.captions);
         let overlayText = isSaved ? '' : `<div class="overlay">${this.getRandomItem(this.stickers)}</div>`;
@@ -439,6 +573,67 @@ class MemeApp {
         this.state.preferences.darkMode = !this.state.preferences.darkMode;
         this.applyTheme();
         this.saveState();
+    }
+
+    triggerUpload() {
+        document.getElementById('file-upload').click();
+    }
+
+    handleFileUpload(input) {
+        if (input.files && input.files[0]) {
+            const file = input.files[0];
+            const reader = new FileReader();
+
+            reader.onload = (e) => {
+                const memeData = {
+                    url: e.target.result,
+                    source: 'upload',
+                    title: 'Custom Upload',
+                    caption: 'My Custom Meme 😎'
+                };
+
+                // Add to state and render immediately
+                this.state.memes.unshift(memeData);
+
+                // If in feed view, render it at the top
+                if (this.state.view === 'feed') {
+                    // Check if it is already in DOM to avoid duplicate if we have complex logic
+                    // But here we just created it.
+                    // Wait, if we switchView('feed') it might have been cleared?
+                    // Let's rely on manual insertion since we want it at the top NOW.
+                    const memeDiv = document.createElement("div");
+                    this.createMemeCard(memeData, memeDiv);
+                    this.feed.insertBefore(memeDiv.firstElementChild, this.feed.firstChild);
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                } else {
+                    this.switchView('feed');
+                    // switchView renders the feed if empty.
+                    // If not empty, we need to insert.
+                    // If we just rendered (was empty), renderFeed pulls from state.memes.
+                    // Since we unshifted, renderFeed will likely pick the FIRST one (our new one).
+                    // BUT renderFeed removes from state.memes: "const meme = this.state.memes.shift();"
+                    // If renderFeed runs, it consumes our new meme.
+                    // If renderFeed DOES NOT run (feed not empty), we need to insert manually.
+
+                    // Let's check if the first child is our meme.
+                    // A safer way is:
+                    // 1. switchView('feed')
+                    // 2. Check if the top meme in DOM matches our URL.
+                    // Since we use blob URL, we can check src.
+
+                    const firstMemeImg = this.feed.querySelector('.meme img');
+                    if (!firstMemeImg || firstMemeImg.src !== memeData.url) {
+                         const memeDiv = document.createElement("div");
+                         this.createMemeCard(memeData, memeDiv);
+                         this.feed.insertBefore(memeDiv.firstElementChild, this.feed.firstChild);
+                    }
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+                this.playSound('success');
+            };
+
+            reader.readAsDataURL(file);
+        }
     }
 }
 
