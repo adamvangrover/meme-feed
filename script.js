@@ -23,7 +23,15 @@ class MemeApp {
                 redditAfter: null,
                 giphyOffset: 0
             },
-            view: 'feed' // 'feed' or 'saved' or 'personalities'
+            view: 'feed', // 'feed' or 'saved' or 'personalities'
+            networkUsers: [],
+            currentUser: {
+                id: 'user_me',
+                name: 'You',
+                image: 'https://i.pravatar.cc/150?img=3', // Placeholder avatar
+                isMe: true
+            },
+            renderedMemes: [] // Track memes currently in the feed for simulation
         };
 
         this.captions = [
@@ -88,14 +96,19 @@ class MemeApp {
         this.applyTheme();
         this.setupEventListeners();
 
-        // Restore source selection
-        document.getElementById('source-filter').value = this.state.preferences.source || 'all';
+        // Load network users
+        this.fetchNetworkUsers().then(() => {
+             // Restore source selection
+            document.getElementById('source-filter').value = this.state.preferences.source || 'all';
 
-        if (this.state.view === 'feed') {
-            this.fetchMemes().then(() => this.renderFeed(5));
-        } else {
-            this.switchView('saved');
-        }
+            if (this.state.view === 'feed') {
+                this.fetchMemes().then(() => this.renderFeed(5));
+            } else {
+                this.switchView('saved');
+            }
+
+            this.startNetworkSimulation();
+        });
     }
 
     loadState() {
@@ -106,6 +119,7 @@ class MemeApp {
             this.state.importedPersonalities = parsed.importedPersonalities || [];
             this.state.preferences = { ...this.state.preferences, ...parsed.preferences };
             this.state.engagement = parsed.engagement || {};
+            if(parsed.currentUser) this.state.currentUser = parsed.currentUser;
             // Don't restore view state, always start at feed or last usage logic can be debated.
         }
     }
@@ -115,9 +129,53 @@ class MemeApp {
             savedMemes: this.state.savedMemes,
             importedPersonalities: this.state.importedPersonalities,
             preferences: this.state.preferences,
-            engagement: this.state.engagement
+            engagement: this.state.engagement,
+            currentUser: this.state.currentUser
         };
         localStorage.setItem('memeAppState', JSON.stringify(stateToSave));
+    }
+
+    async fetchNetworkUsers() {
+        try {
+            const response = await fetch('personalities.json');
+            const data = await response.json();
+            this.state.networkUsers = data;
+        } catch (e) {
+            console.error("Failed to load network users", e);
+            // Fallback users
+            this.state.networkUsers = [
+                { id: 'p1', name: 'Doge', image: 'https://i.imgflip.com/4t0m5.jpg' },
+                { id: 'p2', name: 'Grumpy Cat', image: 'https://i.imgflip.com/8p0a.jpg' }
+            ];
+        }
+    }
+
+    generateFakePostData(meme) {
+        // Assign a random author
+        const author = this.getRandomItem(this.state.networkUsers);
+
+        // Generate random stats
+        const views = Math.floor(Math.random() * 5000) + 100;
+        const likes = Math.floor(views * (Math.random() * 0.1 + 0.05)); // 5-15% likes
+        const commentsCount = Math.floor(likes * (Math.random() * 0.2)); // 0-20% comments
+
+        // Random timestamp (within last 24 hours)
+        const now = new Date();
+        const past = new Date(now.getTime() - Math.floor(Math.random() * 24 * 60 * 60 * 1000));
+
+        return {
+            ...meme,
+            id: meme.id || `meme_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+            author: author,
+            timestamp: past.toISOString(),
+            stats: {
+                views: views,
+                likes: likes,
+                shares: Math.floor(likes * 0.1),
+                comments: commentsCount
+            },
+            comments: [] // We can populate this lazily or here
+        };
     }
 
     setupEventListeners() {
@@ -344,7 +402,8 @@ class MemeApp {
             }
 
             // Shuffle and add to pool
-            this.state.memes = [...this.state.memes, ...this.shuffleArray(newMemes)];
+            const socialMemes = newMemes.map(m => this.generateFakePostData(m));
+            this.state.memes = [...this.state.memes, ...this.shuffleArray(socialMemes)];
 
         } catch (error) {
             console.error("Global fetch error:", error);
@@ -375,6 +434,7 @@ class MemeApp {
         for (let i = 0; i < count; i++) {
             if (this.state.memes.length === 0) break;
             const meme = this.state.memes.shift();
+            this.state.renderedMemes.push(meme); // Track for simulation
             this.createMemeCard(meme, this.feed);
         }
     }
@@ -442,15 +502,23 @@ class MemeApp {
     createMemeCard(meme, container, isSaved = false) {
         const memeDiv = document.createElement("div");
         memeDiv.className = "meme";
+        if(meme.id) memeDiv.id = meme.id;
 
         // Observe this meme if it's in the feed
         if (!isSaved && this.observer) {
             this.observer.observe(memeDiv);
         }
 
-        // If it's a saved meme, it has a stored caption. Otherwise, generate/use title.
-        let captionText = meme.caption || meme.title || this.getRandomItem(this.captions);
-        let overlayText = isSaved ? '' : `<div class="overlay">${this.getRandomItem(this.stickers)}</div>`;
+        // Default values for robustness
+        const captionText = meme.caption || meme.title || this.getRandomItem(this.captions);
+        const overlayText = isSaved ? '' : `<div class="overlay">${this.getRandomItem(this.stickers)}</div>`;
+
+        // Social Data Handlers
+        const author = meme.author || { name: 'Anonymous', image: 'https://i.pravatar.cc/150?u=anon' };
+        const timeString = this.timeAgo(meme.timestamp || new Date());
+
+        // Stats
+        const stats = meme.stats || { views: 0, likes: 0, comments: 0, shares: 0 };
 
         // Check if saved to highlight save button
         const isAlreadySaved = this.state.savedMemes.some(m => m.url === meme.url);
@@ -459,25 +527,165 @@ class MemeApp {
 
         // Remove button for saved view
         const removeBtn = isSaved ? `<button onclick="app.removeSaved('${meme.url}')" title="Remove"><i class="fas fa-trash"></i></button>` : '';
-        const saveBtn = !isSaved ? `<button onclick="app.saveMeme('${meme.url}', this.parentNode.previousElementSibling.innerText, this)" title="Save"><i class="${saveBtnClass}" style="${saveBtnColor}"></i></button>` : '';
+        const saveBtn = !isSaved ? `<button onclick="app.saveMeme('${meme.url}', this.closest('.meme').querySelector('.caption').innerText, this)" title="Save"><i class="${saveBtnClass}" style="${saveBtnColor}"></i></button>` : '';
+
+        // Comments HTML
+        let commentsHtml = '';
+        if(meme.comments && meme.comments.length > 0) {
+            meme.comments.slice(0, 2).forEach(c => {
+                commentsHtml += `
+                    <div class="comment">
+                        <img src="${c.author.image}" class="comment-avatar">
+                        <div class="comment-content">
+                            <div class="comment-author">${c.author.name}</div>
+                            <div class="comment-text">${c.text}</div>
+                        </div>
+                    </div>
+                `;
+            });
+            if(meme.comments.length > 2) {
+                commentsHtml += `<div style="font-size:0.8rem; color:#888; text-align:left; margin-bottom:10px; cursor:pointer;">View all ${meme.comments.length} comments</div>`;
+            }
+        }
 
         memeDiv.innerHTML = `
+            <div class="post-header">
+                <img src="${author.image}" class="post-avatar">
+                <div class="post-meta">
+                    <span class="post-author">${author.name}</span>
+                    <span class="post-time">${timeString}</span>
+                </div>
+            </div>
+
             <img src="${meme.url}" alt="Meme" loading="lazy" ondblclick="app.react('${meme.url}', '❤️')">
             ${overlayText}
+
             <div class="caption" contenteditable="${!isSaved}" spellcheck="false">${captionText}</div>
+
+            <div class="post-stats">
+                <span class="stat-views">${stats.views} Views</span>
+                <span>${stats.likes} Likes • ${stats.comments} Comments • ${stats.shares} Shares</span>
+            </div>
+
             <div class="reaction-bar">
                 <button onclick="app.react('${meme.url}', '😂')">😂</button>
                 <button onclick="app.react('${meme.url}', '🔥')">🔥</button>
                 <button onclick="app.react('${meme.url}', '💀')">💀</button>
                 <button onclick="app.react('${meme.url}', '🤡')">🤡</button>
-                <button onclick="app.speakCaption(this.parentNode.previousElementSibling.innerText)" title="Speak"><i class="fas fa-volume-up"></i></button>
+                <button onclick="app.toggleComments('${memeDiv.id}')" title="Comment"><i class="far fa-comment"></i></button>
                 <button onclick="app.shareMeme('${meme.url}')" title="Share"><i class="fas fa-share-alt"></i></button>
+                <button onclick="app.speakCaption(this.closest('.meme').querySelector('.caption').innerText)" title="Speak"><i class="fas fa-volume-up"></i></button>
                 ${saveBtn}
                 ${removeBtn}
+            </div>
+
+            <div class="comments-section ${meme.comments && meme.comments.length > 0 ? '' : 'hidden'}" id="comments-${memeDiv.id}">
+                <div class="comments-list">
+                    ${commentsHtml}
+                </div>
+                <div class="comment-input-area">
+                    <img src="${this.state.currentUser.image}" class="comment-avatar">
+                    <input type="text" class="comment-input" placeholder="Write a comment..." onkeydown="if(event.key === 'Enter') app.postComment('${memeDiv.id}', this)">
+                    <button class="comment-submit-btn" onclick="app.postComment('${memeDiv.id}', this.previousElementSibling)"><i class="fas fa-paper-plane"></i></button>
+                </div>
             </div>
         `;
 
         container.appendChild(memeDiv);
+    }
+
+    timeAgo(dateParam) {
+        if (!dateParam) return null;
+        const date = typeof dateParam === 'object' ? dateParam : new Date(dateParam);
+        const today = new Date();
+        const seconds = Math.round((today - date) / 1000);
+        const minutes = Math.round(seconds / 60);
+        const hours = Math.round(minutes / 60);
+        const days = Math.round(hours / 24);
+
+        if (seconds < 60) return 'Just now';
+        else if (minutes < 60) return `${minutes}m ago`;
+        else if (hours < 24) return `${hours}h ago`;
+        else return `${days}d ago`;
+    }
+
+    toggleComments(memeId) {
+        const section = document.querySelector(`#comments-${memeId}`);
+        if(section) section.classList.toggle('hidden');
+    }
+
+    postComment(memeId, inputElement) {
+        const text = inputElement.value.trim();
+        if (!text) return;
+
+        const meme = this.state.memes.find(m => m.id === memeId) ||
+                     this.state.renderedMemes.find(m => m.id === memeId) ||
+                     this.state.savedMemes.find(m => m.id === memeId);
+
+        if (meme) {
+            const newComment = {
+                id: `c_${Date.now()}`,
+                author: this.state.currentUser,
+                text: text,
+                timestamp: new Date().toISOString()
+            };
+
+            if(!meme.comments) meme.comments = [];
+            meme.comments.push(newComment);
+
+            // Update stats
+            if(!meme.stats) meme.stats = { views:0, likes:0, comments:0, shares:0 };
+            meme.stats.comments += 1;
+
+            // Update UI
+            this.addCommentToDOM(memeId, newComment);
+            this.updateStatsDOM(memeId, meme.stats);
+
+            // Clear input
+            inputElement.value = '';
+
+            // Save state if it's a saved meme (if it's in feed, it's transient unless we save feed state, which we don't fully do yet for infinite scroll)
+            // But we can update engagement state if we want to track it there.
+            // For now, let's just save state if it's in savedMemes.
+             const isSaved = this.state.savedMemes.some(m => m.id === memeId);
+             if(isSaved) this.saveState();
+
+        } else {
+             console.error("Meme not found for comment:", memeId);
+        }
+    }
+
+    addCommentToDOM(memeId, comment) {
+        const list = document.querySelector(`#comments-${memeId} .comments-list`);
+        if (list) {
+            const commentDiv = document.createElement('div');
+            commentDiv.className = 'comment';
+            commentDiv.innerHTML = `
+                <img src="${comment.author.image}" class="comment-avatar">
+                <div class="comment-content">
+                    <div class="comment-author">${comment.author.name}</div>
+                    <div class="comment-text">${comment.text}</div>
+                </div>
+            `;
+            list.appendChild(commentDiv);
+
+            // Ensure section is visible
+            const section = document.querySelector(`#comments-${memeId}`);
+            if(section) section.classList.remove('hidden');
+        }
+    }
+
+    updateStatsDOM(memeId, stats) {
+        const memeEl = document.getElementById(memeId);
+        if(memeEl) {
+             const viewsEl = memeEl.querySelector('.stat-views');
+             if(viewsEl) viewsEl.innerText = `${stats.views} Views`;
+
+             const statsEl = memeEl.querySelector('.post-stats span:nth-child(2)');
+             if(statsEl) {
+                 statsEl.innerHTML = `${stats.likes} Likes • ${stats.comments} Comments • ${stats.shares} Shares`;
+             }
+        }
     }
 
     react(memeUrl, reaction) {
@@ -553,6 +761,57 @@ class MemeApp {
         speechSynthesis.speak(utterance);
     }
 
+    startNetworkSimulation() {
+        setInterval(() => {
+            if (this.state.renderedMemes.length === 0) return;
+
+            // 1. Simulate Views (happens frequently)
+            this.state.renderedMemes.forEach(meme => {
+                if(Math.random() > 0.3) {
+                    meme.stats.views += Math.floor(Math.random() * 5);
+                    this.updateStatsDOM(meme.id, meme.stats);
+                }
+            });
+
+            // 2. Simulate Likes/Shares (less frequent)
+            this.state.renderedMemes.forEach(meme => {
+                if(Math.random() > 0.8) { // 20% chance per tick
+                     meme.stats.likes += 1;
+                     if(Math.random() > 0.7) meme.stats.shares += 1;
+                     this.updateStatsDOM(meme.id, meme.stats);
+                }
+            });
+
+            // 3. Simulate Comments (rare)
+            if(Math.random() > 0.85) { // 15% chance per tick to add a comment somewhere
+                const randomMeme = this.getRandomItem(this.state.renderedMemes);
+                const randomUser = this.getRandomItem(this.state.networkUsers);
+                const randomComment = this.getRandomItem([
+                    "LOL 😂", "I can't breathe 💀", "This is so true", "Delete this",
+                    "Sent to my mom", "Literally me", "Who did this? 🤣", "Underrated",
+                    "Take my upvote", "👀", "🔥", "Wait what?", "Classic"
+                ]);
+
+                if(randomMeme && randomUser) {
+                    const newComment = {
+                        id: `c_${Date.now()}_${Math.random().toString(36).substr(2,5)}`,
+                        author: randomUser,
+                        text: randomComment,
+                        timestamp: new Date().toISOString()
+                    };
+
+                    if(!randomMeme.comments) randomMeme.comments = [];
+                    randomMeme.comments.push(newComment);
+                    randomMeme.stats.comments += 1;
+
+                    this.addCommentToDOM(randomMeme.id, newComment);
+                    this.updateStatsDOM(randomMeme.id, randomMeme.stats);
+                }
+            }
+
+        }, 2000); // Run simulation tick every 2 seconds
+    }
+
     playSound(type) {
         if (this.state.preferences.muted) return;
         if (this.sounds[type]) {
@@ -585,12 +844,18 @@ class MemeApp {
             const reader = new FileReader();
 
             reader.onload = (e) => {
-                const memeData = {
+                let memeData = {
                     url: e.target.result,
                     source: 'upload',
                     title: 'Custom Upload',
                     caption: 'My Custom Meme 😎'
                 };
+
+                // Enrich with Social Data (User is Author)
+                memeData = this.generateFakePostData(memeData);
+                memeData.author = this.state.currentUser; // Override author
+                memeData.timestamp = new Date().toISOString();
+                memeData.stats = { views: 0, likes: 0, shares: 0, comments: 0 };
 
                 // Add to state and render immediately
                 this.state.memes.unshift(memeData);
