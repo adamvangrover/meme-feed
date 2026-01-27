@@ -31,8 +31,27 @@ class MemeApp {
                 image: 'https://i.pravatar.cc/150?img=3', // Placeholder avatar
                 isMe: true
             },
-            renderedMemes: [] // Track memes currently in the feed for simulation
+            renderedMemes: [], // Track memes currently in the feed for simulation
+            userStats: {
+                level: 1,
+                xp: 0,
+                memesViewed: 0,
+                memesLiked: 0,
+                commentsPosted: 0,
+                memesCreated: 0,
+                badges: []
+            },
+            notifications: []
         };
+
+        this.badgesList = [
+            { id: 'newbie', icon: '👶', name: 'Newbie', desc: 'Viewed 10 Memes', req: (s) => s.memesViewed >= 10 },
+            { id: 'addict', icon: '🧟', name: 'Meme Addict', desc: 'Viewed 100 Memes', req: (s) => s.memesViewed >= 100 },
+            { id: 'critic', icon: '🧐', name: 'Critic', desc: 'Liked 20 Memes', req: (s) => s.memesLiked >= 20 },
+            { id: 'artist', icon: '🎨', name: 'Meme Artist', desc: 'Created 1 Meme', req: (s) => s.memesCreated >= 1 },
+            { id: 'chatter', icon: '🗣️', name: 'Chatterbox', desc: 'Posted 5 Comments', req: (s) => s.commentsPosted >= 5 },
+            { id: 'legend', icon: '👑', name: 'Legend', desc: 'Reach Level 10', req: (s) => s.level >= 10 }
+        ];
 
         this.captions = [
             "Me realizing I've been scrolling memes for 5 hours 😭",
@@ -120,6 +139,8 @@ class MemeApp {
             this.state.preferences = { ...this.state.preferences, ...parsed.preferences };
             this.state.engagement = parsed.engagement || {};
             if(parsed.currentUser) this.state.currentUser = parsed.currentUser;
+            if(parsed.userStats) this.state.userStats = { ...this.state.userStats, ...parsed.userStats };
+            if(parsed.notifications) this.state.notifications = parsed.notifications;
             // Don't restore view state, always start at feed or last usage logic can be debated.
         }
     }
@@ -130,7 +151,9 @@ class MemeApp {
             importedPersonalities: this.state.importedPersonalities,
             preferences: this.state.preferences,
             engagement: this.state.engagement,
-            currentUser: this.state.currentUser
+            currentUser: this.state.currentUser,
+            userStats: this.state.userStats,
+            notifications: this.state.notifications
         };
         localStorage.setItem('memeAppState', JSON.stringify(stateToSave));
     }
@@ -148,6 +171,7 @@ class MemeApp {
                 { id: 'p2', name: 'Grumpy Cat', image: 'https://i.imgflip.com/8p0a.jpg' }
             ];
         }
+        this.renderStories();
     }
 
     generateFakePostData(meme) {
@@ -197,6 +221,7 @@ class MemeApp {
                     const index = children.indexOf(entry.target);
                     if (index !== -1) {
                         this.activeMemeIndex = index;
+                        this.trackAction('view');
                     }
                 }
             });
@@ -328,10 +353,12 @@ class MemeApp {
         document.getElementById('btn-feed').classList.toggle('active', viewName === 'feed');
         document.getElementById('btn-saved').classList.toggle('active', viewName === 'saved');
         document.getElementById('btn-personalities').classList.toggle('active', viewName === 'personalities');
+        document.getElementById('btn-profile').classList.toggle('active', viewName === 'profile');
 
         this.feedContainer.classList.add('hidden');
         this.savedContainer.classList.add('hidden');
         this.personalitiesContainer.classList.add('hidden');
+        document.getElementById('profile-container').classList.add('hidden');
 
         if (viewName === 'feed') {
             this.feedContainer.classList.remove('hidden');
@@ -342,6 +369,9 @@ class MemeApp {
         } else if (viewName === 'personalities') {
             this.personalitiesContainer.classList.remove('hidden');
             this.renderPersonalities();
+        } else if (viewName === 'profile') {
+            document.getElementById('profile-container').classList.remove('hidden');
+            this.renderProfile();
         }
     }
 
@@ -641,6 +671,8 @@ class MemeApp {
             this.addCommentToDOM(memeId, newComment);
             this.updateStatsDOM(memeId, meme.stats);
 
+            this.trackAction('comment');
+
             // Clear input
             inputElement.value = '';
 
@@ -690,6 +722,9 @@ class MemeApp {
 
     react(memeUrl, reaction) {
         this.trackEngagement(memeUrl, reaction);
+        if(reaction === '🔥' || reaction === '❤️' || reaction === '😂') {
+            this.trackAction('like');
+        }
         // Visual feedback
         const btn = event.target.closest('button') || event.target;
         if(btn) {
@@ -809,7 +844,98 @@ class MemeApp {
                 }
             }
 
+            // 4. Simulate Notifications (rare)
+            if(Math.random() > 0.95) { // 5% chance
+                const randomUser = this.getRandomItem(this.state.networkUsers);
+                if (randomUser) {
+                    const events = [
+                        "liked your meme",
+                        "commented on your post",
+                        "started following you",
+                        "shared your meme"
+                    ];
+                    const event = this.getRandomItem(events);
+                    this.addNotification(`${randomUser.name} ${event}`, randomUser.image);
+                }
+            }
+
         }, 2000); // Run simulation tick every 2 seconds
+    }
+
+    toggleNotifications() {
+        const dropdown = document.getElementById('notification-dropdown');
+        dropdown.classList.toggle('hidden');
+        if (!dropdown.classList.contains('hidden')) {
+            // Mark as read (visual logic only, or simple counter reset)
+            this.state.notifications.forEach(n => n.read = true);
+            this.updateNotificationBadge();
+            this.saveState();
+        }
+    }
+
+    addNotification(text, image) {
+        const notif = {
+            id: Date.now(),
+            text: text,
+            image: image,
+            time: new Date().toISOString(),
+            read: false
+        };
+        this.state.notifications.unshift(notif);
+        if (this.state.notifications.length > 20) this.state.notifications.pop(); // Keep last 20
+
+        this.renderNotifications();
+        this.updateNotificationBadge();
+        this.saveState();
+        this.playSound('pop');
+    }
+
+    renderNotifications() {
+        const list = document.getElementById('notification-list');
+        const noMsg = document.getElementById('no-notifications');
+
+        if (this.state.notifications.length === 0) {
+            list.innerHTML = '';
+            noMsg.style.display = 'block';
+            return;
+        }
+
+        noMsg.style.display = 'none';
+        list.innerHTML = '';
+
+        this.state.notifications.forEach(n => {
+            const item = document.createElement('div');
+            item.className = 'notification-item';
+            if(!n.read) item.style.borderLeft = '3px solid #ff4b2b';
+
+            item.innerHTML = `
+                <img src="${n.image}" alt="User">
+                <div class="notif-content">
+                    <div class="notif-text">${n.text}</div>
+                    <span class="notif-time">${this.timeAgo(n.time)}</span>
+                </div>
+            `;
+            list.appendChild(item);
+        });
+    }
+
+    updateNotificationBadge() {
+        const badge = document.getElementById('notification-badge');
+        const unreadCount = this.state.notifications.filter(n => !n.read).length;
+
+        if (unreadCount > 0) {
+            badge.innerText = unreadCount;
+            badge.classList.remove('hidden');
+        } else {
+            badge.classList.add('hidden');
+        }
+    }
+
+    clearNotifications() {
+        this.state.notifications = [];
+        this.renderNotifications();
+        this.updateNotificationBadge();
+        this.saveState();
     }
 
     playSound(type) {
@@ -899,6 +1025,310 @@ class MemeApp {
 
             reader.readAsDataURL(file);
         }
+    }
+
+    openMemeEditor(imageSrc = null) {
+        document.getElementById('meme-generator').classList.remove('hidden');
+        this.memeEditorState = {
+            image: null,
+            topText: '',
+            bottomText: '',
+            fontSize: 40,
+            color: '#ffffff'
+        };
+
+        const canvas = document.getElementById('meme-canvas');
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Reset inputs
+        document.getElementById('top-text').value = '';
+        document.getElementById('bottom-text').value = '';
+        document.getElementById('text-size').value = 40;
+        document.getElementById('text-color').value = '#ffffff';
+
+        if (imageSrc) {
+            this.loadImageToCanvas(imageSrc);
+        }
+    }
+
+    closeMemeEditor() {
+        document.getElementById('meme-generator').classList.add('hidden');
+    }
+
+    loadEditorImage(input) {
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = (e) => this.loadImageToCanvas(e.target.result);
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    loadImageToCanvas(src) {
+        const img = new Image();
+        img.onload = () => {
+            this.memeEditorState.image = img;
+            this.drawCanvas();
+        };
+        img.src = src;
+    }
+
+    drawCanvas() {
+        if (!this.memeEditorState.image) return;
+
+        const canvas = document.getElementById('meme-canvas');
+        const ctx = canvas.getContext('2d');
+
+        // Update state from inputs
+        this.memeEditorState.topText = document.getElementById('top-text').value.toUpperCase();
+        this.memeEditorState.bottomText = document.getElementById('bottom-text').value.toUpperCase();
+        this.memeEditorState.fontSize = parseInt(document.getElementById('text-size').value);
+        this.memeEditorState.color = document.getElementById('text-color').value;
+
+        // Resize canvas to match image aspect ratio but keep max width 500
+        const scale = Math.min(500 / this.memeEditorState.image.width, 500 / this.memeEditorState.image.height);
+        canvas.width = this.memeEditorState.image.width * scale;
+        canvas.height = this.memeEditorState.image.height * scale;
+
+        // Draw Image
+        ctx.drawImage(this.memeEditorState.image, 0, 0, canvas.width, canvas.height);
+
+        // Text Styles
+        ctx.fillStyle = this.memeEditorState.color;
+        ctx.strokeStyle = 'black';
+        ctx.lineWidth = Math.max(2, this.memeEditorState.fontSize / 15);
+        ctx.font = `bold ${this.memeEditorState.fontSize}px Impact, sans-serif`;
+        ctx.textAlign = 'center';
+
+        // Draw Top Text
+        if (this.memeEditorState.topText) {
+            ctx.textBaseline = 'top';
+            const x = canvas.width / 2;
+            const y = 10;
+            ctx.strokeText(this.memeEditorState.topText, x, y, canvas.width - 20);
+            ctx.fillText(this.memeEditorState.topText, x, y, canvas.width - 20);
+        }
+
+        // Draw Bottom Text
+        if (this.memeEditorState.bottomText) {
+            ctx.textBaseline = 'bottom';
+            const x = canvas.width / 2;
+            const y = canvas.height - 10;
+            ctx.strokeText(this.memeEditorState.bottomText, x, y, canvas.width - 20);
+            ctx.fillText(this.memeEditorState.bottomText, x, y, canvas.width - 20);
+        }
+    }
+
+    publishMeme() {
+        const canvas = document.getElementById('meme-canvas');
+        if (!this.memeEditorState || !this.memeEditorState.image) {
+            alert("Please upload an image first!");
+            return;
+        }
+
+        const dataUrl = canvas.toDataURL('image/png');
+
+        let memeData = {
+            url: dataUrl,
+            source: 'created',
+            title: 'My Masterpiece',
+            caption: this.memeEditorState.topText || 'Fresh Meme'
+        };
+
+        memeData = this.generateFakePostData(memeData);
+        memeData.author = this.state.currentUser;
+        memeData.timestamp = new Date().toISOString();
+
+        this.state.memes.unshift(memeData);
+
+        this.trackAction('create');
+
+        // Add to DOM
+        if (this.state.view === 'feed') {
+             const memeDiv = document.createElement("div");
+             this.createMemeCard(memeData, memeDiv);
+             this.feed.insertBefore(memeDiv.firstElementChild, this.feed.firstChild);
+             window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+            this.switchView('feed');
+             setTimeout(() => {
+                 const firstMemeImg = this.feed.querySelector('.meme img');
+                 if (!firstMemeImg || firstMemeImg.src !== memeData.url) {
+                      const memeDiv = document.createElement("div");
+                      this.createMemeCard(memeData, memeDiv);
+                      this.feed.insertBefore(memeDiv.firstElementChild, this.feed.firstChild);
+                 }
+                 window.scrollTo({ top: 0, behavior: 'smooth' });
+             }, 100);
+        }
+
+        this.playSound('success');
+        this.closeMemeEditor();
+    }
+
+    downloadMeme() {
+         const canvas = document.getElementById('meme-canvas');
+         if (!this.memeEditorState || !this.memeEditorState.image) return;
+
+         const link = document.createElement('a');
+         link.download = 'my-meme.png';
+         link.href = canvas.toDataURL();
+         link.click();
+    }
+
+    renderStories() {
+        const container = document.getElementById('stories-container');
+        if (!container) return;
+        container.innerHTML = '';
+
+        // Add "My Story" (Upload)
+        const myStoryHTML = `
+            <div class="story-item" onclick="app.triggerUpload()">
+                <div class="story-circle">
+                    <img src="${this.state.currentUser.image}" alt="Me">
+                </div>
+                <div class="story-username">You</div>
+            </div>
+        `;
+        container.innerHTML += myStoryHTML;
+
+        // Add Network Stories
+        this.state.networkUsers.forEach(user => {
+            const hasViewed = this.state.engagement[`story_${user.id}`];
+            const viewedClass = hasViewed ? 'viewed' : '';
+
+            const storyHTML = `
+                <div class="story-item" onclick="app.openStory('${user.id}')">
+                    <div class="story-circle ${viewedClass}">
+                        <img src="${user.image}" alt="${user.name}">
+                    </div>
+                    <div class="story-username">${user.name}</div>
+                </div>
+            `;
+            container.innerHTML += storyHTML;
+        });
+    }
+
+    openStory(userId) {
+        const user = this.state.networkUsers.find(u => u.id === userId);
+        if (!user) return;
+
+        // Generate a fake story content if not exists or just random
+        // For simulation, we'll pick a random meme from our pool or generic
+        const randomMeme = this.getRandomItem(this.state.memes);
+        const storyImage = randomMeme ? randomMeme.url : 'https://i.imgflip.com/1g8my4.jpg';
+        const storyCaption = user.text || "Hello world";
+
+        document.getElementById('story-author-img').src = user.image;
+        document.getElementById('story-author-name').innerText = user.name;
+        document.getElementById('story-image').src = storyImage;
+        document.getElementById('story-caption').innerText = storyCaption;
+
+        document.getElementById('story-viewer').classList.remove('hidden');
+
+        // Mark as viewed
+        this.state.engagement[`story_${user.id}`] = true;
+        this.saveState();
+        this.renderStories(); // Update circles
+
+        this.startStoryProgress();
+    }
+
+    closeStory() {
+        document.getElementById('story-viewer').classList.add('hidden');
+        if (this.storyInterval) clearInterval(this.storyInterval);
+    }
+
+    startStoryProgress() {
+        if (this.storyInterval) clearInterval(this.storyInterval);
+        const progressFill = document.getElementById('story-progress');
+        let width = 0;
+
+        this.storyInterval = setInterval(() => {
+            width += 1;
+            progressFill.style.width = width + '%';
+            if (width >= 100) {
+                this.closeStory();
+            }
+        }, 30); // 3 seconds total (30ms * 100)
+    }
+
+    trackAction(action) {
+        if (!this.state.userStats) return;
+
+        if (action === 'view') this.state.userStats.memesViewed++;
+        if (action === 'like') {
+            this.state.userStats.memesLiked++;
+            this.state.userStats.xp += 5;
+        }
+        if (action === 'comment') {
+            this.state.userStats.commentsPosted++;
+            this.state.userStats.xp += 10;
+        }
+        if (action === 'create') {
+            this.state.userStats.memesCreated++;
+            this.state.userStats.xp += 50;
+        }
+
+        // XP for viewing (less frequent)
+        if (action === 'view') this.state.userStats.xp += 1;
+
+        this.checkLevelUp();
+        this.checkBadges();
+        this.saveState();
+    }
+
+    checkLevelUp() {
+        const xpNeeded = this.state.userStats.level * 100;
+        if (this.state.userStats.xp >= xpNeeded) {
+            this.state.userStats.level++;
+            this.state.userStats.xp -= xpNeeded;
+            this.showToast(`🎉 Level Up! You are now Level ${this.state.userStats.level}`);
+            this.playSound('success');
+        }
+    }
+
+    checkBadges() {
+        this.badgesList.forEach(badge => {
+            if (!this.state.userStats.badges.includes(badge.id) && badge.req(this.state.userStats)) {
+                this.state.userStats.badges.push(badge.id);
+                this.showToast(`🏆 Unlocked Badge: ${badge.name}`);
+                this.playSound('success');
+            }
+        });
+    }
+
+    renderProfile() {
+        document.getElementById('profile-name').innerText = this.state.currentUser.name;
+        document.getElementById('profile-img').src = this.state.currentUser.image;
+
+        // Level
+        const titles = ["Lurker", "Novice", "Memer", "Pro Memer", "Meme Lord", "God Tier"];
+        const titleIndex = Math.min(Math.floor((this.state.userStats.level - 1) / 2), titles.length - 1);
+        document.getElementById('profile-level').innerText = `Level ${this.state.userStats.level}: ${titles[titleIndex]}`;
+
+        // Stats
+        document.getElementById('stat-views').innerText = this.state.userStats.memesViewed;
+        document.getElementById('stat-likes').innerText = this.state.userStats.memesLiked;
+        document.getElementById('stat-comments').innerText = this.state.userStats.commentsPosted;
+        document.getElementById('stat-created').innerText = this.state.userStats.memesCreated;
+
+        // Badges
+        const badgesContainer = document.getElementById('badges-grid');
+        badgesContainer.innerHTML = '';
+        this.badgesList.forEach(badge => {
+            const isUnlocked = this.state.userStats.badges.includes(badge.id);
+            const badgeDiv = document.createElement('div');
+            badgeDiv.className = `badge-item ${isUnlocked ? '' : 'locked'}`;
+            badgeDiv.title = `${badge.name}: ${badge.desc}`;
+            badgeDiv.innerHTML = badge.icon;
+            badgesContainer.appendChild(badgeDiv);
+        });
+
+        // Progress
+        const xpNeeded = this.state.userStats.level * 100;
+        const percent = (this.state.userStats.xp / xpNeeded) * 100;
+        document.getElementById('level-progress-fill').style.width = `${percent}%`;
     }
 }
 
