@@ -1,4 +1,5 @@
 class MemeApp {
+    // === STATE & INIT ===
     constructor() {
         this.feed = document.getElementById("feed");
         this.savedFeed = document.getElementById("saved-feed");
@@ -119,6 +120,10 @@ class MemeApp {
         this.fetchNetworkUsers().then(() => {
              // Restore source selection
             document.getElementById('source-filter').value = this.state.preferences.source || 'all';
+            if (this.state.preferences.source === 'reddit') {
+                 document.getElementById('reddit-sort').classList.remove('hidden');
+                 document.getElementById('reddit-sort').value = this.state.preferences.redditSort || 'hot';
+            }
 
             if (this.state.view === 'feed') {
                 this.fetchMemes().then(() => this.renderFeed(5));
@@ -156,6 +161,64 @@ class MemeApp {
             notifications: this.state.notifications
         };
         localStorage.setItem('memeAppState', JSON.stringify(stateToSave));
+    }
+
+    exportData() {
+        const stateToSave = {
+            savedMemes: this.state.savedMemes,
+            importedPersonalities: this.state.importedPersonalities,
+            preferences: this.state.preferences,
+            engagement: this.state.engagement,
+            currentUser: this.state.currentUser,
+            userStats: this.state.userStats,
+            notifications: this.state.notifications
+        };
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(stateToSave, null, 2));
+        const downloadAnchorNode = document.createElement('a');
+        downloadAnchorNode.setAttribute("href", dataStr);
+        downloadAnchorNode.setAttribute("download", "meme_feed_backup.json");
+        document.body.appendChild(downloadAnchorNode); // required for firefox
+        downloadAnchorNode.click();
+        downloadAnchorNode.remove();
+        this.showToast("Data Exported 📤");
+    }
+
+    triggerImport() {
+        document.getElementById('import-file').click();
+    }
+
+    importData(input) {
+        if (input.files && input.files[0]) {
+            const file = input.files[0];
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    // Basic validation
+                    if (data.preferences && data.userStats) {
+                        this.state.savedMemes = data.savedMemes || [];
+                        this.state.importedPersonalities = data.importedPersonalities || [];
+                        this.state.preferences = { ...this.state.preferences, ...data.preferences };
+                        this.state.engagement = data.engagement || {};
+                        if(data.currentUser) this.state.currentUser = data.currentUser;
+                        if(data.userStats) this.state.userStats = { ...this.state.userStats, ...data.userStats };
+                        if(data.notifications) this.state.notifications = data.notifications;
+
+                        this.saveState();
+                        this.applyTheme();
+                        this.renderProfile();
+                        this.showToast("Data Imported Successfully 🎉");
+                        setTimeout(() => location.reload(), 1000); // Reload to ensure clean state
+                    } else {
+                        alert("Invalid JSON format");
+                    }
+                } catch (err) {
+                    console.error("Import error", err);
+                    alert("Failed to parse JSON");
+                }
+            };
+            reader.readAsText(file);
+        }
     }
 
     async fetchNetworkUsers() {
@@ -202,6 +265,7 @@ class MemeApp {
         };
     }
 
+    // === UI HANDLERS & EVENTS ===
     setupEventListeners() {
         window.addEventListener("scroll", () => {
             if (this.state.view === 'feed' && window.innerHeight + window.scrollY >= document.body.offsetHeight - 800) {
@@ -342,8 +406,26 @@ class MemeApp {
 
     setSource(source) {
         this.state.preferences.source = source;
+
+        const sortSelect = document.getElementById('reddit-sort');
+        if (source === 'reddit') {
+            sortSelect.classList.remove('hidden');
+            // Restore sort preference
+            sortSelect.value = this.state.preferences.redditSort || 'hot';
+        } else {
+            sortSelect.classList.add('hidden');
+        }
+
         this.state.memes = []; // Clear current pool
         this.feed.innerHTML = ''; // Clear display
+        this.saveState();
+        this.fetchMemes().then(() => this.renderFeed(5));
+    }
+
+    setRedditSort(sort) {
+        this.state.preferences.redditSort = sort;
+        this.state.memes = [];
+        this.feed.innerHTML = '';
         this.saveState();
         this.fetchMemes().then(() => this.renderFeed(5));
     }
@@ -375,6 +457,7 @@ class MemeApp {
         }
     }
 
+    // === API CALLS & DATA FETCHING ===
     async fetchMemes() {
         this.loadingIndicator.style.display = "block";
         this.errorMessage.style.display = "none";
@@ -399,8 +482,9 @@ class MemeApp {
             // Reddit
             if (source === 'all' || source === 'reddit') {
                 try {
+                    const sort = this.state.preferences.redditSort || 'hot';
                     const after = this.state.pagination.redditAfter ? `&after=${this.state.pagination.redditAfter}` : '';
-                    const redditResponse = await fetch(`https://www.reddit.com/r/memes/hot.json?limit=25${after}`);
+                    const redditResponse = await fetch(`https://www.reddit.com/r/memes/${sort}.json?limit=25${after}`);
                     const redditData = await redditResponse.json();
 
                     this.state.pagination.redditAfter = redditData.data.after;
@@ -465,6 +549,12 @@ class MemeApp {
             if (this.state.memes.length === 0) break;
             const meme = this.state.memes.shift();
             this.state.renderedMemes.push(meme); // Track for simulation
+
+            // Memory Management: Keep simulated list size in check
+            if (this.state.renderedMemes.length > 100) {
+                this.state.renderedMemes.shift();
+            }
+
             this.createMemeCard(meme, this.feed);
         }
     }
@@ -796,6 +886,7 @@ class MemeApp {
         speechSynthesis.speak(utterance);
     }
 
+    // === SIMULATION & ENGAGEMENT ===
     startNetworkSimulation() {
         setInterval(() => {
             if (this.state.renderedMemes.length === 0) return;
@@ -820,12 +911,35 @@ class MemeApp {
             // 3. Simulate Comments (rare)
             if(Math.random() > 0.85) { // 15% chance per tick to add a comment somewhere
                 const randomMeme = this.getRandomItem(this.state.renderedMemes);
-                const randomUser = this.getRandomItem(this.state.networkUsers);
-                const randomComment = this.getRandomItem([
-                    "LOL 😂", "I can't breathe 💀", "This is so true", "Delete this",
-                    "Sent to my mom", "Literally me", "Who did this? 🤣", "Underrated",
-                    "Take my upvote", "👀", "🔥", "Wait what?", "Classic"
-                ]);
+                let randomUser = this.getRandomItem(this.state.networkUsers);
+                let randomComment = "";
+
+                // ENHANCED: Personality Interaction
+                // If the meme author is a network user (personality), another personality might comment something specific
+                if (randomMeme && randomMeme.author && this.state.networkUsers.some(u => u.id === randomMeme.author.id)) {
+                    // Filter out the author so they don't comment on their own post
+                    const otherUsers = this.state.networkUsers.filter(u => u.id !== randomMeme.author.id);
+                    if (otherUsers.length > 0) {
+                        randomUser = this.getRandomItem(otherUsers);
+                        // Interactions based on simple rules or random
+                        const interactions = [
+                            `@${randomMeme.author.name} stop posting this`,
+                            `@${randomMeme.author.name} actually funny for once`,
+                            `@${randomMeme.author.name} 💀💀💀`,
+                            `Classic @${randomMeme.author.name}`
+                        ];
+                        randomComment = this.getRandomItem(interactions);
+                    }
+                }
+
+                // Default comment if not interactive or meme author is generic
+                if (!randomComment) {
+                     randomComment = this.getRandomItem([
+                        "LOL 😂", "I can't breathe 💀", "This is so true", "Delete this",
+                        "Sent to my mom", "Literally me", "Who did this? 🤣", "Underrated",
+                        "Take my upvote", "👀", "🔥", "Wait what?", "Classic"
+                    ]);
+                }
 
                 if(randomMeme && randomUser) {
                     const newComment = {
@@ -960,6 +1074,29 @@ class MemeApp {
         this.saveState();
     }
 
+    toggleZenMode() {
+        const btn = document.getElementById('btn-zen');
+        if (this.zenInterval) {
+            clearInterval(this.zenInterval);
+            this.zenInterval = null;
+            btn.classList.remove('zen-active');
+            this.showToast("Zen Mode Off 🛑");
+        } else {
+            this.zenInterval = setInterval(() => {
+                // Pause if hovering over a meme
+                if (!document.querySelector('.meme:hover')) {
+                     window.scrollBy(0, 1);
+                }
+            }, 30);
+            btn.classList.add('zen-active');
+            this.showToast("Zen Mode On 🍃");
+        }
+    }
+
+    toggleShortcuts() {
+        document.getElementById('shortcuts-modal').classList.toggle('hidden');
+    }
+
     triggerUpload() {
         document.getElementById('file-upload').click();
     }
@@ -1034,7 +1171,8 @@ class MemeApp {
             topText: '',
             bottomText: '',
             fontSize: 40,
-            color: '#ffffff'
+            color: '#ffffff',
+            stickers: []
         };
 
         const canvas = document.getElementById('meme-canvas');
@@ -1071,6 +1209,23 @@ class MemeApp {
             this.drawCanvas();
         };
         img.src = src;
+    }
+
+    addSticker(emoji) {
+        if (!this.memeEditorState.image) return;
+        const canvas = document.getElementById('meme-canvas');
+        // Randomize slightly
+        const x = Math.random() * (canvas.width * 0.6) + (canvas.width * 0.2);
+        const y = Math.random() * (canvas.height * 0.6) + (canvas.height * 0.2);
+
+        if(!this.memeEditorState.stickers) this.memeEditorState.stickers = [];
+        this.memeEditorState.stickers.push({ emoji, x, y, size: 60 });
+        this.drawCanvas();
+    }
+
+    clearStickers() {
+        this.memeEditorState.stickers = [];
+        this.drawCanvas();
     }
 
     drawCanvas() {
@@ -1116,6 +1271,15 @@ class MemeApp {
             const y = canvas.height - 10;
             ctx.strokeText(this.memeEditorState.bottomText, x, y, canvas.width - 20);
             ctx.fillText(this.memeEditorState.bottomText, x, y, canvas.width - 20);
+        }
+
+        // Draw Stickers
+        if (this.memeEditorState.stickers) {
+             this.memeEditorState.stickers.forEach(s => {
+                 ctx.font = `${s.size}px serif`;
+                 ctx.textBaseline = 'middle';
+                 ctx.fillText(s.emoji, s.x, s.y);
+             });
         }
     }
 
