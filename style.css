@@ -377,7 +377,7 @@ body.light-mode .reaction-bar button:hover {
     display: none !important;
 }
 
-select#source-filter {
+select#source-filter, select#reddit-sort {
     background: #333;
     color: white;
     border: 1px solid #444;
@@ -385,7 +385,7 @@ select#source-filter {
     border-radius: 20px;
     margin-left: 10px;
 }
-body.light-mode select#source-filter {
+body.light-mode select#source-filter, body.light-mode select#reddit-sort {
     background: #eee;
     color: #333;
     border: 1px solid #ccc;
@@ -1017,4 +1017,49 @@ body.light-mode .notif-text {
     font-size: 0.7rem;
     color: #888;
     margin-top: 2px;
+}
+
+/* Zen Mode */
+.nav-btn.zen-active {
+    color: #4CAF50;
+    border-color: #4CAF50;
+    animation: pulse-zen 2s infinite;
+}
+
+@keyframes pulse-zen {
+    0% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(76, 175, 80, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0); }
+}
+
+/* Sticker Options */
+.sticker-options {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+    margin-top: 5px;
+}
+
+.sticker-options button {
+    background: #333;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    transition: transform 0.2s;
+}
+
+body.light-mode .sticker-options button {
+    background: #eee;
+}
+
+.sticker-options button:hover {
+    transform: scale(1.1);
+    background: #444;
+}
+
+body.light-mode .sticker-options button:hover {
+    background: #ddd;
 }

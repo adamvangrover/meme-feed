@@ -21,6 +21,12 @@
                     <option value="imgflip">Imgflip</option>
                 </select>
 
+                <select id="reddit-sort" onchange="app.setRedditSort(this.value)" class="hidden">
+                    <option value="hot">Hot</option>
+                    <option value="new">New</option>
+                    <option value="top">Top</option>
+                </select>
+
                 <div class="notification-wrapper" style="position: relative; display: inline-block;">
                     <button class="nav-btn" onclick="app.toggleNotifications()" title="Notifications">
                         <i class="fas fa-bell"></i>
@@ -49,6 +55,12 @@
                 <input type="file" id="file-upload" accept="image/*" style="display: none;" onchange="app.handleFileUpload(this)">
                 <button class="nav-btn" onclick="app.toggleTheme()">
                     <i class="fas fa-adjust"></i>
+                </button>
+                <button class="nav-btn" id="btn-zen" onclick="app.toggleZenMode()" title="Zen Mode">
+                    <i class="fas fa-wind"></i>
+                </button>
+                <button class="nav-btn" onclick="app.toggleShortcuts()" title="Keyboard Shortcuts">
+                    <i class="fas fa-keyboard"></i>
                 </button>
             </div>
         </div>
@@ -122,6 +134,15 @@
                 <div class="level-progress-fill" id="level-progress-fill"></div>
             </div>
         </div>
+
+        <div style="margin-top: 30px; border-top: 1px solid #333; padding-top: 20px;">
+            <h3>Data Management 💾</h3>
+            <div style="display: flex; gap: 10px; justify-content: center;">
+                <button class="action-btn secondary" onclick="app.exportData()">Export Data (JSON)</button>
+                <button class="action-btn secondary" onclick="app.triggerImport()">Import Data (JSON)</button>
+                <input type="file" id="import-file" accept=".json" style="display: none;" onchange="app.importData(this)">
+            </div>
+        </div>
     </div>
 
     <button id="scroll-to-top" class="hidden" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">
@@ -141,6 +162,21 @@
             </div>
             <img id="story-image" src="" class="story-main-img">
             <div id="story-caption" class="story-caption"></div>
+        </div>
+    </div>
+
+    <!-- Shortcuts Modal -->
+    <div id="shortcuts-modal" class="hidden modal-overlay" onclick="if(event.target === this) app.toggleShortcuts()">
+        <div class="modal-content" style="max-width: 400px; text-align: left;">
+            <button class="close-modal" onclick="app.toggleShortcuts()">&times;</button>
+            <h2>Keyboard Shortcuts ⌨️</h2>
+            <ul style="list-style: none; padding: 0; font-size: 1.1rem; line-height: 2;">
+                <li><strong>J</strong> / <strong>⬇️</strong> : Next Meme</li>
+                <li><strong>K</strong> / <strong>⬆️</strong> : Previous Meme</li>
+                <li><strong>L</strong> : Like Meme ❤️</li>
+                <li><strong>S</strong> : Save Meme 💾</li>
+                <li><strong>M</strong> : Toggle Mute 🔇</li>
+            </ul>
         </div>
     </div>
 
@@ -177,6 +213,20 @@
                         <div class="control-group half">
                             <label>Color</label>
                             <input type="color" id="text-color" value="#ffffff" oninput="app.drawCanvas()">
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label>Add Stickers</label>
+                        <div class="sticker-options" id="sticker-options">
+                            <!-- Injected by JS or hardcoded -->
+                            <button onclick="app.addSticker('🔥')">🔥</button>
+                            <button onclick="app.addSticker('😂')">😂</button>
+                            <button onclick="app.addSticker('💀')">💀</button>
+                            <button onclick="app.addSticker('🤡')">🤡</button>
+                            <button onclick="app.addSticker('💯')">💯</button>
+                            <button onclick="app.addSticker('😎')">😎</button>
+                            <button onclick="app.clearStickers()" style="font-size: 0.8rem; background: #333; color: white; width: auto; padding: 0 10px;">Clear</button>
                         </div>
                     </div>
 
