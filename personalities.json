@@ -4,87 +4,139 @@
     "name": "Doge",
     "image": "https://i.imgflip.com/4t0m5.jpg",
     "text": "Much wow. Such meme. Very personality.",
-    "voice": {
-        "lang": "en-US",
-        "pitch": 1.2,
-        "rate": 0.8
-    }
+    "voice": { "lang": "en-US", "pitch": 1.2, "rate": 0.8 }
   },
   {
     "id": "p2",
     "name": "Grumpy Cat",
     "image": "https://i.imgflip.com/8p0a.jpg",
     "text": "I had fun once. It was awful.",
-    "voice": {
-        "lang": "en-US",
-        "pitch": 0.5,
-        "rate": 0.5
-    }
+    "voice": { "lang": "en-US", "pitch": 0.5, "rate": 0.5 }
   },
   {
     "id": "p3",
     "name": "Pepe",
     "image": "https://i.imgflip.com/1h7in3.jpg",
     "text": "Feels good man.",
-    "voice": {
-        "lang": "en-US",
-        "pitch": 1.0,
-        "rate": 1.0
-    }
+    "voice": { "lang": "en-US", "pitch": 1.0, "rate": 1.0 }
   },
   {
     "id": "p4",
     "name": "Success Kid",
     "image": "https://i.imgflip.com/1bhk.jpg",
     "text": "Task added to backlog. Done.",
-    "voice": {
-        "lang": "en-US",
-        "pitch": 1.5,
-        "rate": 1.2
-    }
+    "voice": { "lang": "en-US", "pitch": 1.5, "rate": 1.2 }
   },
   {
     "id": "p5",
     "name": "SpongeBob",
     "image": "https://i.imgflip.com/1otk96.jpg",
     "text": "ImAgInE nOt UsInG tHiS mEmE.",
-    "voice": {
-        "lang": "en-US",
-        "pitch": 1.8,
-        "rate": 1.1
-    }
+    "voice": { "lang": "en-US", "pitch": 1.8, "rate": 1.1 }
   },
   {
     "id": "p6",
     "name": "Yoda",
     "image": "https://i.imgflip.com/2p4q.jpg",
     "text": "Meme, you must. Funny, it is.",
-    "voice": {
-        "lang": "en-US",
-        "pitch": 0.8,
-        "rate": 0.7
-    }
+    "voice": { "lang": "en-US", "pitch": 0.8, "rate": 0.7 }
   },
   {
     "id": "p7",
     "name": "Drake",
     "image": "https://i.imgflip.com/30b1gx.jpg",
     "text": "Old memes? Nah. New memes? Yeah.",
-    "voice": {
-        "lang": "en-US",
-        "pitch": 1.0,
-        "rate": 1.0
-    }
+    "voice": { "lang": "en-US", "pitch": 1.0, "rate": 1.0 }
   },
   {
     "id": "p8",
     "name": "Distracted Boyfriend",
     "image": "https://i.imgflip.com/1ur9b0.jpg",
     "text": "Me looking at other memes while this one is right here.",
-    "voice": {
-        "lang": "en-US",
-        "pitch": 1.0,
-        "rate": 1.1
-    }
+    "voice": { "lang": "en-US", "pitch": 1.0, "rate": 1.1 }
+  },
+  {
+    "id": "p9",
+    "name": "Philosoraptor",
+    "image": "https://i.imgflip.com/2ybua0.jpg",
+    "text": "If a meme falls in the forest and no one likes it, is it funny?",
+    "voice": { "lang": "en-US", "pitch": 0.7, "rate": 0.9 }
+  },
+  {
+    "id": "p10",
+    "name": "Bad Luck Brian",
+    "image": "https://i.imgflip.com/1bip.jpg",
+    "text": "Posts a meme. Internet goes down.",
+    "voice": { "lang": "en-US", "pitch": 1.3, "rate": 1.1 }
+  },
+  {
+    "id": "p11",
+    "name": "Hide the Pain Harold",
+    "image": "https://i.imgflip.com/26am.jpg",
+    "text": "Smiling through the cringe.",
+    "voice": { "lang": "en-US", "pitch": 0.9, "rate": 0.9 }
+  },
+  {
+    "id": "p12",
+    "name": "Karen",
+    "image": "https://i.kym-cdn.com/entries/icons/original/000/030/157/womanyellingcat.jpg",
+    "text": "I'd like to speak to the admin of this group.",
+    "voice": { "lang": "en-US", "pitch": 1.4, "rate": 1.3 }
+  },
+  {
+    "id": "p13",
+    "name": "Giga Chad",
+    "image": "https://i.imgflip.com/4q3tsl.jpg",
+    "text": "Yes, I enjoy memes. How could you tell?",
+    "voice": { "lang": "en-US", "pitch": 0.4, "rate": 0.8 }
+  },
+  {
+    "id": "p14",
+    "name": "Nyan Cat",
+    "image": "https://i.imgflip.com/4h0p.jpg",
+    "text": "Nyanyanyanyanyanyanya!",
+    "voice": { "lang": "en-US", "pitch": 2.0, "rate": 1.5 }
+  },
+  {
+    "id": "p15",
+    "name": "Troll Face",
+    "image": "https://i.imgflip.com/1t915.jpg",
+    "text": "Problem?",
+    "voice": { "lang": "en-US", "pitch": 1.6, "rate": 1.2 }
+  },
+  {
+    "id": "p16",
+    "name": "Rick Astley",
+    "image": "https://i.imgflip.com/26jxvz.jpg",
+    "text": "Never gonna give you up.",
+    "voice": { "lang": "en-GB", "pitch": 1.0, "rate": 1.0 }
+  },
+  {
+    "id": "p17",
+    "name": "Batman",
+    "image": "https://i.imgflip.com/39t1o.jpg",
+    "text": "I'm Batman.",
+    "voice": { "lang": "en-US", "pitch": 0.3, "rate": 0.8 }
+  },
+  {
+    "id": "p18",
+    "name": "Joker",
+    "image": "https://i.imgflip.com/345v97.jpg",
+    "text": "We live in a society.",
+    "voice": { "lang": "en-US", "pitch": 1.1, "rate": 0.9 }
+  },
+  {
+    "id": "p19",
+    "name": "Sherlock",
+    "image": "https://i.imgur.com/of9x9E8.jpg",
+    "text": "Elementary, my dear Watson.",
+    "voice": { "lang": "en-GB", "pitch": 0.9, "rate": 1.1 }
+  },
+  {
+    "id": "p20",
+    "name": "Gandalf",
+    "image": "https://i.imgflip.com/1op9.jpg",
+    "text": "You shall not pass!",
+    "voice": { "lang": "en-GB", "pitch": 0.6, "rate": 0.9 }
   }
 ]
