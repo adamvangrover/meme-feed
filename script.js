@@ -9,6 +9,9 @@ class MemeApp {
         this.savedContainer = document.getElementById("saved-container");
         this.personalitiesContainer = document.getElementById("personalities-container");
         this.personalitiesFeed = document.getElementById("personalities-feed");
+        this.soundboardContainer = document.getElementById("soundboard-container");
+        this.shopContainer = document.getElementById("shop-container");
+        this.battleContainer = document.getElementById("battle-container");
 
         this.state = {
             memes: [],
@@ -17,14 +20,16 @@ class MemeApp {
             preferences: {
                 darkMode: true,
                 source: 'all',
-                muted: false
+                muted: false,
+                theme: 'default' // 'default', 'matrix', 'vaporwave', 'cyberpunk'
             },
+            searchQuery: '',
             engagement: {},
             pagination: {
                 redditAfter: null,
                 giphyOffset: 0
             },
-            view: 'feed', // 'feed' or 'saved' or 'personalities'
+            view: 'feed', // 'feed', 'saved', 'personalities', 'soundboard', 'profile'
             networkUsers: [],
             currentUser: {
                 id: 'user_me',
@@ -36,11 +41,16 @@ class MemeApp {
             userStats: {
                 level: 1,
                 xp: 0,
+                coins: 100, // Starting coins
                 memesViewed: 0,
                 memesLiked: 0,
                 commentsPosted: 0,
                 memesCreated: 0,
                 badges: []
+            },
+            inventory: {
+                themes: ['default'],
+                stickers: []
             },
             notifications: []
         };
@@ -101,12 +111,26 @@ class MemeApp {
         this.stickers = ["🔥", "😂", "💀", "🤡", "😱", "🎉", "🥶", "👀", "💯", "🤔", "🤣", "👍", "❤️", "✨", "🚀"];
 
         this.sounds = {
-            pop: new Audio('https://assets.mixkit.co/active_storage/sfx/2578/2578-preview.mp3'), // Simple pop
-            success: new Audio('https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3') // Success chime
+            pop: new Audio('https://assets.mixkit.co/active_storage/sfx/2578/2578-preview.mp3'),
+            success: new Audio('https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3'),
+            airhorn: new Audio('https://www.myinstants.com/media/sounds/mlg-airhorn.mp3'),
+            bruh: new Audio('https://www.myinstants.com/media/sounds/movie_1.mp3'),
+            cricket: new Audio('https://www.myinstants.com/media/sounds/cricket_1.mp3'),
+            violin: new Audio('https://www.myinstants.com/media/sounds/sad-violin-airhorn.mp3'),
+            wow: new Audio('https://www.myinstants.com/media/sounds/anime-wow-sound-effect.mp3'),
+            fart: new Audio('https://www.myinstants.com/media/sounds/fart-with-reverb.mp3')
         };
         // Lower volume
-        this.sounds.pop.volume = 0.2;
-        this.sounds.success.volume = 0.2;
+        Object.values(this.sounds).forEach(s => s.volume = 0.2);
+
+        this.templates = []; // Will load from API
+
+        this.shopItems = [
+            { id: 'theme_matrix', type: 'theme', name: 'Matrix Theme', desc: 'Enter the Matrix', price: 200, value: 'matrix', icon: '💻' },
+            { id: 'theme_vaporwave', type: 'theme', name: 'Vaporwave', desc: 'A E S T H E T I C', price: 300, value: 'vaporwave', icon: '🌴' },
+            { id: 'theme_cyberpunk', type: 'theme', name: 'Cyberpunk', desc: 'Wake up Samurai', price: 500, value: 'cyberpunk', icon: '🤖' },
+            { id: 'coins_100', type: 'consumable', name: '100 Coins', desc: 'Get rich quick (Demo)', price: 0, value: 100, icon: '💰' } // Free for demo
+        ];
 
         this.init();
     }
@@ -133,6 +157,23 @@ class MemeApp {
 
             this.startNetworkSimulation();
         });
+
+        this.loadTemplates();
+    }
+
+    handleSearch(query) {
+        this.state.searchQuery = query;
+        // Debounce slightly or just run
+        clearTimeout(this.searchTimeout);
+        this.searchTimeout = setTimeout(() => {
+            this.state.memes = [];
+            this.feed.innerHTML = '';
+            // Reset pagination
+            this.state.pagination.redditAfter = null;
+            this.state.pagination.giphyOffset = 0;
+
+            this.fetchMemes().then(() => this.renderFeed(5));
+        }, 500);
     }
 
     loadState() {
@@ -145,8 +186,8 @@ class MemeApp {
             this.state.engagement = parsed.engagement || {};
             if(parsed.currentUser) this.state.currentUser = parsed.currentUser;
             if(parsed.userStats) this.state.userStats = { ...this.state.userStats, ...parsed.userStats };
+            if(parsed.inventory) this.state.inventory = { ...this.state.inventory, ...parsed.inventory };
             if(parsed.notifications) this.state.notifications = parsed.notifications;
-            // Don't restore view state, always start at feed or last usage logic can be debated.
         }
     }
 
@@ -158,6 +199,7 @@ class MemeApp {
             engagement: this.state.engagement,
             currentUser: this.state.currentUser,
             userStats: this.state.userStats,
+            inventory: this.state.inventory,
             notifications: this.state.notifications
         };
         localStorage.setItem('memeAppState', JSON.stringify(stateToSave));
@@ -435,11 +477,17 @@ class MemeApp {
         document.getElementById('btn-feed').classList.toggle('active', viewName === 'feed');
         document.getElementById('btn-saved').classList.toggle('active', viewName === 'saved');
         document.getElementById('btn-personalities').classList.toggle('active', viewName === 'personalities');
+        document.getElementById('btn-soundboard').classList.toggle('active', viewName === 'soundboard');
+        document.getElementById('btn-battle').classList.toggle('active', viewName === 'battle');
+        document.getElementById('btn-shop').classList.toggle('active', viewName === 'shop');
         document.getElementById('btn-profile').classList.toggle('active', viewName === 'profile');
 
         this.feedContainer.classList.add('hidden');
         this.savedContainer.classList.add('hidden');
         this.personalitiesContainer.classList.add('hidden');
+        this.soundboardContainer.classList.add('hidden');
+        this.battleContainer.classList.add('hidden');
+        this.shopContainer.classList.add('hidden');
         document.getElementById('profile-container').classList.add('hidden');
 
         if (viewName === 'feed') {
@@ -451,6 +499,15 @@ class MemeApp {
         } else if (viewName === 'personalities') {
             this.personalitiesContainer.classList.remove('hidden');
             this.renderPersonalities();
+        } else if (viewName === 'soundboard') {
+            this.soundboardContainer.classList.remove('hidden');
+            this.renderSoundboard();
+        } else if (viewName === 'battle') {
+            this.battleContainer.classList.remove('hidden');
+            this.renderBattle();
+        } else if (viewName === 'shop') {
+            this.shopContainer.classList.remove('hidden');
+            this.renderShop();
         } else if (viewName === 'profile') {
             document.getElementById('profile-container').classList.remove('hidden');
             this.renderProfile();
@@ -464,6 +521,7 @@ class MemeApp {
 
         const newMemes = [];
         const source = this.state.preferences.source;
+        const query = this.state.searchQuery;
 
         try {
             // Imgflip (Only fetch once or sparingly as they don't paginate well)
@@ -472,8 +530,12 @@ class MemeApp {
                     const imgflipResponse = await fetch("https://api.imgflip.com/get_memes");
                     const imgflipData = await imgflipResponse.json();
                     if (imgflipData.success) {
-                        imgflipData.data.memes.forEach(m => {
-                           newMemes.push({ url: m.url, source: 'imgflip', width: m.width, height: m.height });
+                        let memes = imgflipData.data.memes;
+                        if (query) {
+                            memes = memes.filter(m => m.name.toLowerCase().includes(query.toLowerCase()));
+                        }
+                        memes.forEach(m => {
+                           newMemes.push({ url: m.url, source: 'imgflip', width: m.width, height: m.height, title: m.name });
                         });
                     }
                 } catch (e) { console.error("Imgflip error", e); }
@@ -484,7 +546,13 @@ class MemeApp {
                 try {
                     const sort = this.state.preferences.redditSort || 'hot';
                     const after = this.state.pagination.redditAfter ? `&after=${this.state.pagination.redditAfter}` : '';
-                    const redditResponse = await fetch(`https://www.reddit.com/r/memes/${sort}.json?limit=25${after}`);
+
+                    let url = `https://www.reddit.com/r/memes/${sort}.json?limit=25${after}`;
+                    if (query) {
+                        url = `https://www.reddit.com/r/memes/search.json?q=${encodeURIComponent(query)}&restrict_sr=1&limit=25${after}`;
+                    }
+
+                    const redditResponse = await fetch(url);
                     const redditData = await redditResponse.json();
 
                     this.state.pagination.redditAfter = redditData.data.after;
@@ -502,7 +570,13 @@ class MemeApp {
                 try {
                     const giphyApiKey = "dc6zaTOxFJmzC";
                     const offset = this.state.pagination.giphyOffset;
-                    const giphyResponse = await fetch(`https://api.giphy.com/v1/gifs/trending?api_key=${giphyApiKey}&limit=10&rating=pg-13&offset=${offset}`);
+
+                    let url = `https://api.giphy.com/v1/gifs/trending?api_key=${giphyApiKey}&limit=10&rating=pg-13&offset=${offset}`;
+                    if (query) {
+                        url = `https://api.giphy.com/v1/gifs/search?api_key=${giphyApiKey}&q=${encodeURIComponent(query)}&limit=10&rating=pg-13&offset=${offset}`;
+                    }
+
+                    const giphyResponse = await fetch(url);
                     const giphyData = await giphyResponse.json();
 
                     this.state.pagination.giphyOffset += 10;
@@ -605,6 +679,21 @@ class MemeApp {
         this.renderPersonalities();
     }
 
+    renderSoundboard() {
+        const grid = document.getElementById('soundboard-grid');
+        grid.innerHTML = '';
+        Object.keys(this.sounds).forEach(key => {
+            const btn = document.createElement('div');
+            btn.className = 'sound-btn';
+            btn.onclick = () => this.playSound(key);
+            btn.innerHTML = `
+                <i class="fas fa-music"></i>
+                <span>${key.charAt(0).toUpperCase() + key.slice(1)}</span>
+            `;
+            grid.appendChild(btn);
+        });
+    }
+
     speakPersonality(id) {
         const p = this.state.importedPersonalities.find(item => item.id === id);
         if (p) {
@@ -617,6 +706,157 @@ class MemeApp {
             }
             speechSynthesis.speak(utterance);
         }
+    }
+
+    renderShop() {
+        const grid = document.getElementById('shop-grid');
+        const coinsEl = document.getElementById('user-coins');
+        grid.innerHTML = '';
+        coinsEl.innerText = this.state.userStats.coins;
+
+        this.shopItems.forEach(item => {
+            const isOwned = this.state.inventory.themes.includes(item.value) || (item.type === 'consumable' ? false : false); // Consumables not owned permanently logic for demo
+            const isEquipped = this.state.preferences.theme === item.value;
+
+            const card = document.createElement('div');
+            card.className = 'shop-item';
+
+            let btnHtml = '';
+            if (item.type === 'theme') {
+                if (isEquipped) {
+                    btnHtml = `<button class="shop-btn owned" disabled>Equipped</button>`;
+                } else if (isOwned) {
+                    btnHtml = `<button class="shop-btn equip" onclick="app.equipTheme('${item.value}')">Equip</button>`;
+                } else {
+                    const canAfford = this.state.userStats.coins >= item.price;
+                    btnHtml = `<button class="shop-btn" ${canAfford ? '' : 'disabled'} onclick="app.buyItem('${item.id}')">Buy ${item.price}</button>`;
+                }
+            } else {
+                 btnHtml = `<button class="shop-btn" onclick="app.buyItem('${item.id}')">Get ${item.price}</button>`;
+            }
+
+            card.innerHTML = '';
+
+            const iconDiv = document.createElement('div');
+            iconDiv.className = 'shop-item-icon';
+            iconDiv.innerText = item.icon;
+
+            const h3 = document.createElement('h3');
+            h3.innerText = item.name;
+
+            const p = document.createElement('p');
+            p.innerText = item.desc;
+
+            card.appendChild(iconDiv);
+            card.appendChild(h3);
+            card.appendChild(p);
+
+            // Insert button safely
+            card.insertAdjacentHTML('beforeend', btnHtml);
+
+            grid.appendChild(card);
+        });
+    }
+
+    buyItem(itemId) {
+        const item = this.shopItems.find(i => i.id === itemId);
+        if (!item) return;
+
+        if (item.type === 'consumable') {
+            // Free coins logic
+            this.state.userStats.coins += item.value;
+            this.showToast(`💰 Received ${item.value} Coins!`);
+            this.playSound('success');
+            this.saveState();
+            this.renderShop();
+            return;
+        }
+
+        if (this.state.userStats.coins >= item.price) {
+            this.state.userStats.coins -= item.price;
+            if (item.type === 'theme') {
+                this.state.inventory.themes.push(item.value);
+            }
+            this.showToast(`Bought ${item.name}!`);
+            this.playSound('success');
+            this.saveState();
+            this.renderShop();
+        } else {
+            this.showToast("Not enough coins! 💸");
+        }
+    }
+
+    equipTheme(theme) {
+        this.state.preferences.theme = theme;
+        this.applyTheme();
+        this.saveState();
+        this.renderShop();
+        this.showToast(`Theme changed to ${theme}! 🎨`);
+    }
+
+    renderBattle() {
+        const left = document.getElementById('battle-left');
+        const right = document.getElementById('battle-right');
+
+        // Pick 2 random memes
+        // If we have less than 2, fetch more first, but for simplicity assume we have pool
+        if (this.state.memes.length < 2) {
+             this.fetchMemes().then(() => this.renderBattle());
+             return;
+        }
+
+        // Ensure they are different
+        let m1 = this.getRandomItem(this.state.memes);
+        let m2 = this.getRandomItem(this.state.memes);
+        while(m1.url === m2.url) {
+            m2 = this.getRandomItem(this.state.memes);
+        }
+
+        this.renderBattleCard(m1, left);
+        this.renderBattleCard(m2, right);
+    }
+
+    renderBattleCard(meme, container) {
+        container.innerHTML = '';
+
+        const h3 = document.createElement('h3');
+        h3.innerText = meme.title || 'Funny Meme';
+
+        const img = document.createElement('img');
+        img.src = meme.url;
+        img.loading = "lazy";
+
+        const btn = document.createElement('button');
+        btn.className = "action-btn primary";
+        btn.onclick = () => this.voteBattle(btn);
+        btn.innerText = "Vote This!";
+
+        container.appendChild(h3);
+        container.appendChild(img);
+        container.appendChild(btn);
+    }
+
+    voteBattle(btn) {
+        // Visual feedback
+        const winnerCard = btn.closest('.battle-side');
+        winnerCard.style.borderColor = '#00ff00';
+        winnerCard.style.transform = 'scale(1.05)';
+
+        this.playSound('pop');
+        this.showToast('Voted! +10 XP +5 Coins');
+
+        // Award
+        this.state.userStats.xp += 10;
+        this.state.userStats.coins += 5;
+        this.checkLevelUp();
+        this.saveState();
+
+        // Delay and reload
+        setTimeout(() => {
+             winnerCard.style.borderColor = 'transparent';
+             winnerCard.style.transform = 'scale(1)';
+             this.renderBattle();
+        }, 800);
     }
 
     createMemeCard(meme, container, isSaved = false) {
@@ -1061,10 +1301,17 @@ class MemeApp {
     }
 
     applyTheme() {
-        if (this.state.preferences.darkMode) {
-            document.body.classList.remove('light-mode');
-        } else {
+        // Clear all theme classes
+        document.body.className = '';
+
+        // Base Dark/Light
+        if (!this.state.preferences.darkMode) {
             document.body.classList.add('light-mode');
+        }
+
+        // Apply Custom Theme
+        if (this.state.preferences.theme && this.state.preferences.theme !== 'default') {
+            document.body.classList.add(`theme-${this.state.preferences.theme}`);
         }
     }
 
@@ -1188,6 +1435,87 @@ class MemeApp {
         if (imageSrc) {
             this.loadImageToCanvas(imageSrc);
         }
+
+        this.renderTemplates();
+    }
+
+    async loadTemplates() {
+        try {
+            const response = await fetch('https://api.imgflip.com/get_memes');
+            const data = await response.json();
+            if (data.success) {
+                this.templates = data.data.memes;
+            }
+        } catch (e) {
+            console.error("Failed to load templates", e);
+        }
+    }
+
+    renderTemplates() {
+        const list = document.getElementById('template-list');
+        list.innerHTML = '';
+        if (this.templates.length === 0) {
+            list.innerHTML = '<p style="padding:10px; color:#888;">Loading templates...</p>';
+            return;
+        }
+
+        this.templates.forEach(t => {
+            const img = document.createElement('img');
+            img.src = t.url;
+            img.className = 'template-thumb';
+            img.title = t.name;
+            img.onclick = () => this.selectTemplate(t.url);
+            list.appendChild(img);
+        });
+    }
+
+    selectTemplate(url) {
+        // Use proxy or crossOrigin anonymous if possible, but Imgflip supports CORS mostly.
+        const img = new Image();
+        img.crossOrigin = "Anonymous";
+        img.onload = () => {
+            this.memeEditorState.image = img;
+            this.drawCanvas();
+        };
+        img.onerror = () => {
+            // Fallback if CORS fails (might happen with canvas export)
+            this.loadImageToCanvas(url);
+        };
+        img.src = url;
+    }
+
+    generateMagicCaption() {
+        const topCaptions = [
+            "WHEN YOU", "POV:", "NOBODY:", "ME:", "TEACHER:", "MY BRAIN:",
+            "WAIT", "HOL UP", "THE MOMENT", "THAT FEELING WHEN", "WHY IS IT THAT"
+        ];
+        const bottomCaptions = [
+            "FORGOT TO SAVE", "SEE A BUG", "DEPLOY TO PROD", "LOSE INTERNET",
+            "EAT THE LAST SLICE", "TEXT YOUR EX", "START CODING", "REALIZED IT'S MONDAY",
+            "FIND A MEME", "GET 100 LIKES", "TOUCH GRASS"
+        ];
+
+        // Randomly pick top/bottom or just one
+        if (Math.random() > 0.5) {
+            document.getElementById('top-text').value = this.getRandomItem(topCaptions);
+            document.getElementById('bottom-text').value = this.getRandomItem(bottomCaptions);
+        } else {
+            // Use existing long captions split up
+            const longCap = this.getRandomItem(this.captions);
+            const mid = Math.floor(longCap.length / 2);
+            // Split near middle space
+            const splitIdx = longCap.indexOf(' ', mid);
+            if (splitIdx !== -1) {
+                document.getElementById('top-text').value = longCap.substring(0, splitIdx);
+                document.getElementById('bottom-text').value = longCap.substring(splitIdx + 1);
+            } else {
+                document.getElementById('bottom-text').value = longCap;
+                document.getElementById('top-text').value = "";
+            }
+        }
+
+        this.drawCanvas();
+        this.playSound('pop');
     }
 
     closeMemeEditor() {
@@ -1476,6 +1804,44 @@ class MemeApp {
         document.getElementById('stat-likes').innerText = this.state.userStats.memesLiked;
         document.getElementById('stat-comments').innerText = this.state.userStats.commentsPosted;
         document.getElementById('stat-created').innerText = this.state.userStats.memesCreated;
+
+        // Chart
+        // Create chart container if not exists (in stats section)
+        let chartContainer = document.getElementById('stats-chart-container');
+        if (!chartContainer) {
+            chartContainer = document.createElement('div');
+            chartContainer.id = 'stats-chart-container';
+            chartContainer.className = 'stats-chart-container';
+            // Insert after stats grid
+            document.querySelector('.profile-stats').after(chartContainer);
+        }
+
+        // Normalize values for chart height (max 100%)
+        // We use log scale or relative to max because views >> others
+        const values = [
+            { label: 'Views', value: this.state.userStats.memesViewed },
+            { label: 'Likes', value: this.state.userStats.memesLiked },
+            { label: 'Comments', value: this.state.userStats.commentsPosted },
+            { label: 'Created', value: this.state.userStats.memesCreated }
+        ];
+
+        const maxVal = Math.max(...values.map(v => v.value)) || 1;
+
+        chartContainer.innerHTML = `
+            <h3>Activity Overview 📊</h3>
+            <div class="stats-chart">
+                ${values.map(v => {
+                    const height = Math.max(5, (v.value / maxVal) * 100);
+                    return `
+                        <div class="chart-bar-wrapper">
+                            <div class="chart-value">${v.value}</div>
+                            <div class="chart-bar" style="height: ${height}%"></div>
+                            <div class="chart-label">${v.label}</div>
+                        </div>
+                    `;
+                }).join('')}
+            </div>
+        `;
 
         // Badges
         const badgesContainer = document.getElementById('badges-grid');

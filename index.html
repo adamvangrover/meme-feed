@@ -14,6 +14,8 @@
         <div class="nav-container">
             <div class="logo">🔥 MemeFeed</div>
             <div class="nav-controls">
+                <input type="text" id="search-bar" placeholder="Search memes..." onkeyup="app.handleSearch(this.value)">
+
                 <select id="source-filter" onchange="app.setSource(this.value)">
                     <option value="all">All Sources</option>
                     <option value="reddit">Reddit</option>
@@ -44,6 +46,11 @@
 
                 <button class="nav-btn active" id="btn-feed" onclick="app.switchView('feed')">Feed</button>
                 <button class="nav-btn" id="btn-saved" onclick="app.switchView('saved')">Saved</button>
+                <button class="nav-btn" id="btn-soundboard" onclick="app.switchView('soundboard')">Soundboard</button>
+                <button class="nav-btn" id="btn-battle" onclick="app.switchView('battle')">Battle</button>
+                <button class="nav-btn" id="btn-shop" onclick="app.switchView('shop')" title="Shop">
+                    <i class="fas fa-shopping-cart"></i>
+                </button>
                 <button class="nav-btn" id="btn-personalities" onclick="app.switchView('personalities')">Personalities</button>
                 <button class="nav-btn" id="btn-profile" onclick="app.switchView('profile')">Profile</button>
                 <button class="nav-btn" onclick="app.triggerUpload()" title="Upload Meme">
@@ -89,6 +96,34 @@
         </div>
         <div id="personalities-feed" class="personalities-grid"></div> <!-- Reusing grid class from personalities.html if possible, or define in css -->
         <p id="no-personalities-msg" style="display:none; color: #777;">No personalities imported yet.</p>
+    </div>
+
+    <div id="soundboard-container" class="hidden">
+        <h2>Meme Soundboard 🔊</h2>
+        <div id="soundboard-grid" class="soundboard-grid"></div>
+    </div>
+
+    <div id="battle-container" class="hidden">
+        <h2>Meme Battle ⚔️</h2>
+        <p>Vote for the funnier meme! Winners earn XP.</p>
+        <div id="battle-arena" class="battle-arena">
+             <div id="battle-left" class="battle-side">
+                 <!-- Injected -->
+             </div>
+             <div class="battle-vs">VS</div>
+             <div id="battle-right" class="battle-side">
+                 <!-- Injected -->
+             </div>
+        </div>
+        <div id="battle-result" class="hidden"></div>
+    </div>
+
+    <div id="shop-container" class="hidden">
+        <h2>Meme Shop 🛒</h2>
+        <div class="shop-header">
+            <span class="coin-balance">💰 <span id="user-coins">0</span> Coins</span>
+        </div>
+        <div id="shop-grid" class="shop-grid"></div>
     </div>
 
     <div id="profile-container" class="hidden">
@@ -185,6 +220,10 @@
         <div class="modal-content">
             <button class="close-modal" onclick="app.closeMemeEditor()">&times;</button>
             <h2>Create a Meme 🎨</h2>
+            <div id="template-selector" class="template-selector">
+                <h3>Pick a Template</h3>
+                <div class="template-list" id="template-list"></div>
+            </div>
             <div class="editor-container">
                 <div class="canvas-wrapper">
                     <canvas id="meme-canvas" width="500" height="500"></canvas>
@@ -196,6 +235,7 @@
                 <div class="editor-controls">
                     <input type="file" id="editor-upload" accept="image/*" onchange="app.loadEditorImage(this)" hidden>
 
+                    <button class="action-btn secondary" style="margin-bottom: 10px;" onclick="app.generateMagicCaption()">✨ Magic Caption</button>
                     <div class="control-group">
                         <label>Top Text</label>
                         <input type="text" id="top-text" placeholder="TOP TEXT" oninput="app.drawCanvas()">
