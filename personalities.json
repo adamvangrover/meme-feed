@@ -138,5 +138,75 @@
     "image": "https://i.imgflip.com/1op9.jpg",
     "text": "You shall not pass!",
     "voice": { "lang": "en-GB", "pitch": 0.6, "rate": 0.9 }
+  },
+  {
+    "id": "p21",
+    "name": "The Skeptic",
+    "image": "https://robohash.org/skeptic?set=set1",
+    "text": "I doubt that's true.",
+    "voice": { "lang": "en-US", "pitch": 0.9, "rate": 0.9 }
+  },
+  {
+    "id": "p22",
+    "name": "The Hype Beast",
+    "image": "https://robohash.org/hype?set=set1",
+    "text": "Let's gooooo! 🔥",
+    "voice": { "lang": "en-US", "pitch": 1.2, "rate": 1.1 }
+  },
+  {
+    "id": "p23",
+    "name": "The Lurker",
+    "image": "https://robohash.org/lurker?set=set1",
+    "text": "...",
+    "voice": { "lang": "en-US", "pitch": 0.5, "rate": 0.5 }
+  },
+  {
+    "id": "p24",
+    "name": "The Bot",
+    "image": "https://robohash.org/bot?set=set1",
+    "text": "Beep boop. I am a human.",
+    "voice": { "lang": "en-US", "pitch": 1.5, "rate": 1.5 }
+  },
+  {
+    "id": "p25",
+    "name": "The Mod",
+    "image": "https://robohash.org/mod?set=set1",
+    "text": "Thread locked.",
+    "voice": { "lang": "en-US", "pitch": 0.8, "rate": 0.8 }
+  },
+  {
+    "id": "p26",
+    "name": "The Influencer",
+    "image": "https://robohash.org/influencer?set=set4",
+    "text": "Link in bio! ✨",
+    "voice": { "lang": "en-US", "pitch": 1.3, "rate": 1.0 }
+  },
+  {
+    "id": "p27",
+    "name": "The Gamer",
+    "image": "https://robohash.org/gamer?set=set1",
+    "text": "GG EZ.",
+    "voice": { "lang": "en-US", "pitch": 1.1, "rate": 1.2 }
+  },
+  {
+    "id": "p28",
+    "name": "The Coder",
+    "image": "https://robohash.org/coder?set=set1",
+    "text": "It works on my machine.",
+    "voice": { "lang": "en-US", "pitch": 1.0, "rate": 1.0 }
+  },
+  {
+    "id": "p29",
+    "name": "The Artist",
+    "image": "https://robohash.org/artist?set=set1",
+    "text": "Check out my SoundCloud.",
+    "voice": { "lang": "en-US", "pitch": 1.1, "rate": 0.9 }
+  },
+  {
+    "id": "p30",
+    "name": "The Normie",
+    "image": "https://robohash.org/normie?set=set1",
+    "text": "What is a meme?",
+    "voice": { "lang": "en-US", "pitch": 1.0, "rate": 1.0 }
   }
 ]
