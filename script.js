@@ -48,16 +48,24 @@ class MemeApp {
 
         this.badgesList = [
             { id: 'newbie', icon: '👶', name: 'Newbie', desc: 'Viewed 10 Memes', req: (s) => s.memesViewed >= 10 },
+            { id: 'casual', icon: '😐', name: 'Casual', desc: 'Viewed 50 Memes', req: (s) => s.memesViewed >= 50 },
             { id: 'addict', icon: '🧟', name: 'Meme Addict', desc: 'Viewed 100 Memes', req: (s) => s.memesViewed >= 100 },
+            { id: 'obsessed', icon: '😵', name: 'Obsessed', desc: 'Viewed 500 Memes', req: (s) => s.memesViewed >= 500 },
             { id: 'critic', icon: '🧐', name: 'Critic', desc: 'Liked 20 Memes', req: (s) => s.memesLiked >= 20 },
+            { id: 'curator', icon: '🏛️', name: 'Curator', desc: 'Liked 100 Memes', req: (s) => s.memesLiked >= 100 },
             { id: 'artist', icon: '🎨', name: 'Meme Artist', desc: 'Created 1 Meme', req: (s) => s.memesCreated >= 1 },
+            { id: 'creator', icon: '🖌️', name: 'Creator', desc: 'Created 10 Memes', req: (s) => s.memesCreated >= 10 },
             { id: 'chatter', icon: '🗣️', name: 'Chatterbox', desc: 'Posted 5 Comments', req: (s) => s.commentsPosted >= 5 },
-            { id: 'legend', icon: '👑', name: 'Legend', desc: 'Reach Level 10', req: (s) => s.level >= 10 }
+            { id: 'debater', icon: '🗯️', name: 'Debater', desc: 'Posted 20 Comments', req: (s) => s.commentsPosted >= 20 },
+            { id: 'legend', icon: '👑', name: 'Legend', desc: 'Reach Level 10', req: (s) => s.level >= 10 },
+            { id: 'mythic', icon: '🦄', name: 'Mythic', desc: 'Reach Level 20', req: (s) => s.level >= 20 }
         ];
 
         this.questConfig = [
             { id: 'view_10', desc: 'View 10 Memes', type: 'view', target: 10, reward: 50 },
+            { id: 'view_50', desc: 'View 50 Memes', type: 'view', target: 50, reward: 200 },
             { id: 'like_5', desc: 'Like 5 Memes', type: 'like', target: 5, reward: 100 },
+            { id: 'like_20', desc: 'Like 20 Memes', type: 'like', target: 20, reward: 300 },
             { id: 'comment_3', desc: 'Post 3 Comments', type: 'comment', target: 3, reward: 150 },
             { id: 'create_1', desc: 'Create a Meme', type: 'create', target: 1, reward: 200 },
             { id: 'save_2', desc: 'Save 2 Memes', type: 'save', target: 2, reward: 80 }
@@ -169,7 +177,57 @@ class MemeApp {
             "Harold hiding the pain 😬",
             "Drake yes/no ✋",
             "Troll face 🤡",
-            "Forever alone 💔"
+            "Forever alone 💔",
+            "Me after one pushup: Am I buff yet?",
+            "When you accidentally open the front camera.",
+            "My brain during a test: *elevator music*",
+            "When the Wi-Fi is slow and you have to think about your life.",
+            "Me: I'm not hungry. Also me: eats entire fridge.",
+            "When you wave at someone and they weren't waving at you.",
+            "That panic when you can't feel your phone in your pocket.",
+            "When you hear your own voice recording.",
+            "Me trying to be healthy: eats one salad.",
+            "When you send a risky text and throw your phone across the room.",
+            "My sleep schedule is a myth.",
+            "When you realize tomorrow is Monday.",
+            "Me: I'm going to save money. Also me: *buys unnecessary things*",
+            "When you forget someone's name 5 seconds after meeting them.",
+            "Trying to sneeze but it goes away.",
+            "When you step on a Lego.",
+            "Me explaining a meme to my parents.",
+            "When you type a whole paragraph and they reply 'k'.",
+            "The face you make when you see a spider.",
+            "When you're trying to hold in a laugh at a serious moment.",
+            "Me waiting for my package to arrive.",
+            "When you open a pack of gum in class.",
+            "When you're singing along and the music stops but you keep going.",
+            "Me: I have nothing to wear. My closet: full of clothes.",
+            "When you accidentally like a photo from 3 years ago.",
+            "Me pretending to text so I don't look lonely.",
+            "When the teacher picks you to answer.",
+            "Me: I'll do it in 5 minutes. 5 hours later:",
+            "When you're arguing and realize you're wrong but keep going.",
+            "Me watching a tutorial and still messing up.",
+            "When you find money in your pocket.",
+            "That feeling when you peel the plastic off a new electronic.",
+            "Me: I'm never drinking again. Next weekend:",
+            "When you see your food coming at a restaurant.",
+            "Me trying to flirt.",
+            "When your favorite song comes on.",
+            "Me: I'm tired. Also me: stays up until 4 AM.",
+            "When you get a text from your crush.",
+            "Me trying to act natural.",
+            "When you realize you've been on your phone for 3 hours.",
+            "Me: I need to study. Also me: watches cat videos.",
+            "When someone says 'we need to talk'.",
+            "Me avoiding my responsibilities.",
+            "When you finish a series and don't know what to do with your life.",
+            "Me: I'm over it. Also me: talks about it for hours.",
+            "When you accidentally call your teacher 'Mom'.",
+            "Me trying to understand math.",
+            "When you look at your bank account.",
+            "Me: I'll start my diet tomorrow.",
+            "When you realize you're an adult now."
         ];
 
         this.stickers = ["🔥", "😂", "💀", "🤡", "😱", "🎉", "🥶", "👀", "💯", "🤔", "🤣", "👍", "❤️", "✨", "🚀",
@@ -178,7 +236,24 @@ class MemeApp {
                          "💢", "💤", "💨", "💦", "🍌", "🍉", "🍩", "🍪", "🎮", "🕹️", "🎲", "🏆", "🥇", "🥈", "🥉",
                          "🎸", "🎻", "🎹", "🎺", "🥁", "🎤", "🎧", "🎬", "🎨", "🎭", "🎪", "🎫", "🎢", "🎡",
                          "🚒", "🚓", "🚑", "🚕", "🚌", "🏎️", "🚲", "🛵", "🛸", "🚀", "🛶", "⛵", "🛳️", "🚧",
-                         "🐶", "🐱", "🐭", "🐹", "🐰", "🦊", "🐻", "🐼", "🐨", "🐯", "🦁", "🐮", "🐷", "🐸"];
+                         "🐶", "🐱", "🐭", "🐹", "🐰", "🦊", "🐻", "🐼", "🐨", "🐯", "🦁", "🐮", "🐷", "🐸",
+                         "🍔", "🍟", "🌭", "🍿", "🧂", "🥓", "🥚", "🍳", "🧇", "🥞", "🧈", "🍞", "🥐", "🥨", "🥯", "🥖",
+                         "🧀", "🥗", "🥙", "🥪", "🌮", "🌯", "🥫", "🍖", "🍗", "🥩", "🍠", "🥟", "🥠", "🥡", "🍱", "🍘",
+                         "🍙", "🍚", "🍛", "🍜", "🦪", "🍣", "🍤", "🍥", "🥮", "🍡", "🥟", "🍪", "🍩", "🍨", "🍧", "🍦",
+                         "🥧", "🧁", "🍰", "🎂", "🍮", "🍭", "🍬", "🍫", "🍿", "🥤", "🧋", "🍼", "🥛", "☕", "🫖", "🍵",
+                         "🍶", "🍾", "🍷", "🍸", "🍹", "🍺", "🍻", "🥂", "🥃", "🧊", "🥢", "🍽️", "🍴", "🥄",
+                         "🐵", "🐒", "🦍", "🦧", "🐶", "🐕", "🦮", "🐕‍🦺", "🐩", "🐺", "🦊", "🦝", "🐱", "🐈", "🐈‍⬛", "🦁",
+                         "🐯", "🐅", "🐆", "🐴", "🐎", "🦄", "🦓", "🦌", "🦬", "🐮", "🐂", "🐃", "🐄", "🐷", "🐖", "🐗",
+                         "🐽", "🐏", "🐑", "🐐", "🐪", "🐫", "🦙", "🦒", "🐘", "🦣", "🦏", "🦛", "🐭", "🐁", "🐀", "🐹",
+                         "🐰", "🐇", "🐿️", "🦫", "🦔", "🦇", "🐻", "🐻‍❄️", "🐨", "🐼", "🦥", "🦦", "🦨", "🦘", "🦡",
+                         "⚽", "🏀", "🏈", "⚾", "🥎", "🎾", "🏐", "🏉", "🥏", "🎱", "🪀", "🏓", "🏸", "🏒", "🏑", "🥍",
+                         "🏏", "🪃", "🥅", "⛳", "🪁", "🏹", "🎣", "🤿", "🥊", "🥋", "🎽", "🛹", "🛼", "🛷", "⛸️", "🥌",
+                         "🎿", "⛷️", "🏂", "🪂", "🏋️‍♀️", "🏋️", "🏋️‍♂️", "🤼‍♀️", "🤼", "🤼‍♂️", "🤸‍♀️", "🤸", "🤸‍♂️", "⛹️‍♀️",
+                         "⛹️", "⛹️‍♂️", "🤺", "🤾‍♀️", "🤾", "🤾‍♂️", "🏌️‍♀️", "🏌️", "🏌️‍♂️", "🏇", "🧘‍♀️", "🧘", "🧘‍♂️", "🏄‍♀️",
+                         "🏄", "🏄‍♂️", "🏊‍♀️", "🏊", "🏊‍♂️", "🤽‍♀️", "🤽", "🤽‍♂️", "🚣‍♀️", "🚣", "🚣‍♂️", "🧗‍♀️", "🧗",
+                         "🧗‍♂️", "🚵‍♀️", "🚵", "🚵‍♂️", "🚴‍♀️", "🚴", "🚴‍♂️", "🏆", "🥇", "🥈", "🥉", "🏅", "🎖️", "🏵️",
+                         "🎗️", "🎫", "🎟️", "🎪", "🤹", "🎭", "🩰", "🎨", "🎬", "🎤", "🎧", "🎼", "🎹", "🥁", "🎷", "🎺",
+                         "🎸", "🪕", "🎻", "🎲", "♟️", "🎯", "🎳", "🎮", "🎰", "🧩"];
 
         this.magicReplies = [
             "That's wild 🤯", "No way.", "LMAO 💀", "Facts.", "Big mood.", "I feel that.",
@@ -188,12 +263,28 @@ class MemeApp {
             "Slay.", "I'm dead ⚰️", "Clown behavior 🤡", "Main character energy.",
             "This ain't it chief.", "Weird flex but ok.", "Sheesh 🥶", "Poggers.",
             "Sus 👀", "Wait, really?", "I have questions.", "Understandable, have a nice day.",
-            "Delete this.", "Cursed.", "Wholesome 100", "Stonks 📈", "Not stonks 📉"
+            "Delete this.", "Cursed.", "Wholesome 100", "Stonks 📈", "Not stonks 📉",
+            "Big brain time.", "Stonks.", "Not stonks.", "This sparkled joy.", "This did not sparkle joy.",
+            "Hol' up.", "Wait a minute.", "Confused stonks.", "Visible confusion.", "Press X to doubt.",
+            "F.", "It's free real estate.", "Modern problems require modern solutions.", "Outstanding move.",
+            "I see this as an absolute win.", "Impossible.", "Reality is often disappointing.", "Perfectly balanced.",
+            "As all things should be.", "I love democracy.", "Unlimited power!", "Hello there.",
+            "General Kenobi.", "It's over Anakin.", "You underestimate my power.", "So anyway, I started blasting.",
+            "Can I offer you a nice egg in this trying time?", "Did I stutter?", "Why are you running?",
+            "Look at me.", "I am the captain now.", "My goals are beyond your understanding.",
+            "You guys are getting paid?", "Am I a joke to you?", "Ah, I see you're a man of culture as well.",
+            "Huzzah! A man of quality!", "Shut up and take my money!", "One does not simply...",
+            "Say sike right now.", "Thomas had never seen such bullshit before.", "They had us in the first half, not gonna lie.",
+            "And that's a fact.", "Change my mind.", "Is this a pigeon?", "Well yes, but actually no.",
+            "I used the stones to destroy the stones.", "Small price to pay for salvation.", "I don't feel so good.",
+            "Get this man a shield.", "Wakanda forever."
         ];
 
         this.subreddits = [
             'memes', 'dankmemes', 'wholesomememes', 'me_irl', 'funny', 'ProgrammerHumor', 'prequelmemes', 'historymemes', 'AdviceAnimals',
-            'comics', 'AnimalsBeingDerps', 'trippinthroughtime', 'starterpacks', 'wholesome', 'reactiongifs', 'facepalm', 'Unexpected', 'nextfuckinglevel', 'MadeMeSmile'
+            'comics', 'AnimalsBeingDerps', 'trippinthroughtime', 'starterpacks', 'wholesome', 'reactiongifs', 'facepalm', 'Unexpected', 'nextfuckinglevel', 'MadeMeSmile',
+            'gaming', 'aww', 'pics', 'gifs', 'mildlyinteresting', 'interestingasfuck', 'NatureIsFuckingLit', 'technology', 'science',
+            'EarthPorn', 'food', 'Art', 'OldSchoolCool', 'CatastrophicFailure', 'IdiotsInCars', 'oddlysatisfying', 'crappydesign'
         ];
 
         this.classicMemes = [
@@ -235,7 +326,24 @@ class MemeApp {
             'https://i.imgflip.com/54hjww.jpg', // Anakin Padme
             'https://i.imgflip.com/9vct.jpg',   // Jack Sparrow being chased
             'https://i.imgflip.com/2wifvo.jpg', // Car drifting
-            'https://i.imgflip.com/1o00in.jpg'  // Futurama Fry
+            'https://i.imgflip.com/1o00in.jpg', // Futurama Fry
+            'https://i.imgflip.com/33e92f.jpg', // Confused Math Lady
+            'https://i.imgflip.com/1op9.jpg',   // You Shall Not Pass (Gandalf)
+            'https://i.imgflip.com/22bdq6.jpg', // Distracted Boyfriend (Wait, already have this? 1ur9b0. Yes. Reuse is fine or skip)
+            'https://i.imgflip.com/2cp1.jpg',   // Cheezburger Cat
+            'https://i.imgflip.com/3l60ph.jpg', // Stonks
+            'https://i.imgflip.com/2odckz.jpg', // Buff Doge vs Cheems
+            'https://i.imgflip.com/1bgw.jpg',   // Y U NO
+            'https://i.imgflip.com/1bh3.jpg',   // First World Problems
+            'https://i.imgflip.com/1b4243.jpg', // Toughest Guy in Prison
+            'https://i.imgflip.com/2kbn1e.jpg', // Don't Make Me Tap The Sign
+            'https://i.imgflip.com/390s2y.jpg', // UNO Draw 25 Cards
+            'https://i.imgflip.com/1c1uej.jpg', // Sad Pablo Escobar (duplicate check? 1c1uej already there)
+            'https://i.imgflip.com/319g4i.jpg', // I am once again asking
+            'https://i.imgflip.com/49z6c.jpg',  // Surprised Pikachu (high res)
+            'https://i.imgflip.com/2fm6x.jpg',  // Skeptical African Kid
+            'https://i.imgflip.com/1ii4oc.jpg', // This Is Fine
+            'https://i.imgflip.com/2t8r9a.jpg'  // Woman Yelling At Cat (Top quality)
         ];
 
         this.sounds = {
@@ -264,7 +372,13 @@ class MemeApp {
              { id: 'sad', name: 'Bruh', icon: '💀' }, // Reuse
              { id: 'wow', name: 'Anime Wow', icon: '🤩' }, // Reuse
              { id: 'pop', name: 'Yeet', icon: '💨' }, // Reuse
-             { id: 'drum', name: 'Bad Joke', icon: '🍅' } // Reuse
+             { id: 'drum', name: 'Bad Joke', icon: '🍅' }, // Reuse
+             { id: 'wow', name: 'Gasp', icon: '😱' }, // Reuse
+             { id: 'boo', name: 'No God No', icon: '🙅' }, // Reuse
+             { id: 'success', name: 'Applause', icon: '👏' }, // Reuse
+             { id: 'drum', name: 'Rimshot', icon: '🥁' }, // Reuse
+             { id: 'sad', name: 'Fail', icon: '📉' }, // Reuse
+             { id: 'success', name: 'Level Up', icon: '🆙' } // Reuse
         ];
 
         // Init volumes
@@ -2124,6 +2238,38 @@ class MemeApp {
         if (user.name === 'The Coder') return this.getRandomItem(["It works on my machine.", "Did you try turning it off and on again?", "Compiling...", "Undefined is not a function.", "I need coffee."]);
         if (user.name === 'The Artist') return this.getRandomItem(["It's abstract.", "Check out my SoundCloud.", "I'm working on a new project.", "Creativity takes courage.", "Support small artists!"]);
         if (user.name === 'The Normie') return this.getRandomItem(["What is a meme?", "Is this funny?", "I don't get it.", "Minions are hilarious!", "LOL!"]);
+
+        // Expanded Personalities
+        if (user.name === 'Plato') return this.getRandomItem(["The unexamined meme is not worth posting.", "What is the form of the perfect meme?", "Truth lies in the abstract."]);
+        if (user.name === 'Shakespeare') return this.getRandomItem(["All the world's a stage, and all the memes merely players.", "What light through yonder window breaks? It is a notification.", "Brevity is the soul of wit, and memes."]);
+        if (user.name === 'Einstein') return this.getRandomItem(["Imagination is more important than knowledge.", "Two things are infinite: the universe and human stupidity.", "God does not play dice with memes."]);
+        if (user.name === 'Cleopatra') return this.getRandomItem(["I shall be remembered for my memes.", "Bow before your queen.", "Empire state of mind."]);
+        if (user.name === 'Lincoln') return this.getRandomItem(["A house divided against itself cannot meme.", "I walk slowly, but I never walk backward.", "Honest Abe never lies about likes."]);
+        if (user.name === 'The Doomer') return this.getRandomItem(["It's over.", "Just let it end.", "Pain.", "Why bother?", "Whatever."]);
+        if (user.name === 'The Zoomer') return this.getRandomItem(["Sheesh.", "No cap.", "Fr fr.", "Lowkey bussin.", "Bet.", "L + Ratio."]);
+        if (user.name === 'The Boomer') return this.getRandomItem(["I can't open this PDF.", "How do I zoom?", "Kids these days.", "Get off my lawn.", "Where is the any key?"]);
+        if (user.name === 'The Reply Guy') return this.getRandomItem(["Well actually...", "Here's why you're wrong.", "Source?", "Let me play devil's advocate.", "To be fair..."]);
+        if (user.name === 'The Simp') return this.getRandomItem(["Yes queen!", "Anything for you.", "Notice me.", "I donated.", "You look great today."]);
+        if (user.name === 'The Stan') return this.getRandomItem(["Omg dad.", "Slay.", "Bestie.", "I'm screaming.", "Wig."]);
+        if (user.name === 'Dracula') return this.getRandomItem(["I don't drink... wine.", "Listen to the children of the night.", "Bleh bleh bleh."]);
+        if (user.name === 'Alien') return this.getRandomItem(["👽", "Take me to your leader.", "We come in peace.", "Ack ack."]);
+        if (user.name === 'Robot') return this.getRandomItem(["01001000 01101001", "Does not compute.", "Error.", "I am fully operational."]);
+        if (user.name === 'Wizard') return this.getRandomItem(["A wizard is never late.", "You shall not pass!", "Fly, you fools.", "I cast fireball."]);
+        if (user.name === 'Knight') return this.getRandomItem(["For honor!", "Have at thee!", "Tis but a scratch.", "Deus Vult!"]);
+        if (user.name === 'Cat') return this.getRandomItem(["Meow.", "Purr.", "*Knocks glass off table*", "Feed me.", "Hiss."]);
+        if (user.name === 'Monkey') return this.getRandomItem(["Ooh ooh ah ah.", "🍌", "*Scratches head*"]);
+        if (user.name === 'Penguin') return this.getRandomItem(["Noot noot.", "*Slides on belly*", "Waddle waddle."]);
+        if (user.name === 'Doctor') return this.getRandomItem(["Take two memes and call me in the morning.", "It's terminal.", "Let me check your pulse."]);
+        if (user.name === 'Lawyer') return this.getRandomItem(["My client is innocent.", "Objection!", "It depends.", "I'll see you in court."]);
+        if (user.name === 'Chef') return this.getRandomItem(["It's raw!", "Finally, some good food.", "Wheres the lamb sauce?", "Salt bae."]);
+        if (user.name === 'Mechanic') return this.getRandomItem(["It's gonna cost ya.", "Your transmission is shot.", "Did you check the oil?"]);
+        if (user.name === 'Pilot') return this.getRandomItem(["Buckle up.", "We are experiencing some turbulence.", "This is your captain speaking."]);
+        if (user.name === 'Astronaut') return this.getRandomItem(["Houston, we have a problem.", "One small step for man.", "To infinity and beyond."]);
+        if (user.name === 'Crypto Bro') return this.getRandomItem(["HODL.", "To the moon! 🚀", "Have you heard of Bitcoin?", "Buy the dip."]);
+        if (user.name === 'NFT Artist') return this.getRandomItem(["Don't screenshot.", "It's unique.", "Web3 is the future.", "Minting soon."]);
+        if (user.name === 'Hacker') return this.getRandomItem(["I'm in.", "Access granted.", "Firewall breached.", "System compromised."]);
+        if (user.name === 'Gym Rat') return this.getRandomItem(["Do you even lift?", "Light weight baby!", "Gains.", "Protein.", "Leg day."]);
+        if (user.name === 'Traveler') return this.getRandomItem(["Wanderlust.", "Catch flights not feelings.", "Adventure awaits.", "Just got back from Bali."]);
 
         // Generic
         const responses = [
