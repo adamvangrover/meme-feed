@@ -211,6 +211,177 @@
   },
   {
     "id": "p31",
+    "name": "The Philosopher",
+    "image": "https://robohash.org/philosopher?set=set2",
+    "text": "I meme, therefore I am.",
+    "voice": { "lang": "en-US", "pitch": 0.8, "rate": 0.8 }
+  },
+  {
+    "id": "p32",
+    "name": "The Historian",
+    "image": "https://robohash.org/historian?set=set5",
+    "text": "Those who do not study memes are doomed to repost them.",
+    "voice": { "lang": "en-GB", "pitch": 0.9, "rate": 1.0 }
+  },
+  {
+    "id": "p33",
+    "name": "The Scientist",
+    "image": "https://robohash.org/scientist?set=set1",
+    "text": "According to my calculations, this is funny.",
+    "voice": { "lang": "en-US", "pitch": 1.1, "rate": 1.1 }
+  },
+  {
+    "id": "p34",
+    "name": "The Astronaut",
+    "image": "https://robohash.org/astronaut?set=set1",
+    "text": "Memes in spaaaaace!",
+    "voice": { "lang": "en-US", "pitch": 1.0, "rate": 0.9 }
+  },
+  {
+    "id": "p35",
+    "name": "The Chef",
+    "image": "https://robohash.org/chef?set=set5",
+    "text": "This meme is raw!",
+    "voice": { "lang": "fr-FR", "pitch": 1.2, "rate": 1.2 }
+  },
+  {
+    "id": "p36",
+    "name": "The Fit",
+    "image": "https://robohash.org/fitness?set=set5",
+    "text": "Do you even lift (memes)?",
+    "voice": { "lang": "en-US", "pitch": 0.9, "rate": 1.2 }
+  },
+  {
+    "id": "p37",
+    "name": "The Cat Lady",
+    "image": "https://robohash.org/catlady?set=set4",
+    "text": "More cats please.",
+    "voice": { "lang": "en-US", "pitch": 1.4, "rate": 1.0 }
+  },
+  {
+    "id": "p38",
+    "name": "The Dog Person",
+    "image": "https://robohash.org/dogperson?set=set1",
+    "text": "Who's a good meme? You are!",
+    "voice": { "lang": "en-US", "pitch": 1.0, "rate": 1.1 }
+  },
+  {
+    "id": "p39",
+    "name": "The Conspiracy Theorist",
+    "image": "https://robohash.org/conspiracy?set=set1",
+    "text": "The memes are watching us.",
+    "voice": { "lang": "en-US", "pitch": 0.7, "rate": 1.3 }
+  },
+  {
+    "id": "p40",
+    "name": "The Time Traveler",
+    "image": "https://robohash.org/timetraveler?set=set1",
+    "text": "I saw this meme in 2050.",
+    "voice": { "lang": "en-US", "pitch": 1.0, "rate": 1.0 }
+  },
+  {
+    "id": "p41",
+    "name": "The Wizard",
+    "image": "https://robohash.org/wizard?set=set2",
+    "text": "I cast 'Laughter'!",
+    "voice": { "lang": "en-GB", "pitch": 0.6, "rate": 0.8 }
+  },
+  {
+    "id": "p42",
+    "name": "The Vampire",
+    "image": "https://robohash.org/vampire?set=set2",
+    "text": "I vant to suck your... bandwidth.",
+    "voice": { "lang": "en-US", "pitch": 0.5, "rate": 0.9 }
+  },
+  {
+    "id": "p43",
+    "name": "The Alien",
+    "image": "https://robohash.org/alien?set=set1",
+    "text": "Take me to your meme leader.",
+    "voice": { "lang": "en-US", "pitch": 1.8, "rate": 1.5 }
+  },
+  {
+    "id": "p44",
+    "name": "The Robot",
+    "image": "https://robohash.org/robot_v2?set=set3",
+    "text": "01001101 01100101 01101101 01100101",
+    "voice": { "lang": "en-US", "pitch": 0.2, "rate": 0.8 }
+  },
+  {
+    "id": "p45",
+    "name": "The Zombie",
+    "image": "https://robohash.org/zombie?set=set2",
+    "text": "Braaaains... I mean, meeeeemes...",
+    "voice": { "lang": "en-US", "pitch": 0.4, "rate": 0.5 }
+  },
+  {
+    "id": "p46",
+    "name": "The Ghost",
+    "image": "https://robohash.org/ghost?set=set2",
+    "text": "Boooo! (In a good way)",
+    "voice": { "lang": "en-US", "pitch": 1.5, "rate": 0.8 }
+  },
+  {
+    "id": "p47",
+    "name": "The Pirate",
+    "image": "https://robohash.org/pirate?set=set5",
+    "text": "Yarrr, that be a fine meme!",
+    "voice": { "lang": "en-GB", "pitch": 0.7, "rate": 1.0 }
+  },
+  {
+    "id": "p48",
+    "name": "The Ninja",
+    "image": "https://robohash.org/ninja?set=set5",
+    "text": "You didn't see me scroll.",
+    "voice": { "lang": "ja-JP", "pitch": 1.0, "rate": 1.2 }
+  },
+  {
+    "id": "p49",
+    "name": "The Cowboy",
+    "image": "https://robohash.org/cowboy?set=set5",
+    "text": "Howdy partner.",
+    "voice": { "lang": "en-US", "pitch": 0.9, "rate": 0.9 }
+  },
+  {
+    "id": "p50",
+    "name": "The Knight",
+    "image": "https://robohash.org/knight?set=set5",
+    "text": "For the King(dom of memes)!",
+    "voice": { "lang": "en-GB", "pitch": 1.1, "rate": 1.0 }
+  },
+  {
+    "id": "p51",
+    "name": "The Princess",
+    "image": "https://robohash.org/princess?set=set5",
+    "text": "My meme is in another castle.",
+    "voice": { "lang": "en-US", "pitch": 1.5, "rate": 1.1 }
+  },
+  {
+    "id": "p52",
+    "name": "The Queen",
+    "image": "https://robohash.org/queen?set=set5",
+    "text": "We are amused.",
+    "voice": { "lang": "en-GB", "pitch": 1.2, "rate": 0.9 }
+  },
+  {
+    "id": "p53",
+    "name": "The King",
+    "image": "https://robohash.org/king?set=set5",
+    "text": "Bring me the royal jester!",
+    "voice": { "lang": "en-GB", "pitch": 0.8, "rate": 0.9 }
+  },
+  {
+    "id": "p54",
+    "name": "The Jester",
+    "image": "https://robohash.org/jester?set=set5",
+    "text": "Why did the meme cross the road?",
+    "voice": { "lang": "en-US", "pitch": 1.6, "rate": 1.3 }
+  },
+  {
+    "id": "p55",
+    "name": "The Merchant",
+    "image": "https://robohash.org/merchant?set=set5",
+    "text": "Meme for coin?",
     "name": "Plato",
     "image": "https://robohash.org/plato?set=set2",
     "text": "The meme is a shadow of the truth.",
@@ -386,6 +557,38 @@
   },
   {
     "id": "p56",
+    "name": "The Blacksmith",
+    "image": "https://robohash.org/blacksmith?set=set5",
+    "text": "Forging fresh content.",
+    "voice": { "lang": "en-US", "pitch": 0.7, "rate": 0.8 }
+  },
+  {
+    "id": "p57",
+    "name": "The Farmer",
+    "image": "https://robohash.org/farmer?set=set5",
+    "text": "It ain't much, but it's honest work.",
+    "voice": { "lang": "en-US", "pitch": 0.9, "rate": 0.9 }
+  },
+  {
+    "id": "p58",
+    "name": "The Fisherman",
+    "image": "https://robohash.org/fisherman?set=set5",
+    "text": "Caught a big one!",
+    "voice": { "lang": "en-US", "pitch": 0.8, "rate": 0.9 }
+  },
+  {
+    "id": "p59",
+    "name": "The Hunter",
+    "image": "https://robohash.org/hunter?set=set5",
+    "text": "Shh. Be vewy vewy quiet.",
+    "voice": { "lang": "en-US", "pitch": 1.0, "rate": 1.0 }
+  },
+  {
+    "id": "p60",
+    "name": "The Bard",
+    "image": "https://robohash.org/bard?set=set5",
+    "text": "Toss a coin to your memer.",
+    "voice": { "lang": "en-GB", "pitch": 1.1, "rate": 1.1 }
     "name": "Crypto Bro",
     "image": "https://robohash.org/crypto?set=set1",
     "text": "HODL.",
