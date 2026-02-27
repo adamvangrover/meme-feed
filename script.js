@@ -37,14 +37,26 @@ class MemeApp {
             userStats: {
                 level: 1,
                 xp: 0,
+                coins: 0,
                 memesViewed: 0,
                 memesLiked: 0,
                 commentsPosted: 0,
                 memesCreated: 0,
                 badges: []
             },
+            inventory: {
+                themes: [],
+                stickers: []
+            },
             notifications: []
         };
+
+        this.shopItems = [
+            { id: 'theme_matrix', name: 'Matrix Theme', type: 'theme', value: 'matrix', cost: 500, icon: '💻', desc: 'Enter the Matrix.' },
+            { id: 'theme_vaporwave', name: 'Vaporwave Theme', type: 'theme', value: 'vaporwave', cost: 600, icon: '🌆', desc: 'Aesthetic vibes only.' },
+            { id: 'pack_stickers_1', name: 'Rare Stickers', type: 'sticker_pack', value: ['👽', '👾', '🤖', '🦖'], cost: 300, icon: '📦', desc: 'Unlocks 4 rare stickers.' },
+            { id: 'xp_boost', name: 'XP Boost', type: 'consumable', value: 100, cost: 200, icon: '⚡', desc: 'Instantly gain 100 XP.' }
+        ];
 
         this.badgesList = [
             { id: 'newbie', icon: '👶', name: 'Newbie', desc: 'Viewed 10 Memes', req: (s) => s.memesViewed >= 10 },
@@ -527,6 +539,7 @@ class MemeApp {
 
     init() {
         this.loadState();
+        this.updateCoinDisplay();
         this.checkDailyQuests();
         this.applyTheme();
         this.setupEventListeners();
@@ -561,6 +574,7 @@ class MemeApp {
             }
 
             this.startNetworkSimulation();
+            this.restorePurchases();
             this.renderStickerOptions();
             this.renderTemplateOptions();
         });
@@ -583,6 +597,7 @@ class MemeApp {
             this.state.engagement = parsed.engagement || {};
             if(parsed.currentUser) this.state.currentUser = parsed.currentUser;
             if(parsed.userStats) this.state.userStats = { ...this.state.userStats, ...parsed.userStats };
+            if(parsed.inventory) this.state.inventory = { ...this.state.inventory, ...parsed.inventory };
             if(parsed.notifications) this.state.notifications = parsed.notifications;
             // Don't restore view state, always start at feed or last usage logic can be debated.
         }
@@ -596,10 +611,19 @@ class MemeApp {
             engagement: this.state.engagement,
             currentUser: this.state.currentUser,
             userStats: this.state.userStats,
+            inventory: this.state.inventory,
             notifications: this.state.notifications,
             dailyQuests: this.state.dailyQuests
         };
         localStorage.setItem('memeAppState', JSON.stringify(stateToSave));
+        this.updateCoinDisplay();
+    }
+
+    updateCoinDisplay() {
+        const el = document.getElementById('user-coins');
+        if(el) el.innerText = this.state.userStats.coins || 0;
+        const el2 = document.getElementById('shop-balance');
+        if(el2) el2.innerText = this.state.userStats.coins || 0;
     }
 
     exportData() {
@@ -610,6 +634,7 @@ class MemeApp {
             engagement: this.state.engagement,
             currentUser: this.state.currentUser,
             userStats: this.state.userStats,
+            inventory: this.state.inventory,
             notifications: this.state.notifications
         };
         const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(stateToSave, null, 2));
@@ -705,6 +730,44 @@ class MemeApp {
     }
 
     // === UI RENDERING ===
+    restorePurchases() {
+        // Restore Themes
+        if (this.state.inventory.themes) {
+            const selector = document.getElementById('theme-selector');
+            if (selector) {
+                this.state.inventory.themes.forEach(themeVal => {
+                    let exists = false;
+                    for (let i = 0; i < selector.options.length; i++) {
+                        if (selector.options[i].value === themeVal) exists = true;
+                    }
+                    if (!exists) {
+                        const shopItem = this.shopItems.find(i => i.value === themeVal);
+                        const name = shopItem ? shopItem.name.replace(' Theme', '') : themeVal.charAt(0).toUpperCase() + themeVal.slice(1);
+
+                        const opt = document.createElement('option');
+                        opt.value = themeVal;
+                        opt.innerText = name;
+                        selector.appendChild(opt);
+                    }
+                });
+            }
+        }
+
+        // Restore Stickers
+        if (this.state.inventory.stickerPacks) {
+            this.state.inventory.stickerPacks.forEach(packId => {
+                const item = this.shopItems.find(i => i.id === packId);
+                if (item && item.type === 'sticker_pack') {
+                    item.value.forEach(sticker => {
+                        if (!this.stickers.includes(sticker)) {
+                            this.stickers.push(sticker);
+                        }
+                    });
+                }
+            });
+        }
+    }
+
     renderStickerOptions() {
         const container = document.getElementById('sticker-options');
         if (!container) return;
@@ -751,6 +814,20 @@ class MemeApp {
         });
 
         window.addEventListener("keydown", (e) => this.handleKeydown(e));
+
+        // Canvas Drawing Events
+        const canvas = document.getElementById('meme-canvas');
+        if (canvas) {
+            canvas.addEventListener('mousedown', (e) => this.startDrawing(e));
+            canvas.addEventListener('mousemove', (e) => this.draw(e));
+            canvas.addEventListener('mouseup', () => this.stopDrawing());
+            canvas.addEventListener('mouseout', () => this.stopDrawing());
+
+            // Touch support
+            canvas.addEventListener('touchstart', (e) => this.startDrawing(e));
+            canvas.addEventListener('touchmove', (e) => this.draw(e));
+            canvas.addEventListener('touchend', () => this.stopDrawing());
+        }
 
         // Use IntersectionObserver for active meme tracking
         this.observer = new IntersectionObserver((entries) => {
@@ -947,6 +1024,8 @@ class MemeApp {
         this.personalitiesContainer.classList.add('hidden');
         document.getElementById('soundboard-container').classList.add('hidden');
         document.getElementById('profile-container').classList.add('hidden');
+        document.getElementById('shop-container').classList.add('hidden');
+        document.getElementById('battle-container').classList.add('hidden');
 
         if (viewName === 'feed') {
             this.feedContainer.classList.remove('hidden');
@@ -963,7 +1042,146 @@ class MemeApp {
         } else if (viewName === 'profile') {
             document.getElementById('profile-container').classList.remove('hidden');
             this.renderProfile();
+        } else if (viewName === 'shop') {
+            document.getElementById('shop-container').classList.remove('hidden');
+            this.renderShop();
+        } else if (viewName === 'battle') {
+            document.getElementById('battle-container').classList.remove('hidden');
+            this.renderBattle();
         }
+    }
+
+    renderShop() {
+        const container = document.getElementById('shop-grid');
+        if(!container) return;
+        container.innerHTML = '';
+
+        this.updateCoinDisplay();
+
+        this.shopItems.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'shop-item';
+
+            let isOwned = false;
+            if(item.type === 'theme') {
+                // Check if theme is in dropdown options or logic.
+                // We'll track ownership in inventory.
+                isOwned = this.state.inventory.themes && this.state.inventory.themes.includes(item.value);
+            }
+            if(item.type === 'sticker_pack') {
+                // Simplification: check if sticker pack id is logged
+                // Or just check if stickers are already in list.
+                // Better: store pack id in inventory
+                isOwned = this.state.inventory.stickerPacks && this.state.inventory.stickerPacks.includes(item.id);
+            }
+
+            const canAfford = this.state.userStats.coins >= item.cost;
+            const btnText = isOwned ? "Owned" : (canAfford ? "Buy" : "Not Enough Coins");
+            const btnDisabled = isOwned || !canAfford;
+
+            card.innerHTML = `
+                <div class="shop-item-icon">${item.icon}</div>
+                <div class="shop-item-name">${item.name}</div>
+                <div class="shop-item-desc">${item.desc}</div>
+                <div style="font-weight:bold; color:#ffd700; margin-bottom:10px;">${item.cost} <i class="fas fa-coins"></i></div>
+                <button class="shop-buy-btn" onclick="app.buyItem('${item.id}')" ${btnDisabled ? 'disabled' : ''}>${btnText}</button>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    buyItem(itemId) {
+        const item = this.shopItems.find(i => i.id === itemId);
+        if(!item) return;
+
+        if(this.state.userStats.coins >= item.cost) {
+            this.state.userStats.coins -= item.cost;
+
+            if(item.type === 'theme') {
+                if(!this.state.inventory.themes) this.state.inventory.themes = [];
+                this.state.inventory.themes.push(item.value);
+
+                // Add to select dropdown dynamically
+                const selector = document.getElementById('theme-selector');
+                const opt = document.createElement('option');
+                opt.value = item.value;
+                opt.innerText = item.name.replace(' Theme', '');
+                selector.appendChild(opt);
+            }
+
+            if(item.type === 'sticker_pack') {
+                if(!this.state.inventory.stickerPacks) this.state.inventory.stickerPacks = [];
+                this.state.inventory.stickerPacks.push(item.id);
+                // Add stickers
+                this.stickers = [...this.stickers, ...item.value];
+                this.renderStickerOptions();
+            }
+
+            if(item.type === 'consumable') {
+                 if(item.id === 'xp_boost') {
+                     this.state.userStats.xp += item.value;
+                     this.checkLevelUp();
+                 }
+            }
+
+            this.showToast(`Purchased ${item.name}! 🎉`);
+            this.playSound('success');
+            this.saveState();
+            this.renderShop();
+            this.renderProfile();
+        }
+    }
+
+    renderBattle() {
+        const containerLeft = document.getElementById('battle-left');
+        const containerRight = document.getElementById('battle-right');
+        if(!containerLeft || !containerRight) return;
+
+        // Pick 2 random memes (prefer distinct ones)
+        let meme1 = this.getRandomItem(this.state.memes);
+        let meme2 = this.getRandomItem(this.state.memes);
+
+        // Ensure distinct
+        let attempts = 0;
+        while(meme1.url === meme2.url && attempts < 10) {
+            meme2 = this.getRandomItem(this.state.memes);
+            attempts++;
+        }
+
+        const renderCard = (meme, container) => {
+            container.innerHTML = `
+                <img src="${meme.url}" alt="Meme">
+                <div class="caption">${meme.caption || meme.title || 'Funny Meme'}</div>
+                <button class="action-btn primary" style="width:100%; margin-top:10px;" onclick="app.voteBattle('${meme.id}')">Vote This ☝️</button>
+            `;
+        };
+
+        renderCard(meme1, containerLeft);
+        renderCard(meme2, containerRight);
+    }
+
+    voteBattle(memeId) {
+        this.playSound('pop');
+
+        // Simple reward logic
+        const xpReward = 20;
+        const coinReward = Math.floor(Math.random() * 40) + 10;
+
+        this.state.userStats.xp += xpReward;
+        this.state.userStats.coins += coinReward;
+
+        this.checkLevelUp();
+        this.saveState();
+        this.updateCoinDisplay();
+
+        this.showToast(`Vote Cast! +${xpReward} XP, +${coinReward} Coins 🪙`);
+
+        // Animation or delay before next round
+        document.getElementById('battle-container').classList.add('fade-out');
+        setTimeout(() => {
+             this.renderBattle();
+             document.getElementById('battle-container').classList.remove('fade-out');
+        }, 500);
     }
 
     renderSoundboard() {
@@ -1794,7 +2012,10 @@ class MemeApp {
             fontSize: 40,
             color: '#ffffff',
             stickers: [],
-            filter: 'none'
+            filter: 'none',
+            isDrawingMode: false,
+            isDrawing: false,
+            paths: []
         };
 
         const canvas = document.getElementById('meme-canvas');
@@ -1806,6 +2027,8 @@ class MemeApp {
         document.getElementById('bottom-text').value = '';
         document.getElementById('text-size').value = 40;
         document.getElementById('text-color').value = '#ffffff';
+        document.getElementById('toggle-draw-btn').innerText = "OFF";
+        document.getElementById('toggle-draw-btn').style.background = "var(--secondary-bg)";
 
         if (imageSrc) {
             this.loadImageToCanvas(imageSrc);
@@ -1886,8 +2109,26 @@ class MemeApp {
         // Draw Image
         ctx.drawImage(this.memeEditorState.image, 0, 0, canvas.width, canvas.height);
 
-        // Reset filter for text/stickers
+        // Reset filter for text/stickers/drawing
         ctx.filter = 'none';
+
+        // Draw Paths (Freehand)
+        if (this.memeEditorState.paths) {
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            this.memeEditorState.paths.forEach(path => {
+                ctx.beginPath();
+                ctx.strokeStyle = path.color;
+                ctx.lineWidth = path.width;
+                if(path.points.length > 0) {
+                    ctx.moveTo(path.points[0].x, path.points[0].y);
+                    for (let i = 1; i < path.points.length; i++) {
+                        ctx.lineTo(path.points[i].x, path.points[i].y);
+                    }
+                }
+                ctx.stroke();
+            });
+        }
 
         // Text Styles
         ctx.fillStyle = this.memeEditorState.color;
@@ -1922,6 +2163,110 @@ class MemeApp {
                  ctx.fillText(s.emoji, s.x, s.y);
              });
         }
+    }
+
+    generateMagicCaption() {
+        const templates = [
+            "Me when I [VERB] the [NOUN]",
+            "POV: You are [VERB]ing",
+            "Nobody:\nMe:",
+            "When the [NOUN] hits just right",
+            "My brain during [NOUN]",
+            "Wait, you guys are getting [NOUN]?",
+            "I don't always [VERB], but when I do...",
+            "Change my mind: [NOUN] is [ADJ]"
+        ];
+
+        const nouns = ["pizza", "code", "bug", "wifi", "cat", "meme", "sleep", "coffee"];
+        const verbs = ["eat", "debug", "crash", "pet", "watch", "drink", "lose"];
+        const adjs = ["awesome", "terrible", "spicy", "relatable", "sus"];
+
+        const randomTemplate = this.getRandomItem(templates);
+        let caption = randomTemplate
+            .replace("[NOUN]", this.getRandomItem(nouns))
+            .replace("[VERB]", this.getRandomItem(verbs))
+            .replace("[ADJ]", this.getRandomItem(adjs));
+
+        // Or just pick a preset
+        if (Math.random() > 0.5) {
+            caption = this.getRandomItem(this.captions);
+        }
+
+        // Set to top or bottom
+        if (caption.length < 20 || Math.random() > 0.5) {
+            document.getElementById('top-text').value = caption;
+        } else {
+            document.getElementById('bottom-text').value = caption;
+        }
+
+        this.drawCanvas();
+        this.playSound('pop');
+    }
+
+    toggleDrawMode() {
+        if(!this.memeEditorState) return;
+        this.memeEditorState.isDrawingMode = !this.memeEditorState.isDrawingMode;
+
+        const btn = document.getElementById('toggle-draw-btn');
+        if(this.memeEditorState.isDrawingMode) {
+            btn.innerText = "ON";
+            btn.style.background = "var(--accent-color)";
+            document.getElementById('meme-canvas').style.cursor = "crosshair";
+        } else {
+            btn.innerText = "OFF";
+            btn.style.background = "var(--secondary-bg)";
+            document.getElementById('meme-canvas').style.cursor = "default";
+        }
+    }
+
+    startDrawing(e) {
+        if (!this.memeEditorState || !this.memeEditorState.isDrawingMode) return;
+        this.memeEditorState.isDrawing = true;
+        const pos = this.getPointerPos(e);
+
+        // Start a new path
+        this.memeEditorState.paths.push({
+            color: this.memeEditorState.color, // Use text color as brush color
+            width: 5,
+            points: [pos]
+        });
+
+        this.drawCanvas();
+    }
+
+    draw(e) {
+        if (!this.memeEditorState || !this.memeEditorState.isDrawing || !this.memeEditorState.isDrawingMode) return;
+        e.preventDefault(); // Prevent scrolling on touch
+        const pos = this.getPointerPos(e);
+
+        // Add point to last path
+        const currentPath = this.memeEditorState.paths[this.memeEditorState.paths.length - 1];
+        currentPath.points.push(pos);
+
+        this.drawCanvas();
+    }
+
+    stopDrawing() {
+        if (!this.memeEditorState) return;
+        this.memeEditorState.isDrawing = false;
+    }
+
+    getPointerPos(e) {
+        const canvas = document.getElementById('meme-canvas');
+        const rect = canvas.getBoundingClientRect();
+
+        // Handle touch vs mouse
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+        // Map to canvas coordinates (considering scaling)
+        const scaleX = canvas.width / rect.width;
+        const scaleY = canvas.height / rect.height;
+
+        return {
+            x: (clientX - rect.left) * scaleX,
+            y: (clientY - rect.top) * scaleY
+        };
     }
 
     publishMeme() {
@@ -2470,6 +2815,38 @@ class MemeApp {
         document.getElementById('stat-likes').innerText = this.state.userStats.memesLiked;
         document.getElementById('stat-comments').innerText = this.state.userStats.commentsPosted;
         document.getElementById('stat-created').innerText = this.state.userStats.memesCreated;
+
+        // Chart (Simulated History)
+        const chartContainer = document.getElementById('activity-chart');
+        if(chartContainer) {
+            chartContainer.innerHTML = '';
+            const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+            const today = new Date().getDay(); // 0 is Sun
+
+            // Reorder days to end with today
+            const orderedDays = [];
+            for(let i=6; i>=0; i--) {
+                const d = new Date();
+                d.setDate(d.getDate() - i);
+                orderedDays.push(days[d.getDay() === 0 ? 6 : d.getDay() - 1]); // Adjust for array index
+            }
+
+            orderedDays.forEach((day, index) => {
+                // Generate psuedo-random data seeded by day/user logic or just random
+                // We'll base it slightly on total stats to look realistic but it is fake history
+                const maxVal = Math.max(10, this.state.userStats.memesViewed / 10);
+                const val = Math.floor(Math.random() * maxVal);
+                const height = Math.min((val / maxVal) * 100, 100);
+
+                const barContainer = document.createElement('div');
+                barContainer.className = 'chart-bar-container';
+                barContainer.innerHTML = `
+                    <div class="chart-bar" style="height: ${height}%"></div>
+                    <div class="chart-label">${day}</div>
+                `;
+                chartContainer.appendChild(barContainer);
+            });
+        }
 
         // Badges
         const badgesContainer = document.getElementById('badges-grid');

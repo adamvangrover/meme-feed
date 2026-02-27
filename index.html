@@ -34,6 +34,8 @@
                     <option value="top">Top</option>
                 </select>
 
+                <span style="margin-right:10px; font-weight:bold; color:gold;"><i class="fas fa-coins"></i> <span id="user-coins">0</span></span>
+
                 <div class="notification-wrapper" style="position: relative; display: inline-block;">
                     <button class="nav-btn" onclick="app.toggleNotifications()" title="Notifications">
                         <i class="fas fa-bell"></i>
@@ -54,6 +56,8 @@
                 <button class="nav-btn" id="btn-personalities" onclick="app.switchView('personalities')">Personalities</button>
                 <button class="nav-btn" id="btn-soundboard" onclick="app.switchView('soundboard')">Sounds</button>
                 <button class="nav-btn" id="btn-profile" onclick="app.switchView('profile')">Profile</button>
+                <button class="nav-btn" onclick="app.switchView('shop')" title="Shop"><i class="fas fa-shopping-cart"></i></button>
+                <button class="nav-btn" onclick="app.switchView('battle')" title="Battle"><i class="fas fa-fist-raised"></i></button>
                 <button class="nav-btn" onclick="app.triggerUpload()" title="Upload Meme">
                     <i class="fas fa-upload"></i>
                 </button>
@@ -119,6 +123,24 @@
         </div>
     </div>
 
+    <div id="shop-container" class="hidden">
+        <h2 style="display:flex; justify-content:space-between; align-items:center;">
+            Meme Shop 🛒
+            <span style="font-size: 0.8em;">Balance: <span id="shop-balance">0</span> 🪙</span>
+        </h2>
+        <div id="shop-grid" class="shop-grid"></div>
+    </div>
+
+    <div id="battle-container" class="hidden" style="text-align:center;">
+        <h2>Meme Battle ⚔️</h2>
+        <p>Vote for the best meme to win XP & Coins!</p>
+        <div class="battle-arena">
+            <div id="battle-left" class="battle-card"></div>
+            <div class="vs-badge">VS</div>
+            <div id="battle-right" class="battle-card"></div>
+        </div>
+    </div>
+
     <div id="profile-container" class="hidden">
         <div class="profile-header">
             <img src="https://i.pravatar.cc/150?img=3" id="profile-img" class="profile-avatar-large">
@@ -147,6 +169,11 @@
                 <h3 id="stat-created">0</h3>
                 <p>Memes Created</p>
             </div>
+        </div>
+
+        <div style="margin-bottom: 30px;">
+            <h3>Activity History 📊</h3>
+            <div id="activity-chart"></div>
         </div>
 
         <div class="badges-section">
@@ -302,6 +329,13 @@
                             <!-- Injected by JS -->
                         </div>
                         <button onclick="app.clearStickers()" style="font-size: 0.8rem; background: #333; color: white; width: 100%; padding: 5px; margin-top: 5px; border-radius: 5px;">Clear Stickers</button>
+                    </div>
+
+                    <button class="action-btn secondary" onclick="app.generateMagicCaption()" style="width: 100%; margin-top: 5px; margin-bottom: 10px;">✨ Magic Caption</button>
+
+                    <div class="control-group" style="margin-bottom: 15px;">
+                        <label>Freehand Draw</label>
+                        <button id="toggle-draw-btn" class="action-btn secondary" onclick="app.toggleDrawMode()" style="width: 100%;">OFF</button>
                     </div>
 
                     <button class="action-btn primary" onclick="app.publishMeme()">🚀 Publish Meme</button>
