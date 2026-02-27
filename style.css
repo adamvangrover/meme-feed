@@ -42,6 +42,60 @@
     --modal-bg: rgba(20, 40, 20, 0.9);
 }
 
+[data-theme='ocean'] {
+    --bg-color: #001f3f;
+    --card-bg: #002b55;
+    --text-color: #7fdbff;
+    --accent-color: #0074d9;
+    --secondary-bg: #003366;
+    --modal-bg: rgba(0, 31, 63, 0.9);
+}
+
+[data-theme='sunset'] {
+    --bg-color: #2b0e0e;
+    --card-bg: #4a1919;
+    --text-color: #ffccbc;
+    --accent-color: #ff5722;
+    --secondary-bg: #602222;
+    --modal-bg: rgba(43, 14, 14, 0.9);
+}
+
+[data-theme='midnight'] {
+    --bg-color: #000000;
+    --card-bg: #111111;
+    --text-color: #888888;
+    --accent-color: #333333;
+    --secondary-bg: #1a1a1a;
+    --modal-bg: rgba(10, 10, 10, 0.9);
+}
+
+[data-theme='candy'] {
+    --bg-color: #fff0f5;
+    --card-bg: #ffe4e1;
+    --text-color: #d81b60;
+    --accent-color: #ff69b4;
+    --secondary-bg: #ffc0cb;
+    --modal-bg: rgba(255, 240, 245, 0.9);
+}
+
+[data-theme='hacker'] {
+    --bg-color: #000000;
+    --card-bg: #0d0d0d;
+    --text-color: #00ff00;
+    --accent-color: #39ff14;
+    --secondary-bg: #001a00;
+    --modal-bg: rgba(0, 0, 0, 0.95);
+}
+
+[data-theme='autumn'] {
+    --bg-color: #3e2723;
+    --card-bg: #4e342e;
+    --text-color: #ffcc80;
+    --accent-color: #ef6c00;
+    --secondary-bg: #5d4037;
+    --modal-bg: rgba(62, 39, 35, 0.9);
+}
+
 body {
     background-color: var(--bg-color);
     color: var(--text-color);
