@@ -543,6 +543,9 @@ class MemeApp {
         this.checkDailyQuests();
         this.applyTheme();
         this.setupEventListeners();
+        this.initNewsTicker();
+        this.initMusicPlayer();
+        this.runTutorial();
 
         // Load network users
         this.fetchNetworkUsers().then(() => {
@@ -1048,7 +1051,148 @@ class MemeApp {
         } else if (viewName === 'battle') {
             document.getElementById('battle-container').classList.remove('hidden');
             this.renderBattle();
+        } else if (viewName === 'leaderboard') {
+            document.getElementById('leaderboard-container').classList.remove('hidden');
+            this.renderLeaderboard();
         }
+    }
+
+    renderLeaderboard() {
+        const container = document.getElementById('leaderboard-content');
+        if (!container) return;
+
+        // Combine network users and current user
+        let allUsers = [...this.state.networkUsers];
+        // Ensure current user is in list if not already
+        if (!allUsers.find(u => u.id === this.state.currentUser.id)) {
+            allUsers.push(this.state.currentUser);
+        }
+
+        // Assign random XP to network users if missing
+        allUsers.forEach(u => {
+            if (u.xp === undefined) {
+                // Deterministic pseudo-random based on name length or id
+                u.xp = (u.name.length * 100) + Math.floor(Math.random() * 500);
+                if (u.isMe) u.xp = this.state.userStats.xp; // Use real XP for me
+            }
+        });
+
+        // Sort by XP descending
+        allUsers.sort((a, b) => b.xp - a.xp);
+
+        // Top 20
+        const topUsers = allUsers.slice(0, 20);
+
+        let html = `
+            <table>
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>User</th>
+                        <th>XP</th>
+                        <th>Level</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+
+        topUsers.forEach((u, index) => {
+            const rank = index + 1;
+            let rankClass = 'rank-other';
+            if (rank === 1) rankClass = 'rank-1';
+            if (rank === 2) rankClass = 'rank-2';
+            if (rank === 3) rankClass = 'rank-3';
+
+            const rowStyle = u.isMe ? 'background: rgba(255, 75, 43, 0.2); font-weight: bold;' : '';
+            const level = Math.floor(u.xp / 100) + 1;
+
+            html += `
+                <tr style="${rowStyle}">
+                    <td><span class="rank-badge ${rankClass}">${rank}</span></td>
+                    <td style="display: flex; align-items: center; gap: 10px;">
+                        <img src="${u.image}" style="width: 30px; height: 30px; border-radius: 50%;">
+                        ${u.name} ${u.isMe ? '(You)' : ''}
+                    </td>
+                    <td>${u.xp}</td>
+                    <td>${level}</td>
+                </tr>
+            `;
+        });
+
+        html += `</tbody></table>`;
+        container.innerHTML = html;
+    }
+
+    initNewsTicker() {
+        const headlines = [
+            "BREAKING: Local Cat Promoted to CEO of Naptime Inc. 🐱",
+            "Doge Coin up 5000% after Elon Musk tweets 'Wow' 🚀",
+            "Scientist discovers new color, names it 'Blellow' 🎨",
+            "Florida Man tries to rob bank with an alligator 🐊",
+            "Study finds 99% of meetings could have been an email 📧",
+            "Area 51 Raid scheduled for next Tuesday, bring snacks 👽",
+            "Pizza declared a vegetable by toddler logic 🍕",
+            "Programmer fixes bug by staring at it really hard 💻",
+            "Report: Your FBI agent is proud of you 🕵️",
+            "New study confirms: The floor is indeed lava 🔥",
+            "Meme shortage predicted for 2025, stockpile now! 📉",
+            "Local dog is 'Good Boy', sources confirm 🐶"
+        ];
+
+        const tickerContent = document.querySelector('.ticker-content');
+        if (tickerContent) {
+            // Duplicate for smooth loop
+            const text = headlines.join("  •  ") + "  •  ";
+            tickerContent.innerText = text + text;
+        }
+    }
+
+    initMusicPlayer() {
+        this.musicTracks = [
+            { title: "Chill Lofi 1", src: "https://assets.mixkit.co/music/preview/mixkit-tech-house-vibes-130.mp3" },
+            { title: "Relaxing Beat", src: "https://assets.mixkit.co/music/preview/mixkit-hip-hop-02-738.mp3" },
+            { title: "Study Mode", src: "https://assets.mixkit.co/music/preview/mixkit-driving-ambition-32.mp3" },
+            { title: "Night Vibe", src: "https://assets.mixkit.co/music/preview/mixkit-night-sky-1024.mp3" }
+        ];
+        this.currentTrackIndex = 0;
+        this.musicAudio = new Audio(this.musicTracks[0].src);
+        this.musicAudio.volume = 0.3;
+        this.musicAudio.loop = true; // Loop current track or handle ended event for next
+
+        this.musicAudio.addEventListener('ended', () => this.nextTrack());
+
+        const widget = document.getElementById('music-player-widget');
+        if (widget) widget.classList.remove('hidden');
+        this.updateMusicUI();
+    }
+
+    toggleMusic() {
+        const btn = document.getElementById('music-play-btn');
+        if (this.musicAudio.paused) {
+            this.musicAudio.play().then(() => {
+                btn.innerHTML = '<i class="fas fa-pause"></i>';
+            }).catch(e => console.error("Play error", e));
+        } else {
+            this.musicAudio.pause();
+            btn.innerHTML = '<i class="fas fa-play"></i>';
+        }
+    }
+
+    nextTrack() {
+        this.currentTrackIndex = (this.currentTrackIndex + 1) % this.musicTracks.length;
+        this.musicAudio.src = this.musicTracks[this.currentTrackIndex].src;
+        if (!this.musicAudio.paused || document.getElementById('music-play-btn').innerHTML.includes('pause')) {
+             this.musicAudio.play();
+        }
+        this.updateMusicUI();
+    }
+
+    setMusicVolume(val) {
+        this.musicAudio.volume = val;
+    }
+
+    updateMusicUI() {
+        document.getElementById('music-track-name').innerText = this.musicTracks[this.currentTrackIndex].title;
     }
 
     renderShop() {
@@ -1491,6 +1635,7 @@ class MemeApp {
                 <button onclick="app.toggleComments('${memeDiv.id}')" title="Comment"><i class="far fa-comment"></i></button>
                 <button onclick="app.shareMeme('${meme.url}')" title="Share"><i class="fas fa-share-alt"></i></button>
                 <button onclick="app.speakCaption(this.closest('.meme').querySelector('.caption').innerText)" title="Speak"><i class="fas fa-volume-up"></i></button>
+                <button onclick="app.remixMeme('${meme.url}')" title="Remix"><i class="fas fa-paint-brush"></i></button>
                 ${saveBtn}
                 ${removeBtn}
             </div>
@@ -2326,6 +2471,10 @@ class MemeApp {
          link.click();
     }
 
+    remixMeme(url) {
+        this.openMemeEditor(url);
+    }
+
     generateRandomMeme() {
         const template = this.getRandomItem(this.classicMemes);
         const caption = this.getRandomItem(this.captions);
@@ -2799,6 +2948,58 @@ class MemeApp {
         ];
 
         return this.getRandomItem(responses);
+    }
+
+    runTutorial() {
+        if (!localStorage.getItem('tutorialComplete')) {
+            const overlay = document.getElementById('tutorial-overlay');
+            if(overlay) overlay.classList.remove('hidden');
+            this.tutorialStep = 0;
+            this.tutorialSteps = [
+                { id: 'btn-feed', text: 'This is your Meme Feed. Infinite scrolling fun!' },
+                { id: 'theme-selector', text: 'Customize your look with themes!' },
+                { id: 'btn-profile', text: 'Check your stats, badges, and level.' },
+                { id: 'btn-zen', text: 'Need to relax? Try Zen Mode for auto-scroll.' }
+            ];
+        }
+    }
+
+    nextTutorialStep() {
+        // Clear previous highlight
+        if (this.currentHighlight) {
+            this.currentHighlight.classList.remove('highlight-element');
+        }
+
+        if (this.tutorialStep >= this.tutorialSteps.length) {
+            this.skipTutorial();
+            return;
+        }
+
+        const step = this.tutorialSteps[this.tutorialStep];
+        const el = document.getElementById(step.id);
+        
+        if (el) {
+            el.classList.add('highlight-element');
+            this.currentHighlight = el;
+            
+            document.getElementById('tutorial-title').innerText = "Did you know? 💡";
+            document.getElementById('tutorial-text').innerText = step.text;
+            
+            this.tutorialStep++;
+        } else {
+            // Skip missing element
+            this.tutorialStep++;
+            this.nextTutorialStep();
+        }
+    }
+
+    skipTutorial() {
+        document.getElementById('tutorial-overlay').classList.add('hidden');
+        if (this.currentHighlight) {
+            this.currentHighlight.classList.remove('highlight-element');
+        }
+        localStorage.setItem('tutorialComplete', 'true');
+        this.showToast("Tutorial Completed! 🎓");
     }
 
     renderProfile() {
