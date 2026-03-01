@@ -471,7 +471,7 @@ class MemeApp {
             'https://i.imgflip.com/1bhm.jpg',   // Aliens Guy
             'https://i.imgflip.com/1bh9.jpg',   // Gangnam Style
             'https://i.imgflip.com/1bhq.jpg',   // Anchorman I Don't Believe You
-            'https://i.imgflip.com/1bhs.jpg',    // Dr Evil Laser
+            'https://i.imgflip.com/1bhs.jpg',   // Dr Evil Laser
             'https://i.imgflip.com/33e92f.jpg', // Confused Math Lady
             'https://i.imgflip.com/1op9.jpg',   // You Shall Not Pass (Gandalf)
             'https://i.imgflip.com/22bdq6.jpg', // Distracted Boyfriend (Wait, already have this? 1ur9b0. Yes. Reuse is fine or skip)
@@ -1192,9 +1192,9 @@ class MemeApp {
     }
 
     updateMusicUI() {
-        const el = document.getElementById('music-track-name');
-        if (el) {
-            el.innerText = this.musicTracks[this.currentTrackIndex].title;
+        const trackNameEl = document.getElementById('music-track-name');
+        if (trackNameEl) {
+            trackNameEl.innerText = this.musicTracks[this.currentTrackIndex].title;
         }
     }
 
