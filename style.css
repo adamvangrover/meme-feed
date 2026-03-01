@@ -52,21 +52,6 @@
 }
 
 [data-theme='sunset'] {
-    --bg-color: #2b0e0e;
-    --card-bg: #4a1919;
-    --text-color: #ffccbc;
-    --accent-color: #ff5722;
-    --secondary-bg: #602222;
-    --modal-bg: rgba(43, 14, 14, 0.9);
-    --bg-color: #002b36;
-    --card-bg: #073642;
-    --text-color: #839496;
-    --accent-color: #2aa198;
-    --secondary-bg: #073642;
-    --modal-bg: rgba(0, 43, 54, 0.9);
-}
-
-[data-theme='sunset'] {
     --bg-color: #2d1b2e;
     --card-bg: #442747;
     --text-color: #e0e0e0;
@@ -78,9 +63,6 @@
 [data-theme='midnight'] {
     --bg-color: #000000;
     --card-bg: #111111;
-    --text-color: #888888;
-    --accent-color: #333333;
-    --secondary-bg: #1a1a1a;
     --text-color: #cccccc;
     --accent-color: #6666ff;
     --secondary-bg: #222222;
@@ -91,19 +73,12 @@
     --bg-color: #fff0f5;
     --card-bg: #ffe4e1;
     --text-color: #d81b60;
-    --text-color: #555;
     --accent-color: #ff69b4;
     --secondary-bg: #ffc0cb;
     --modal-bg: rgba(255, 240, 245, 0.9);
 }
 
 [data-theme='hacker'] {
-    --bg-color: #000000;
-    --card-bg: #0d0d0d;
-    --text-color: #00ff00;
-    --accent-color: #39ff14;
-    --secondary-bg: #001a00;
-    --modal-bg: rgba(0, 0, 0, 0.95);
     --bg-color: #0d0d0d;
     --card-bg: #1a1a1a;
     --text-color: #00ff00;
@@ -117,8 +92,6 @@
     --card-bg: #4e342e;
     --text-color: #ffcc80;
     --accent-color: #ef6c00;
-    --text-color: #ffe0b2;
-    --accent-color: #ff7043;
     --secondary-bg: #5d4037;
     --modal-bg: rgba(62, 39, 35, 0.9);
 }
@@ -1223,4 +1196,134 @@ input[type="text"], input[type="number"], select {
         width: 100%;
         margin: 10px 0;
     }
+}
+
+/* Leaderboard Styles */
+#leaderboard-container {
+    max-width: 600px;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.leaderboard-table {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.leaderboard-row {
+    display: flex;
+    align-items: center;
+    background: var(--card-bg);
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+}
+
+.leaderboard-row:hover {
+    transform: scale(1.02);
+}
+
+.leaderboard-rank {
+    font-size: 1.5rem;
+    font-weight: bold;
+    width: 40px;
+    color: var(--accent-color);
+}
+
+.leaderboard-user {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    text-align: left;
+    margin-left: 10px;
+}
+
+.leaderboard-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+    object-fit: cover;
+}
+
+.leaderboard-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.leaderboard-name {
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.leaderboard-score {
+    font-weight: bold;
+    color: #ffd700;
+}
+
+/* News Ticker */
+#news-ticker-bar {
+    width: 100%;
+    background: var(--card-bg);
+    color: var(--text-color);
+    border-bottom: 1px solid var(--secondary-bg);
+    overflow: hidden;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+.ticker-wrap {
+    width: 100%;
+    overflow: hidden;
+    padding-left: 100%; /* Start off-screen */
+}
+
+.ticker-move {
+    display: inline-block;
+    white-space: nowrap;
+    animation: ticker 30s linear infinite;
+}
+
+.ticker-item {
+    display: inline-block;
+    padding: 0 20px;
+}
+
+@keyframes ticker {
+    0% { transform: translate3d(0, 0, 0); }
+    100% { transform: translate3d(-100%, 0, 0); }
+}
+
+/* Tutorial Overlay */
+#tutorial-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 3000;
+    pointer-events: none;
+}
+
+#tutorial-box {
+    position: absolute;
+    background: var(--card-bg);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5), 0 0 0 10000px rgba(0,0,0,0.5);
+    z-index: 3001;
+    max-width: 300px;
+    pointer-events: auto;
+    transition: top 0.5s, left 0.5s;
+    border: 2px solid var(--accent-color);
+}
+
+.tutorial-highlight {
+    position: relative;
+    z-index: 3002;
+    box-shadow: 0 0 15px var(--accent-color);
+    transition: box-shadow 0.3s;
 }
