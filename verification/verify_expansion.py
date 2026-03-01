@@ -54,6 +54,8 @@ def verify_expansion():
             # We need to trigger sticker render, which happens on load usually or init
             # app.renderStickerOptions() is called in init()
 
+            page.evaluate("app.openMemeEditor()")
+
             # Wait for stickers
             page.wait_for_selector("#sticker-options button", timeout=10000)
             stickers = page.locator("#sticker-options button").count()
