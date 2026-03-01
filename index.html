@@ -36,6 +36,10 @@
 
                 <span style="margin-right:10px; font-weight:bold; color:gold;"><i class="fas fa-coins"></i> <span id="user-coins">0</span></span>
 
+                <button class="nav-btn" onclick="app.toggleMusic()" title="Toggle Lo-Fi Music">
+                    <i id="music-icon" class="fas fa-music"></i>
+                </button>
+
                 <div class="notification-wrapper" style="position: relative; display: inline-block;">
                     <button class="nav-btn" onclick="app.toggleNotifications()" title="Notifications">
                         <i class="fas fa-bell"></i>
@@ -58,6 +62,7 @@
                 <button class="nav-btn" id="btn-profile" onclick="app.switchView('profile')">Profile</button>
                 <button class="nav-btn" onclick="app.switchView('shop')" title="Shop"><i class="fas fa-shopping-cart"></i></button>
                 <button class="nav-btn" onclick="app.switchView('battle')" title="Battle"><i class="fas fa-fist-raised"></i></button>
+                <button class="nav-btn" onclick="app.switchView('leaderboard')" title="Leaderboard"><i class="fas fa-trophy"></i></button>
                 <button class="nav-btn" onclick="app.triggerUpload()" title="Upload Meme">
                     <i class="fas fa-upload"></i>
                 </button>
@@ -93,6 +98,14 @@
 
     <div id="stories-container">
         <!-- Stories injected here -->
+    </div>
+
+    <div id="news-ticker-bar">
+        <div class="ticker-wrap">
+            <div class="ticker-move" id="ticker-content">
+                <!-- News items injected here -->
+            </div>
+        </div>
     </div>
 
     <div id="feed-container">
@@ -138,6 +151,13 @@
             <div id="battle-left" class="battle-card"></div>
             <div class="vs-badge">VS</div>
             <div id="battle-right" class="battle-card"></div>
+        </div>
+    </div>
+
+    <div id="leaderboard-container" class="hidden">
+        <h2>Leaderboard 🏆</h2>
+        <div class="leaderboard-table" id="leaderboard-table">
+            <!-- Injected via JS -->
         </div>
     </div>
 
@@ -208,6 +228,16 @@
     <button id="scroll-to-top" class="hidden" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">
         <i class="fas fa-arrow-up"></i>
     </button>
+
+    <!-- Tutorial Overlay -->
+    <div id="tutorial-overlay" class="hidden">
+        <div id="tutorial-box">
+            <h3 id="tutorial-title">Welcome!</h3>
+            <p id="tutorial-text">Let's show you around.</p>
+            <button class="action-btn primary" onclick="app.nextTutorialStep()">Next</button>
+            <button class="action-btn secondary" onclick="app.closeTutorial()">Skip</button>
+        </div>
+    </div>
 
     <!-- Story Viewer Modal -->
     <div id="story-viewer" class="hidden modal-overlay">
@@ -346,13 +376,6 @@
     </div>
 
     <script src="script.js"></script>
-    <script>
-        // Ensure app is globally accessible for inline handlers and testing
-        window.onload = function() {
-            if (typeof app === 'undefined' && typeof MemeApp !== 'undefined') {
-                window.app = new MemeApp();
-            }
-        };
-    </script>
+
 </body>
 </html>
