@@ -73,7 +73,7 @@ class MemeApp {
             { id: 'social', icon: '🦋', name: 'Social Butterfly', desc: 'Posted 20 Comments', req: (s) => s.commentsPosted >= 20 },
             { id: 'creator', icon: '🖌️', name: 'Creator', desc: 'Created 5 Memes', req: (s) => s.memesCreated >= 5 },
             { id: 'fan', icon: '❤️', name: 'Super Fan', desc: 'Liked 100 Memes', req: (s) => s.memesLiked >= 100 },
-            { id: 'nightowl', icon: '🦉', name: 'Night Owl', desc: 'Viewed 500 Memes', req: (s) => s.memesViewed >= 500 }
+            { id: 'nightowl', icon: '🦉', name: 'Night Owl', desc: 'Viewed 500 Memes', req: (s) => s.memesViewed >= 500 },
             { id: 'debater', icon: '🗯️', name: 'Debater', desc: 'Posted 20 Comments', req: (s) => s.commentsPosted >= 20 },
             { id: 'legend', icon: '👑', name: 'Legend', desc: 'Reach Level 10', req: (s) => s.level >= 10 },
             { id: 'mythic', icon: '🦄', name: 'Mythic', desc: 'Reach Level 20', req: (s) => s.level >= 20 }
@@ -277,7 +277,7 @@ class MemeApp {
             "Trade Offer 🤝",
             "Anakin and Padme 😐",
             "Think Mark, Think! 👉😠👈",
-            "Giga Chad 💪"
+            "Giga Chad 💪",
             "Me after one pushup: Am I buff yet?",
             "When you accidentally open the front camera.",
             "My brain during a test: *elevator music*",
@@ -354,7 +354,7 @@ class MemeApp {
                          "🍡", "🥟", "🥠", "🥡", "🦀", "🦞", "🦐", "🦑", "🦪", "🍦", "🍧", "🍨", "🍩", "🍪",
                          "🎂", "🍰", "🧁", "🥧", "🍫", "🍬", "🍭", "🍮", "🍯", "🍼", "🥛", "☕", "🫖", "🍵",
                          "🍶", "🍾", "🍷", "🍸", "🍹", "🍺", "🍻", "🥂", "🥃", "🫗", "🥤", "🧋", "🧃", "🧉",
-                         "🧊", "🥢", "🍽️", "🍴", "🥄", "🔪", "🏺", "🌍", "🌎", "🌏", "🌐", "🗺️", "🗾", "🧭"];
+                         "🧊", "🥢", "🍽️", "🍴", "🥄", "🔪", "🏺", "🌍", "🌎", "🌏", "🌐", "🗺️", "🗾", "🧭",
                          "🍔", "🍟", "🌭", "🍿", "🧂", "🥓", "🥚", "🍳", "🧇", "🥞", "🧈", "🍞", "🥐", "🥨", "🥯", "🥖",
                          "🧀", "🥗", "🥙", "🥪", "🌮", "🌯", "🥫", "🍖", "🍗", "🥩", "🍠", "🥟", "🥠", "🥡", "🍱", "🍘",
                          "🍙", "🍚", "🍛", "🍜", "🦪", "🍣", "🍤", "🍥", "🥮", "🍡", "🥟", "🍪", "🍩", "🍨", "🍧", "🍦",
@@ -386,7 +386,7 @@ class MemeApp {
             "Imagine.", "This is the way.", "I missed the part where that's my problem.",
             "It is what it is.", "Sheesh.", "Bet.", "Say less.", "Caught in 4K 📸",
             "Down bad.", "Valid.", "Rent free.", "Emotional damage.", "Cap.", "No cap.",
-            "Savage.", "Lit.", "Fam.", "Yeet.", "Oof.", "F.", "Press X to doubt."
+            "Savage.", "Lit.", "Fam.", "Yeet.", "Oof.", "F.", "Press X to doubt.",
             "Big brain time.", "Stonks.", "Not stonks.", "This sparkled joy.", "This did not sparkle joy.",
             "Hol' up.", "Wait a minute.", "Confused stonks.", "Visible confusion.", "Press X to doubt.",
             "F.", "It's free real estate.", "Modern problems require modern solutions.", "Outstanding move.",
@@ -408,7 +408,7 @@ class MemeApp {
             'comics', 'AnimalsBeingDerps', 'trippinthroughtime', 'starterpacks', 'wholesome', 'reactiongifs', 'facepalm', 'Unexpected', 'nextfuckinglevel', 'MadeMeSmile',
             'gaming', 'aww', 'mildlyinteresting', 'oddlysatisfying', 'NatureIsFuckingLit', 'CozyPlaces', 'Damnthatsinteresting', 'BeAmazed',
             'whitepeopletwitter', 'blackpeopletwitter', 'youseeingthisshit', 'rareinsults', 'brandnewsentence', 'technicallythetruth',
-            'TIHI', 'Tinder', 'MurderedByWords', 'blursedimages'
+            'TIHI', 'Tinder', 'MurderedByWords', 'blursedimages',
             'gaming', 'aww', 'pics', 'gifs', 'mildlyinteresting', 'interestingasfuck', 'NatureIsFuckingLit', 'technology', 'science',
             'EarthPorn', 'food', 'Art', 'OldSchoolCool', 'CatastrophicFailure', 'IdiotsInCars', 'oddlysatisfying', 'crappydesign'
         ];
@@ -471,7 +471,7 @@ class MemeApp {
             'https://i.imgflip.com/1bhm.jpg',   // Aliens Guy
             'https://i.imgflip.com/1bh9.jpg',   // Gangnam Style
             'https://i.imgflip.com/1bhq.jpg',   // Anchorman I Don't Believe You
-            'https://i.imgflip.com/1bhs.jpg'    // Dr Evil Laser
+            'https://i.imgflip.com/1bhs.jpg',    // Dr Evil Laser
             'https://i.imgflip.com/33e92f.jpg', // Confused Math Lady
             'https://i.imgflip.com/1op9.jpg',   // You Shall Not Pass (Gandalf)
             'https://i.imgflip.com/22bdq6.jpg', // Distracted Boyfriend (Wait, already have this? 1ur9b0. Yes. Reuse is fine or skip)
@@ -522,7 +522,7 @@ class MemeApp {
              { id: 'laugh', name: 'LOL', icon: '🤣' },
              { id: 'cricket', name: 'Awkward', icon: '😳' },
              { id: 'boo', name: 'Trash', icon: '🗑️' },
-             { id: 'wow', name: 'Amazing', icon: '✨' }
+             { id: 'wow', name: 'Amazing', icon: '✨' },
              { id: 'wow', name: 'Gasp', icon: '😱' }, // Reuse
              { id: 'boo', name: 'No God No', icon: '🙅' }, // Reuse
              { id: 'success', name: 'Applause', icon: '👏' }, // Reuse
@@ -1192,7 +1192,10 @@ class MemeApp {
     }
 
     updateMusicUI() {
-        document.getElementById('music-track-name').innerText = this.musicTracks[this.currentTrackIndex].title;
+        const el = document.getElementById('music-track-name');
+        if (el) {
+            el.innerText = this.musicTracks[this.currentTrackIndex].title;
+        }
     }
 
     renderShop() {
