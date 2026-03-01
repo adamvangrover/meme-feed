@@ -471,7 +471,7 @@ class MemeApp {
             'https://i.imgflip.com/1bhm.jpg',   // Aliens Guy
             'https://i.imgflip.com/1bh9.jpg',   // Gangnam Style
             'https://i.imgflip.com/1bhq.jpg',   // Anchorman I Don't Believe You
-            'https://i.imgflip.com/1bhs.jpg',   // Dr Evil Laser
+            'https://i.imgflip.com/1bhs.jpg',    // Dr Evil Laser
             'https://i.imgflip.com/33e92f.jpg', // Confused Math Lady
             'https://i.imgflip.com/1op9.jpg',   // You Shall Not Pass (Gandalf)
             'https://i.imgflip.com/22bdq6.jpg', // Distracted Boyfriend (Wait, already have this? 1ur9b0. Yes. Reuse is fine or skip)
@@ -534,7 +534,31 @@ class MemeApp {
         // Init volumes
         Object.values(this.sounds).forEach(s => s.volume = 0.3);
 
+        // Music Player Init
+        this.bgMusic = new Audio('https://assets.mixkit.co/active_storage/sfx/1239/1239-preview.mp3'); // Placeholder lo-fi/chill track
+        this.bgMusic.loop = true;
+        this.bgMusic.volume = 0.2;
+        this.isMusicPlaying = false;
+
         this.init();
+    }
+
+    toggleMusic() {
+        const icon = document.getElementById('music-icon');
+        if (this.isMusicPlaying) {
+            this.bgMusic.pause();
+            this.isMusicPlaying = false;
+            if(icon) icon.className = "fas fa-music";
+            this.showToast("Music Paused ⏸️");
+        } else {
+            this.bgMusic.play().catch(e => {
+                console.error("Music play failed:", e);
+                alert("Audio play failed. Interaction required.");
+            });
+            this.isMusicPlaying = true;
+            if(icon) icon.className = "fas fa-pause";
+            this.showToast("Music Playing 🎵");
+        }
     }
 
     init() {
@@ -543,9 +567,6 @@ class MemeApp {
         this.checkDailyQuests();
         this.applyTheme();
         this.setupEventListeners();
-        this.initNewsTicker();
-        this.initMusicPlayer();
-        this.runTutorial();
 
         // Load network users
         this.fetchNetworkUsers().then(() => {
@@ -577,10 +598,105 @@ class MemeApp {
             }
 
             this.startNetworkSimulation();
+            this.startNewsTicker();
             this.restorePurchases();
             this.renderStickerOptions();
             this.renderTemplateOptions();
+            
+            // Tutorial Check
+            if (!localStorage.getItem('meme_tutorial_seen')) {
+                setTimeout(() => this.runTutorial(), 1000);
+            }
         });
+    }
+
+    runTutorial() {
+        this.tutorialStep = 0;
+        this.tutorialSteps = [
+            { el: '#btn-feed', title: 'The Feed', text: 'Scroll infinitely to see the dankest memes.' },
+            { el: '#btn-personalities', title: 'Personalities', text: 'Interact with AI characters like Doge and Giga Chad.' },
+            { el: 'button[title="Create Meme"]', title: 'Create', text: 'Make your own memes using the advanced editor.' },
+            { el: '#user-coins', title: 'Economy', text: 'Earn coins by engaging and spend them in the shop.' },
+            { el: 'button[title="Leaderboard"]', title: 'Leaderboard', text: 'Compete for the top spot!' }
+        ];
+        
+        document.getElementById('tutorial-overlay').classList.remove('hidden');
+        this.showTutorialStep();
+    }
+
+    showTutorialStep() {
+        const step = this.tutorialSteps[this.tutorialStep];
+        const target = document.querySelector(step.el);
+        const box = document.getElementById('tutorial-box');
+        
+        // Remove previous highlights
+        document.querySelectorAll('.tutorial-highlight').forEach(el => el.classList.remove('tutorial-highlight'));
+
+        if (target) {
+            target.classList.add('tutorial-highlight');
+            const rect = target.getBoundingClientRect();
+            
+            // Position box near target
+            let top = rect.bottom + 10;
+            let left = rect.left;
+            
+            // Adjust if off screen
+            if (left + 300 > window.innerWidth) left = window.innerWidth - 320;
+            if (top + 200 > window.innerHeight) top = rect.top - 200;
+
+            box.style.top = `${top}px`;
+            box.style.left = `${left}px`;
+        } else {
+            // Center if target not found
+            box.style.top = '50%';
+            box.style.left = '50%';
+            box.style.transform = 'translate(-50%, -50%)';
+        }
+
+        document.getElementById('tutorial-title').innerText = step.title;
+        document.getElementById('tutorial-text').innerText = step.text;
+    }
+
+    nextTutorialStep() {
+        this.tutorialStep++;
+        if (this.tutorialStep >= this.tutorialSteps.length) {
+            this.closeTutorial();
+        } else {
+            this.showTutorialStep();
+        }
+    }
+
+    closeTutorial() {
+        document.getElementById('tutorial-overlay').classList.add('hidden');
+        document.querySelectorAll('.tutorial-highlight').forEach(el => el.classList.remove('tutorial-highlight'));
+        localStorage.setItem('meme_tutorial_seen', 'true');
+        this.showToast("You're ready to meme! 🚀");
+    }
+
+    startNewsTicker() {
+        const headlines = [
+            "BREAKING: Doge coin creates new millionaire.",
+            "Scientists confirm memes are good for health.",
+            "Local cat becomes internet sensation.",
+            "Area man scrolls for 12 hours straight.",
+            "New study shows 99% of people love pizza.",
+            "Meme stock hits all time high.",
+            "Aliens prefer dank memes over contact.",
+            "Keyboard Cat voted president of the internet.",
+            "Rick Astley never gives you up.",
+            "Pepe declared most versatile frog.",
+            "Shrek 5 announced, internet breaks.",
+            "Grumpy Cat statue unveiled in park.",
+            "Woman yelling at cat meme resolves conflict.",
+            "Distracted boyfriend finally makes a choice.",
+            "Is this a pigeon? Experts say maybe."
+        ];
+
+        const tickerContent = document.getElementById('ticker-content');
+        if(!tickerContent) return;
+
+        // Populate initial content
+        tickerContent.innerHTML = headlines.map(h => `<div class="ticker-item">🔥 ${h}</div>`).join('');
     }
 
     loadState() {
@@ -1058,144 +1174,51 @@ class MemeApp {
     }
 
     renderLeaderboard() {
-        const container = document.getElementById('leaderboard-content');
+        const container = document.getElementById('leaderboard-table');
         if (!container) return;
+        container.innerHTML = '';
 
         // Combine network users and current user
-        let allUsers = [...this.state.networkUsers];
-        // Ensure current user is in list if not already
-        if (!allUsers.find(u => u.id === this.state.currentUser.id)) {
-            allUsers.push(this.state.currentUser);
-        }
-
-        // Assign random XP to network users if missing
+        const allUsers = [...this.state.networkUsers];
+        // Calculate fake XP for network users based on simulated activity
         allUsers.forEach(u => {
-            if (u.xp === undefined) {
-                // Deterministic pseudo-random based on name length or id
-                u.xp = (u.name.length * 100) + Math.floor(Math.random() * 500);
-                if (u.isMe) u.xp = this.state.userStats.xp; // Use real XP for me
-            }
+            // Deterministic fake XP based on ID hash or similar, plus some simulation randomness
+            // We use simple hash of name length + ID for base, plus simulated engagement
+            u.xp = (u.name.length * 100) + Math.floor(Math.random() * 500);
+            u.level = Math.floor(u.xp / 100) + 1;
         });
 
-        // Sort by XP descending
+        // Add current user
+        allUsers.push({
+            ...this.state.currentUser,
+            xp: this.state.userStats.xp + (this.state.userStats.level * 100), // Approximate total XP
+            level: this.state.userStats.level
+        });
+
+        // Sort by XP desc
         allUsers.sort((a, b) => b.xp - a.xp);
 
-        // Top 20
-        const topUsers = allUsers.slice(0, 20);
+        // Render top 20
+        allUsers.slice(0, 20).forEach((u, index) => {
+            const row = document.createElement('div');
+            row.className = 'leaderboard-row';
+            
+            // Highlight current user
+            if (u.isMe) row.style.border = '2px solid var(--accent-color)';
 
-        let html = `
-            <table>
-                <thead>
-                    <tr>
-                        <th>Rank</th>
-                        <th>User</th>
-                        <th>XP</th>
-                        <th>Level</th>
-                    </tr>
-                </thead>
-                <tbody>
-        `;
-
-        topUsers.forEach((u, index) => {
-            const rank = index + 1;
-            let rankClass = 'rank-other';
-            if (rank === 1) rankClass = 'rank-1';
-            if (rank === 2) rankClass = 'rank-2';
-            if (rank === 3) rankClass = 'rank-3';
-
-            const rowStyle = u.isMe ? 'background: rgba(255, 75, 43, 0.2); font-weight: bold;' : '';
-            const level = Math.floor(u.xp / 100) + 1;
-
-            html += `
-                <tr style="${rowStyle}">
-                    <td><span class="rank-badge ${rankClass}">${rank}</span></td>
-                    <td style="display: flex; align-items: center; gap: 10px;">
-                        <img src="${u.image}" style="width: 30px; height: 30px; border-radius: 50%;">
-                        ${u.name} ${u.isMe ? '(You)' : ''}
-                    </td>
-                    <td>${u.xp}</td>
-                    <td>${level}</td>
-                </tr>
+            row.innerHTML = `
+                <div class="leaderboard-rank">#${index + 1}</div>
+                <div class="leaderboard-user">
+                    <img src="${u.image}" class="leaderboard-avatar">
+                    <div class="leaderboard-info">
+                        <div class="leaderboard-name">${u.name} ${u.isMe ? '(You)' : ''}</div>
+                        <div style="font-size:0.8rem; color:#888;">Level ${u.level}</div>
+                    </div>
+                </div>
+                <div class="leaderboard-score">${u.xp} XP</div>
             `;
+            container.appendChild(row);
         });
-
-        html += `</tbody></table>`;
-        container.innerHTML = html;
-    }
-
-    initNewsTicker() {
-        const headlines = [
-            "BREAKING: Local Cat Promoted to CEO of Naptime Inc. 🐱",
-            "Doge Coin up 5000% after Elon Musk tweets 'Wow' 🚀",
-            "Scientist discovers new color, names it 'Blellow' 🎨",
-            "Florida Man tries to rob bank with an alligator 🐊",
-            "Study finds 99% of meetings could have been an email 📧",
-            "Area 51 Raid scheduled for next Tuesday, bring snacks 👽",
-            "Pizza declared a vegetable by toddler logic 🍕",
-            "Programmer fixes bug by staring at it really hard 💻",
-            "Report: Your FBI agent is proud of you 🕵️",
-            "New study confirms: The floor is indeed lava 🔥",
-            "Meme shortage predicted for 2025, stockpile now! 📉",
-            "Local dog is 'Good Boy', sources confirm 🐶"
-        ];
-
-        const tickerContent = document.querySelector('.ticker-content');
-        if (tickerContent) {
-            // Duplicate for smooth loop
-            const text = headlines.join("  •  ") + "  •  ";
-            tickerContent.innerText = text + text;
-        }
-    }
-
-    initMusicPlayer() {
-        this.musicTracks = [
-            { title: "Chill Lofi 1", src: "https://assets.mixkit.co/music/preview/mixkit-tech-house-vibes-130.mp3" },
-            { title: "Relaxing Beat", src: "https://assets.mixkit.co/music/preview/mixkit-hip-hop-02-738.mp3" },
-            { title: "Study Mode", src: "https://assets.mixkit.co/music/preview/mixkit-driving-ambition-32.mp3" },
-            { title: "Night Vibe", src: "https://assets.mixkit.co/music/preview/mixkit-night-sky-1024.mp3" }
-        ];
-        this.currentTrackIndex = 0;
-        this.musicAudio = new Audio(this.musicTracks[0].src);
-        this.musicAudio.volume = 0.3;
-        this.musicAudio.loop = true; // Loop current track or handle ended event for next
-
-        this.musicAudio.addEventListener('ended', () => this.nextTrack());
-
-        const widget = document.getElementById('music-player-widget');
-        if (widget) widget.classList.remove('hidden');
-        this.updateMusicUI();
-    }
-
-    toggleMusic() {
-        const btn = document.getElementById('music-play-btn');
-        if (this.musicAudio.paused) {
-            this.musicAudio.play().then(() => {
-                btn.innerHTML = '<i class="fas fa-pause"></i>';
-            }).catch(e => console.error("Play error", e));
-        } else {
-            this.musicAudio.pause();
-            btn.innerHTML = '<i class="fas fa-play"></i>';
-        }
-    }
-
-    nextTrack() {
-        this.currentTrackIndex = (this.currentTrackIndex + 1) % this.musicTracks.length;
-        this.musicAudio.src = this.musicTracks[this.currentTrackIndex].src;
-        if (!this.musicAudio.paused || document.getElementById('music-play-btn').innerHTML.includes('pause')) {
-             this.musicAudio.play();
-        }
-        this.updateMusicUI();
-    }
-
-    setMusicVolume(val) {
-        this.musicAudio.volume = val;
-    }
-
-    updateMusicUI() {
-        const trackNameEl = document.getElementById('music-track-name');
-        if (trackNameEl) {
-            trackNameEl.innerText = this.musicTracks[this.currentTrackIndex].title;
-        }
     }
 
     renderShop() {
@@ -1637,8 +1660,8 @@ class MemeApp {
                 <button onclick="app.react('${meme.url}', '🤡')">🤡</button>
                 <button onclick="app.toggleComments('${memeDiv.id}')" title="Comment"><i class="far fa-comment"></i></button>
                 <button onclick="app.shareMeme('${meme.url}')" title="Share"><i class="fas fa-share-alt"></i></button>
+                <button onclick="app.remixMeme('${meme.url}')" title="Remix This"><i class="fas fa-pencil-alt"></i></button>
                 <button onclick="app.speakCaption(this.closest('.meme').querySelector('.caption').innerText)" title="Speak"><i class="fas fa-volume-up"></i></button>
-                <button onclick="app.remixMeme('${meme.url}')" title="Remix"><i class="fas fa-paint-brush"></i></button>
                 ${saveBtn}
                 ${removeBtn}
             </div>
@@ -1823,6 +1846,11 @@ class MemeApp {
         this.state.savedMemes = this.state.savedMemes.filter(m => m.url !== memeUrl);
         this.saveState();
         this.renderSavedMemes();
+    }
+
+    remixMeme(memeUrl) {
+        this.openMemeEditor(memeUrl);
+        this.showToast("Remix Mode Activated 🎨");
     }
 
     speakCaption(text) {
@@ -2474,10 +2502,6 @@ class MemeApp {
          link.click();
     }
 
-    remixMeme(url) {
-        this.openMemeEditor(url);
-    }
-
     generateRandomMeme() {
         const template = this.getRandomItem(this.classicMemes);
         const caption = this.getRandomItem(this.captions);
@@ -2953,58 +2977,6 @@ class MemeApp {
         return this.getRandomItem(responses);
     }
 
-    runTutorial() {
-        if (!localStorage.getItem('tutorialComplete')) {
-            const overlay = document.getElementById('tutorial-overlay');
-            if(overlay) overlay.classList.remove('hidden');
-            this.tutorialStep = 0;
-            this.tutorialSteps = [
-                { id: 'btn-feed', text: 'This is your Meme Feed. Infinite scrolling fun!' },
-                { id: 'theme-selector', text: 'Customize your look with themes!' },
-                { id: 'btn-profile', text: 'Check your stats, badges, and level.' },
-                { id: 'btn-zen', text: 'Need to relax? Try Zen Mode for auto-scroll.' }
-            ];
-        }
-    }
-
-    nextTutorialStep() {
-        // Clear previous highlight
-        if (this.currentHighlight) {
-            this.currentHighlight.classList.remove('highlight-element');
-        }
-
-        if (this.tutorialStep >= this.tutorialSteps.length) {
-            this.skipTutorial();
-            return;
-        }
-
-        const step = this.tutorialSteps[this.tutorialStep];
-        const el = document.getElementById(step.id);
-        
-        if (el) {
-            el.classList.add('highlight-element');
-            this.currentHighlight = el;
-            
-            document.getElementById('tutorial-title').innerText = "Did you know? 💡";
-            document.getElementById('tutorial-text').innerText = step.text;
-            
-            this.tutorialStep++;
-        } else {
-            // Skip missing element
-            this.tutorialStep++;
-            this.nextTutorialStep();
-        }
-    }
-
-    skipTutorial() {
-        document.getElementById('tutorial-overlay').classList.add('hidden');
-        if (this.currentHighlight) {
-            this.currentHighlight.classList.remove('highlight-element');
-        }
-        localStorage.setItem('tutorialComplete', 'true');
-        this.showToast("Tutorial Completed! 🎓");
-    }
-
     renderProfile() {
         document.getElementById('profile-name').innerText = this.state.currentUser.name;
         document.getElementById('profile-img').src = this.state.currentUser.image;
@@ -3074,5 +3046,8 @@ class MemeApp {
 }
 
 // Initialize the app
-const app = new MemeApp();
-window.app = app; // Expose for inline handlers
+let app;
+window.onload = () => {
+    app = new MemeApp();
+    window.app = app; // Expose for inline handlers
+};
