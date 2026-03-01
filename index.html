@@ -346,6 +346,13 @@
     </div>
 
     <script src="script.js"></script>
-
+    <script>
+        // Ensure app is globally accessible for inline handlers and testing
+        window.onload = function() {
+            if (typeof app === 'undefined' && typeof MemeApp !== 'undefined') {
+                window.app = new MemeApp();
+            }
+        };
+    </script>
 </body>
 </html>
