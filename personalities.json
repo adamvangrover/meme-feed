@@ -628,5 +628,40 @@
     "image": "https://robohash.org/travel?set=set2",
     "text": "Wanderlust.",
     "voice": { "lang": "en-US", "pitch": 1.0, "rate": 1.0 }
+  },
+  {
+    "id": "p91",
+    "name": "The Explorer",
+    "image": "https://robohash.org/explorer?set=set1",
+    "text": "Mapping uncharted memes.",
+    "voice": { "lang": "en-US", "pitch": 1.1, "rate": 1.0 }
+  },
+  {
+    "id": "p92",
+    "name": "The Comedian",
+    "image": "https://robohash.org/comedian?set=set1",
+    "text": "Is this mic on?",
+    "voice": { "lang": "en-US", "pitch": 1.2, "rate": 1.1 }
+  },
+  {
+    "id": "p93",
+    "name": "The Politician",
+    "image": "https://robohash.org/politician?set=set1",
+    "text": "I promise more memes.",
+    "voice": { "lang": "en-US", "pitch": 0.9, "rate": 0.9 }
+  },
+  {
+    "id": "p94",
+    "name": "The Teacher",
+    "image": "https://robohash.org/teacher?set=set1",
+    "text": "Pay attention class.",
+    "voice": { "lang": "en-US", "pitch": 1.0, "rate": 0.9 }
+  },
+  {
+    "id": "p95",
+    "name": "The Critic",
+    "image": "https://robohash.org/critic?set=set1",
+    "text": "2 out of 5 stars.",
+    "voice": { "lang": "en-US", "pitch": 0.8, "rate": 1.0 }
   }
 ]

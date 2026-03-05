@@ -96,6 +96,24 @@
     --modal-bg: rgba(62, 39, 35, 0.9);
 }
 
+[data-theme='neon'] {
+    --bg-color: #000000;
+    --card-bg: #1a1a1a;
+    --text-color: #00ffff;
+    --accent-color: #ff00ff;
+    --secondary-bg: #333333;
+    --modal-bg: rgba(0, 0, 0, 0.9);
+}
+
+[data-theme='monochrome'] {
+    --bg-color: #ffffff;
+    --card-bg: #eeeeee;
+    --text-color: #000000;
+    --accent-color: #555555;
+    --secondary-bg: #dddddd;
+    --modal-bg: rgba(255, 255, 255, 0.9);
+}
+
 body {
     background-color: var(--bg-color);
     color: var(--text-color);
