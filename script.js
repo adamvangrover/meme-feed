@@ -55,7 +55,9 @@ class MemeApp {
             { id: 'theme_matrix', name: 'Matrix Theme', type: 'theme', value: 'matrix', cost: 500, icon: '💻', desc: 'Enter the Matrix.' },
             { id: 'theme_vaporwave', name: 'Vaporwave Theme', type: 'theme', value: 'vaporwave', cost: 600, icon: '🌆', desc: 'Aesthetic vibes only.' },
             { id: 'pack_stickers_1', name: 'Rare Stickers', type: 'sticker_pack', value: ['👽', '👾', '🤖', '🦖'], cost: 300, icon: '📦', desc: 'Unlocks 4 rare stickers.' },
-            { id: 'xp_boost', name: 'XP Boost', type: 'consumable', value: 100, cost: 200, icon: '⚡', desc: 'Instantly gain 100 XP.' }
+            { id: 'xp_boost', name: 'XP Boost', type: 'consumable', value: 100, cost: 200, icon: '⚡', desc: 'Instantly gain 100 XP.' },
+            { id: 'theme_neon', name: 'Neon Theme', type: 'theme', value: 'neon', cost: 700, icon: '💡', desc: 'Bright and flashy.' },
+            { id: 'theme_monochrome', name: 'Monochrome Theme', type: 'theme', value: 'monochrome', cost: 400, icon: '⚫', desc: 'Black and white.' }
         ];
 
         this.badgesList = [
@@ -327,7 +329,12 @@ class MemeApp {
             "Me trying to understand math.",
             "When you look at your bank account.",
             "Me: I'll start my diet tomorrow.",
-            "When you realize you're an adult now."
+            "When you realize you're an adult now.",
+            "When you see a dog on the street.",
+            "Me trying to explain my dreams.",
+            "When the food is too hot but you eat it anyway.",
+            "Me remembering something embarrassing I did 5 years ago.",
+            "When you accidentally hit reply all."
         ];
 
         this.stickers = ["🔥", "😂", "💀", "🤡", "😱", "🎉", "🥶", "👀", "💯", "🤔", "🤣", "👍", "❤️", "✨", "🚀",
@@ -400,7 +407,8 @@ class MemeApp {
             "Say sike right now.", "Thomas had never seen such bullshit before.", "They had us in the first half, not gonna lie.",
             "And that's a fact.", "Change my mind.", "Is this a pigeon?", "Well yes, but actually no.",
             "I used the stones to destroy the stones.", "Small price to pay for salvation.", "I don't feel so good.",
-            "Get this man a shield.", "Wakanda forever."
+            "Get this man a shield.", "Wakanda forever.",
+            "This is the way.", "I have spoken.", "Hello there.", "General Kenobi!", "May the Force be with you."
         ];
 
         this.subreddits = [
@@ -488,7 +496,12 @@ class MemeApp {
             'https://i.imgflip.com/49z6c.jpg',  // Surprised Pikachu (high res)
             'https://i.imgflip.com/2fm6x.jpg',  // Skeptical African Kid
             'https://i.imgflip.com/1ii4oc.jpg', // This Is Fine
-            'https://i.imgflip.com/2t8r9a.jpg'  // Woman Yelling At Cat (Top quality)
+            'https://i.imgflip.com/2t8r9a.jpg',  // Woman Yelling At Cat (Top quality)
+            'https://i.imgflip.com/1g8my4.jpg', // Two Buttons
+            'https://i.imgflip.com/1ur9b0.jpg', // Distracted Boyfriend
+            'https://i.imgflip.com/1bhk.jpg', // Success Kid
+            'https://i.imgflip.com/261o3j.jpg', // Bernie I Am Once Again Asking
+            'https://i.imgflip.com/1bhf.jpg' // Brace Yourselves
         ];
 
         this.sounds = {
@@ -528,7 +541,9 @@ class MemeApp {
              { id: 'success', name: 'Applause', icon: '👏' }, // Reuse
              { id: 'drum', name: 'Rimshot', icon: '🥁' }, // Reuse
              { id: 'sad', name: 'Fail', icon: '📉' }, // Reuse
-             { id: 'success', name: 'Level Up', icon: '🆙' } // Reuse
+             { id: 'success', name: 'Level Up', icon: '🆙' }, // Reuse
+             { id: 'success', name: 'Cheer', icon: '🥳' }, // Reuse
+             { id: 'airhorn', name: 'Alert', icon: '🚨' } // Reuse
         ];
 
         // Init volumes
@@ -2959,6 +2974,11 @@ class MemeApp {
         if (user.name === 'Hacker') return this.getRandomItem(["I'm in.", "Access granted.", "Firewall breached.", "System compromised."]);
         if (user.name === 'Gym Rat') return this.getRandomItem(["Do you even lift?", "Light weight baby!", "Gains.", "Protein.", "Leg day."]);
         if (user.name === 'Traveler') return this.getRandomItem(["Wanderlust.", "Catch flights not feelings.", "Adventure awaits.", "Just got back from Bali."]);
+        if (user.name === 'The Explorer') return this.getRandomItem(["I've discovered a new meme format.", "Let's venture into the unknown.", "This is uncharted territory.", "Adventure is out there!"]);
+        if (user.name === 'The Comedian') return this.getRandomItem(["Is this mic on?", "Tough crowd.", "That's a knee slapper.", "I'm here all week!"]);
+        if (user.name === 'The Politician') return this.getRandomItem(["I promise more memes.", "I approve this message.", "Let's build a bridge.", "Vote for me!"]);
+        if (user.name === 'The Teacher') return this.getRandomItem(["Pay attention class.", "There are no stupid questions.", "Did you do the reading?", "Pop quiz!"]);
+        if (user.name === 'The Critic') return this.getRandomItem(["2 out of 5 stars.", "Derivative.", "I expected better.", "A triumph of modern art."]);
 
         // Generic
         const responses = [
