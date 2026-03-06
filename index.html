@@ -253,8 +253,14 @@
                     <button class="action-btn secondary" onclick="app.toggleTemplates()" style="margin-bottom: 15px; width: 100%;">Browse Templates 🖼️</button>
                     <div id="template-grid" class="hidden"></div>
 
+
+                    <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                        <button class="action-btn secondary" onclick="app.generateMagicCaption()" style="flex: 1;"><i class="fas fa-magic"></i> Magic Caption</button>
+                        <button class="action-btn secondary" onclick="app.stickerBomb()" style="flex: 1;"><i class="fas fa-bomb"></i> Sticker Bomb</button>
+                    </div>
+
                     <div class="control-group">
-                        <label>Top Text</label>
+
                         <input type="text" id="top-text" placeholder="TOP TEXT" oninput="app.drawCanvas()">
                     </div>
                     <div class="control-group">
@@ -273,6 +279,29 @@
                         </div>
                     </div>
 
+
+                    <div class="control-row">
+                        <div class="control-group half">
+                            <label>Font Style</label>
+                            <select id="font-style" onchange="app.drawCanvas()" style="width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc;">
+                                <option value="normal">Normal</option>
+                                <option value="italic">Italic</option>
+                                <option value="oblique">Oblique</option>
+                            </select>
+                        </div>
+                        <div class="control-group half">
+                            <label>Stroke Width</label>
+                            <input type="range" id="stroke-width" min="0" max="10" value="2" oninput="app.drawCanvas()" style="width: 100%;">
+                        </div>
+                    </div>
+
+                    <div class="control-row">
+                        <div class="control-group half">
+                            <label>Stroke Color</label>
+                            <input type="color" id="stroke-color" value="#000000" oninput="app.drawCanvas()">
+                        </div>
+                    </div>
+
                     <div class="control-group">
                         <label>Filters</label>
                         <div class="filter-buttons">
@@ -281,6 +310,9 @@
                             <button onclick="app.applyFilter('sepia')" class="filter-btn" style="filter: sepia(1); background: #f4ecd8; color: #5b4636;">Sepia</button>
                             <button onclick="app.applyFilter('invert')" class="filter-btn" style="filter: invert(1); background: white; color: black;">Invert</button>
                             <button onclick="app.applyFilter('contrast')" class="filter-btn">Fried 🍟</button>
+
+                            <button onclick="app.applyFilter('blur')" class="filter-btn" style="filter: blur(1px);">Blur</button>
+                            <button onclick="app.applyFilter('huerotate')" class="filter-btn" style="filter: hue-rotate(90deg);">Alien</button>
                         </div>
                     </div>
 

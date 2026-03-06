@@ -228,7 +228,83 @@ class MemeApp {
             "When you look at your bank account.",
             "Me: I'll start my diet tomorrow.",
             "When you realize you're an adult now."
-        ];
+        ,
+
+            "When you thought it was a fart but it wasn't. 💩",
+            "That moment you realize you've been muted the whole meeting. 🎤",
+            "Me: I'm going to be productive today. Also me: 🥔",
+            "When you check your screen time report. 🫣",
+            "Trying to find the end of the tape like... 🎞️",
+            "When the group project is due and you're the only one working. 😤",
+            "Me: I'll just check one notification. 3 hours later... 📱",
+            "When you see someone you know in public and hide. 🙈",
+            "That feeling when you finally fix a bug. 🐛✅",
+            "When you type your password wrong 3 times. 🔒",
+            "Me: I don't need a jacket. Me outside: 🥶",
+            "When you drop your phone on your face in bed. 🤕",
+            "Trying to look busy at work when the boss walks by. ⌨️",
+            "When you realize you have to cook dinner every day forever. 🍳",
+            "Me: I'm listening. My brain: 🐵🥁",
+            "When you accidentally hit 'reply all'. 📧",
+            "That one song you can't get out of your head. 🎶",
+            "When you try to take a aesthetic photo but look like a goblin. 👺",
+            "Me: I'm on a diet. Also me: 🍕🍔🍟",
+            "When you finally get into bed after a long day. 🛌✨",
+            "When you realize you left the oven on. 🔥",
+            "Me explaining why I need another plant. 🪴",
+            "When you try to do math in your head. 🧮",
+            "When you find a meme that is too specific. 🤨",
+            "Me: I'm going to save this for later. Never looks at it again. 🗑️",
+            "When you realize it's Sunday night. 😫",
+            "Me trying to keep up with slang. 👴",
+            "When you successfully plug in the USB on the first try. 🔌",
+            "Me: I'm chill. Also me: *internally screaming* 😱",
+            "When you realize you're the drama. 🎭"
+
+,
+
+            "When the code compiles on the first try 🤯",
+            "Me looking at my bank account after a night out 📉",
+            "That face you make when the teacher calls on you 👀",
+            "When someone says they don't like pizza 🍕",
+            "My brain trying to process math 🧮",
+            "When the Wi-Fi drops mid-game 🎮",
+            "Me explaining my genius plan to my dog 🐶",
+            "When you find a $20 bill in an old jacket 💵",
+            "Trying to sleep but remembering something embarrassing from 5 years ago 🤦",
+            "When the food delivery arrives 30 mins early 🍔",
+            "Me pretending to work while looking at memes 💻",
+            "When your phone is at 1% and you can't find the charger 🔋",
+            "The realization that tomorrow is Monday again 📅",
+            "When you accidentally like a post from 2012 ❤️",
+            "Me judging people on reality TV while eating a whole bag of chips 📺",
+            "When the joke lands perfectly 🎯",
+            "That moment you realize you're the drama 🎭",
+            "When the group chat gets way too political 💬",
+            "Me trying to be healthy vs the box of cookies staring at me 🍪",
+            "When the 'quick 5 min nap' turns into a 3 hour hibernation 😴",
+            "My last two brain cells trying to form a coherent sentence 🧠",
+            "When you hold the door for someone and they don't say thank you 🚪",
+            "Me waiting for my package to arrive tracking it every 5 minutes 📦",
+            "When the playlist hits right during a road trip 🚗",
+            "Trying to look cool while slipping on ice ⛸️",
+            "When you send a risky text and immediately throw your phone away 📱",
+            "Me trying to understand the plot of this movie 🤔",
+            "When you realize you forgot to thaw the chicken and your mom is pulling up 🍗",
+            "The look I give my best friend when *that* person walks in 👀",
+            "When you hit your pinky toe on the furniture 🦶",
+            "Me trying to adult 👔",
+            "When the coffee hasn't kicked in yet ☕",
+            "That feeling of taking off your shoes after a long day 👞",
+            "When the dog does something cute and you miss recording it 🐕",
+            "Me calculating how much sleep I can get if I fall asleep RIGHT NOW ⏱️",
+            "When you tell a joke and nobody laughs 🦗",
+            "The face of pure determination when trying to open a jar 🫙",
+            "When you successfully parallel park on the first try 🚘",
+            "Me looking for who asked 🔭",
+            "When the plot twist is actually good 🍿"
+
+];
 
         this.stickers = ["🔥", "😂", "💀", "🤡", "😱", "🎉", "🥶", "👀", "💯", "🤔", "🤣", "👍", "❤️", "✨", "🚀",
                          "😎", "🤓", "🤑", "🤠", "🤖", "👻", "👽", "💩", "🧠", "💪", "🤙", "🤘", "👎", "👋", "🙏",
@@ -253,7 +329,28 @@ class MemeApp {
                          "🏄", "🏄‍♂️", "🏊‍♀️", "🏊", "🏊‍♂️", "🤽‍♀️", "🤽", "🤽‍♂️", "🚣‍♀️", "🚣", "🚣‍♂️", "🧗‍♀️", "🧗",
                          "🧗‍♂️", "🚵‍♀️", "🚵", "🚵‍♂️", "🚴‍♀️", "🚴", "🚴‍♂️", "🏆", "🥇", "🥈", "🥉", "🏅", "🎖️", "🏵️",
                          "🎗️", "🎫", "🎟️", "🎪", "🤹", "🎭", "🩰", "🎨", "🎬", "🎤", "🎧", "🎼", "🎹", "🥁", "🎷", "🎺",
-                         "🎸", "🪕", "🎻", "🎲", "♟️", "🎯", "🎳", "🎮", "🎰", "🧩"];
+                         "🎸", "🪕", "🎻", "🎲", "♟️", "🎯", "🎳", "🎮", "🎰", "🧩",
+
+"🦄", "🦅", "🦆", "🦉", "🦇", "🐺", "🐗", "🐴", "🐝", "🪱", "🐛", "🦋", "🐌", "🐞", "🐜", "🪰", "🪲", "🪳", "🦟", "🦗", "🕷️", "🕸️", "🦂", "🐢", "🐍", "🦎", "🦖", "🦕",
+"🐙", "🦑", "🦐", "🦞", "🦀", "🐡", "🐠", "🐟", "🐬", "🐳", "🐋", "🦈", "🦭", "🐊", "🐅", "🐆", "🦓", "🦍", "🦧", "🦣",
+"🐘", "🦛", "🦏", "🐪", "🐫", "🦒", "🦘", "🦬", "🐃", "🐂", "🐄", "🐎", "🐖", "🐏", "🐑", "🦙", "🐐", "🦌", "🐕", "🐩",
+"🦮", "🐕‍🦺", "🐈", "🐈‍⬛", "🐓", "🦃", "🦚", "🦜", "🦢", "🦩", "🕊️", "🐇", "🦝", "🦨", "🦡", "🦫", "🦦", "🦥", "🐁", "🐀",
+"🐿️", "🦔", "🐾", "🐉", "🐲", "🌵", "🎄", "🌲", "🌳", "🌴", "🪵", "🌱", "🌿", "☘️", "🍀", "🎍", "🪴", "🎋", "🍃", "🍂",
+"🍁", "🍄", "🐚", "🪨", "🌾", "💐", "🌷", "🌹", "🥀", "🌺", "🌸", "🌼", "🌻", "🌞", "🌝", "🌛", "🌜", "🌚", "🌕", "🌖",
+"🌗", "🌘", "🌑", "🌒", "🌓", "🌔", "🌙", "🌎", "🌍", "🌏", "🪐", "💫", "⭐️", "🌟", "✨", "⚡️", "☄️", "💥", "🔥", "🌪️",
+"🌈", "☀️", "🌤️", "⛅️", "🌥️", "☁️", "🌦️", "🌧️", "⛈️", "🌩️", "🌨️", "❄️", "☃️", "⛄️", "🌬️", "💨", "💧", "💦", "🫧", "☔️",
+"⌚️", "📱", "📲", "💻", "⌨️", "🖥️", "🖨️", "🖱️", "🖲️", "🕹️", "🗜️", "💽", "💾", "💿", "📀", "📼", "📷", "📸", "📹", "🎥",
+"📽️", "🎞️", "📞", "☎️", "📠", "📺", "📻", "🎙️", "🎚️", "🎛️", "⏱️", "⏲️", "⏰", "🕰️", "⌛️", "⏳", "📡", "🔋",
+"🔌", "💡", "🔦", "🕯️", "🪔", "🧯", "🛢️", "💸", "💵", "💴", "💶", "💷", "🪙", "💰", "💳", "💎", "⚖️", "🪜", "🧰", "🪛",
+"🔧", "🔨", "⚒️", "🛠️", "⛏️", "🪚", "🔩", "⚙️", "🪤", "🧱", "⛓️", "🧲", "🔫", "💣", "🧨", "🪓", "🔪", "🗡️", "⚔️", "🛡️",
+"🚬", "⚰️", "🪦", "⚱️", "🏺", "🔮", "📿", "🧿", "💈", "⚗️", "🔭", "🔬", "🕳️", "🩹", "🩺", "💊", "💉", "🩸", "🧬", "🦠",
+"🧫", "🧪", "🌡️", "🧹", "🪠", "🧺", "🧻", "🚽", "🚰", "🚿", "🛁", "🛀", "🧼", "🪥", "🪒", "🧽", "🪣", "🧴", "🛎️", "🔑",
+"🗝️", "🚪", "🪑", "🛋️", "🛏️", "🛌", "🧸", "🪆", "🖼️", "🪞", "🪟", "🛍️", "🛒", "🎁", "🎈", "🎏", "🎀", "🪄", "🪅", "🎊",
+"🎉", "🎎", "🏮", "🎐", "🧧", "✉️", "📩", "📨", "📧", "💌", "📥", "📤", "📦", "🏷️", "🪧", "📪", "📫", "📬", "📭", "📮",
+"📯", "📜", "📃", "📄", "📑", "🧾", "📊", "📈", "📉", "🗒️", "🗓️", "📆", "📅", "🗑️", "📇", "🗃️", "🗳️", "🗄️", "📋", "📁",
+"📂", "🗂️", "🗞️", "📰", "📓", "📔", "📒", "📕", "📗", "📘", "📙", "📚", "📖", "🔖", "🧷", "🔗", "📎", "🖇️", "📐", "📏"
+
+];
 
         this.magicReplies = [
             "That's wild 🤯", "No way.", "LMAO 💀", "Facts.", "Big mood.", "I feel that.",
@@ -285,7 +382,19 @@ class MemeApp {
             'comics', 'AnimalsBeingDerps', 'trippinthroughtime', 'starterpacks', 'wholesome', 'reactiongifs', 'facepalm', 'Unexpected', 'nextfuckinglevel', 'MadeMeSmile',
             'gaming', 'aww', 'pics', 'gifs', 'mildlyinteresting', 'interestingasfuck', 'NatureIsFuckingLit', 'technology', 'science',
             'EarthPorn', 'food', 'Art', 'OldSchoolCool', 'CatastrophicFailure', 'IdiotsInCars', 'oddlysatisfying', 'crappydesign'
-        ];
+        ,
+
+            'WTF', 'BlackPeopleTwitter', 'WhitePeopleTwitter', 'BikiniBottomTwitter', 'Animemes', 'DeepFriedMemes', 'surrealmemes',
+            'ComedyCemetery', 'terriblefacebookmemes', 'MemeEconomy', 'PewdiepieSubmissions', 'KidsAreFuckingStupid', 'WatchPeopleDieInside'
+
+,
+
+            'Baking', 'gardening', 'Carpentry', 'Woodworking', 'programming', 'webdev', 'cscareerquestions',
+            'Showerthoughts', 'AskReddit', 'NoStupidQuestions', 'ExplainLikeImFive', 'todayilearned',
+            'LifeProTips', 'YouShouldKnow', 'UnethicalLifeProTips', 'Lifehacks', 'GetMotivated',
+            'Space', 'Astronomy', 'Physics', 'chemistry', 'biology', 'geology'
+
+];
 
         this.classicMemes = [
             'https://i.imgflip.com/30b1gx.jpg', // Drake
@@ -344,7 +453,49 @@ class MemeApp {
             'https://i.imgflip.com/2fm6x.jpg',  // Skeptical African Kid
             'https://i.imgflip.com/1ii4oc.jpg', // This Is Fine
             'https://i.imgflip.com/2t8r9a.jpg'  // Woman Yelling At Cat (Top quality)
-        ];
+        ,
+
+            'https://i.imgflip.com/3eqjd8.jpg',
+            'https://i.imgflip.com/1o14g4.jpg',
+            'https://i.imgflip.com/2ji8cx.jpg',
+            'https://i.imgflip.com/3pnmg.jpg',
+            'https://i.imgflip.com/24y43o.jpg',
+            'https://i.imgflip.com/16iyn1.jpg',
+            'https://i.imgflip.com/2reqtg.jpg',
+            'https://i.imgflip.com/4fabb7.jpg',
+            'https://i.imgflip.com/40808k.jpg',
+            'https://i.imgflip.com/38el31.jpg',
+            'https://i.imgflip.com/1yxkcp.jpg',
+            'https://i.imgflip.com/28s2gu.jpg',
+            'https://i.imgflip.com/51s5.jpg',
+            'https://i.imgflip.com/271ps6.jpg',
+            'https://i.imgflip.com/2hgfw.jpg',
+            'https://i.imgflip.com/265k.jpg',
+            'https://i.imgflip.com/261o3j.jpg',
+            'https://i.imgflip.com/461743.jpg',
+            'https://i.imgflip.com/5c7lwq.jpg'
+
+,
+
+            'https://i.imgflip.com/1ur9b0.jpg', 'https://i.imgflip.com/26am.jpg', 'https://i.imgflip.com/4t0m5.jpg',
+            'https://i.imgflip.com/1g8my4.jpg', 'https://i.imgflip.com/1h7in3.jpg', 'https://i.imgflip.com/1otk96.jpg',
+            'https://i.imgflip.com/2p4q.jpg', 'https://i.imgflip.com/1bhk.jpg', 'https://i.imgflip.com/8p0a.jpg',
+            'https://i.imgflip.com/2ybua0.jpg', 'https://i.imgflip.com/1bip.jpg', 'https://i.imgflip.com/4q3tsl.jpg',
+            'https://i.imgflip.com/1t915.jpg', 'https://i.imgflip.com/39t1o.jpg', 'https://i.imgflip.com/345v97.jpg',
+            'https://i.imgflip.com/1e7ql7.jpg', 'https://i.imgflip.com/3si4.jpg', 'https://i.imgflip.com/1w7ygt.jpg',
+            'https://i.imgflip.com/gtj5t.jpg', 'https://i.imgflip.com/28j0te.jpg', 'https://i.imgflip.com/9ehk.jpg',
+            'https://i.imgflip.com/wxica.jpg', 'https://i.imgflip.com/1jwhww.jpg', 'https://i.imgflip.com/23ls.jpg',
+            'https://i.imgflip.com/1c1uej.jpg', 'https://i.imgflip.com/2896ro.jpg', 'https://i.imgflip.com/1ihk.jpg',
+            'https://i.imgflip.com/2gnnjh.jpg', 'https://i.imgflip.com/3vzej.jpg', 'https://i.imgflip.com/21uy0f.jpg',
+            'https://i.imgflip.com/46e43q.jpg', 'https://i.imgflip.com/1tl71a.jpg', 'https://i.imgflip.com/43a45p.jpg',
+            'https://i.imgflip.com/54hjww.jpg', 'https://i.imgflip.com/9vct.jpg', 'https://i.imgflip.com/2wifvo.jpg',
+            'https://i.imgflip.com/1o00in.jpg', 'https://i.imgflip.com/33e92f.jpg', 'https://i.imgflip.com/1op9.jpg',
+            'https://i.imgflip.com/22bdq6.jpg', 'https://i.imgflip.com/2cp1.jpg', 'https://i.imgflip.com/3l60ph.jpg',
+            'https://i.imgflip.com/2odckz.jpg', 'https://i.imgflip.com/1bgw.jpg', 'https://i.imgflip.com/1bh3.jpg',
+            'https://i.imgflip.com/1b4243.jpg', 'https://i.imgflip.com/2kbn1e.jpg', 'https://i.imgflip.com/390s2y.jpg',
+            'https://i.imgflip.com/319g4i.jpg', 'https://i.imgflip.com/49z6c.jpg', 'https://i.imgflip.com/2fm6x.jpg'
+
+];
 
         this.sounds = {
             pop: new Audio('https://assets.mixkit.co/active_storage/sfx/2578/2578-preview.mp3'),
@@ -379,7 +530,15 @@ class MemeApp {
              { id: 'drum', name: 'Rimshot', icon: '🥁' }, // Reuse
              { id: 'sad', name: 'Fail', icon: '📉' }, // Reuse
              { id: 'success', name: 'Level Up', icon: '🆙' } // Reuse
-        ];
+        ,
+
+             { id: 'airhorn', name: 'Quack', icon: '🦆' },
+             { id: 'laugh', name: 'Meow', icon: '🐱' },
+             { id: 'wow', name: 'Bark', icon: '🐶' },
+             { id: 'pop', name: 'Squeak', icon: '🐭' },
+             { id: 'cricket', name: 'Honk', icon: '🦢' }
+
+];
 
         // Init volumes
         Object.values(this.sounds).forEach(s => s.volume = 0.3);
@@ -1015,6 +1174,18 @@ class MemeApp {
 
     renderPersonalities() {
         this.personalitiesFeed.innerHTML = '';
+
+        const genBtnContainer = document.createElement('div');
+        genBtnContainer.style.width = '100%';
+        genBtnContainer.style.textAlign = 'center';
+        genBtnContainer.style.marginBottom = '20px';
+        const genBtn = document.createElement('button');
+        genBtn.className = 'action-btn primary';
+        genBtn.innerText = '✨ Generate Random Personality';
+        genBtn.onclick = () => this.generateRandomPersonality();
+        genBtnContainer.appendChild(genBtn);
+        this.personalitiesFeed.appendChild(genBtnContainer);
+
         if (this.state.importedPersonalities.length === 0) {
             document.getElementById('no-personalities-msg').style.display = 'block';
             return;
@@ -1134,6 +1305,7 @@ class MemeApp {
                 <button onclick="app.react('${meme.url}', '🤡')">🤡</button>
                 <button onclick="app.toggleComments('${memeDiv.id}')" title="Comment"><i class="far fa-comment"></i></button>
                 <button onclick="app.shareMeme('${meme.url}')" title="Share"><i class="fas fa-share-alt"></i></button>
+                <button onclick="app.openMemeEditor(\'${meme.url}\')" title="Remix This Meme"><i class="fas fa-pencil-alt"></i></button>
                 <button onclick="app.speakCaption(this.closest('.meme').querySelector('.caption').innerText)" title="Speak"><i class="fas fa-volume-up"></i></button>
                 ${saveBtn}
                 ${removeBtn}
@@ -1688,6 +1860,7 @@ class MemeApp {
 
     loadImageToCanvas(src) {
         const img = new Image();
+        img.crossOrigin = 'Anonymous';
         img.onload = () => {
             this.memeEditorState.image = img;
             this.drawCanvas();
@@ -1695,7 +1868,45 @@ class MemeApp {
         img.src = src;
     }
 
+
+    generateMagicCaption() {
+        const topParts = [
+            "WHEN YOU REALIZE", "ME TRYING TO EXPLAIN", "NOBODY:", "POV:", "MY BRAIN AT 3 AM:",
+            "TEACHER: THE TEST IS EASY", "MY BANK ACCOUNT:", "WHEN THEY SAY 'WE NEED TO TALK'",
+            "EXPECTATION VS", "THAT MOMENT WHEN"
+        ];
+        const bottomParts = [
+            "IT'S ONLY TUESDAY", "ALIENS EXIST", "I FORGOT TO STUDY", "REALITY",
+            "MCDONALDS ICE CREAM MACHINE IS BROKEN", "WHY AM I LIKE THIS",
+            "I HAVE 0 DOLLARS", "I'M IN DANGER", "STONKS", "IT WAS A TRAP"
+        ];
+
+        document.getElementById('top-text').value = this.getRandomItem(topParts);
+        document.getElementById('bottom-text').value = this.getRandomItem(bottomParts);
+        this.drawCanvas();
+        this.playSound('pop');
+    }
+
+    stickerBomb() {
+        if (!this.memeEditorState.image) return;
+        const canvas = document.getElementById('meme-canvas');
+
+        if(!this.memeEditorState.stickers) this.memeEditorState.stickers = [];
+
+        for(let i=0; i<5; i++) {
+            const emoji = this.getRandomItem(this.stickers);
+            const x = Math.random() * (canvas.width * 0.8) + (canvas.width * 0.1);
+            const y = Math.random() * (canvas.height * 0.8) + (canvas.height * 0.1);
+            const size = Math.random() * 40 + 40; // Size between 40 and 80
+            this.memeEditorState.stickers.push({ emoji, x, y, size });
+        }
+
+        this.drawCanvas();
+        this.playSound('success');
+    }
+
     addSticker(emoji) {
+
         if (!this.memeEditorState.image) return;
         const canvas = document.getElementById('meme-canvas');
         // Randomize slightly
@@ -1730,6 +1941,8 @@ class MemeApp {
         this.memeEditorState.fontSize = parseInt(document.getElementById('text-size').value);
         this.memeEditorState.color = document.getElementById('text-color').value;
         const fontFamily = document.getElementById('font-family').value;
+        const fontStyle = document.getElementById('font-style') ? document.getElementById('font-style').value : 'normal';
+        const strokeWidth = document.getElementById('stroke-width') ? parseInt(document.getElementById('stroke-width').value) : Math.max(2, this.memeEditorState.fontSize / 15);
 
         // Resize canvas to match image aspect ratio but keep max width 500
         const scale = Math.min(500 / this.memeEditorState.image.width, 500 / this.memeEditorState.image.height);
@@ -1743,6 +1956,9 @@ class MemeApp {
             case 'sepia': ctx.filter = 'sepia(100%)'; break;
             case 'invert': ctx.filter = 'invert(100%)'; break;
             case 'contrast': ctx.filter = 'contrast(200%) saturate(200%)'; break; // Deep Fry
+
+            case 'blur': ctx.filter = 'blur(3px)'; break;
+            case 'huerotate': ctx.filter = 'hue-rotate(90deg)'; break;
         }
 
         // Draw Image
@@ -1753,9 +1969,12 @@ class MemeApp {
 
         // Text Styles
         ctx.fillStyle = this.memeEditorState.color;
-        ctx.strokeStyle = 'black';
-        ctx.lineWidth = Math.max(2, this.memeEditorState.fontSize / 15);
-        ctx.font = `bold ${this.memeEditorState.fontSize}px ${fontFamily}, sans-serif`;
+
+        const strokeColor = document.getElementById('stroke-color') ? document.getElementById('stroke-color').value : '#000000';
+        ctx.strokeStyle = strokeColor;
+
+        ctx.lineWidth = strokeWidth;
+        ctx.font = `${fontStyle} bold ${this.memeEditorState.fontSize}px ${fontFamily}, sans-serif`;
         ctx.textAlign = 'center';
 
         // Draw Top Text
@@ -1763,7 +1982,7 @@ class MemeApp {
             ctx.textBaseline = 'top';
             const x = canvas.width / 2;
             const y = 10;
-            ctx.strokeText(this.memeEditorState.topText, x, y, canvas.width - 20);
+            if (strokeWidth > 0)             ctx.strokeText(this.memeEditorState.topText, x, y, canvas.width - 20);
             ctx.fillText(this.memeEditorState.topText, x, y, canvas.width - 20);
         }
 
@@ -1772,7 +1991,7 @@ class MemeApp {
             ctx.textBaseline = 'bottom';
             const x = canvas.width / 2;
             const y = canvas.height - 10;
-            ctx.strokeText(this.memeEditorState.bottomText, x, y, canvas.width - 20);
+            if (strokeWidth > 0)             ctx.strokeText(this.memeEditorState.bottomText, x, y, canvas.width - 20);
             ctx.fillText(this.memeEditorState.bottomText, x, y, canvas.width - 20);
         }
 
@@ -1879,6 +2098,30 @@ class MemeApp {
         window.scrollTo({ top: 0, behavior: 'smooth' });
         this.playSound('pop');
         this.showToast("🎲 Random Meme Generated!");
+    }
+
+    generateRandomPersonality() {
+        const adjectives = ["Happy", "Grumpy", "Sleepy", "Hyper", "Cool", "Weird", "Mysterious", "Crazy", "Silly", "Serious"];
+        const nouns = ["Cat", "Dog", "Robot", "Alien", "Wizard", "Ninja", "Potato", "Gamer", "Ghost", "Pirate"];
+
+        const name = `${this.getRandomItem(adjectives)} ${this.getRandomItem(nouns)}`;
+        const id = `p_rand_${Date.now()}`;
+        const set = this.getRandomItem(["set1", "set2", "set4"]);
+        const image = `https://robohash.org/${name.replace(' ', '')}?set=${set}`;
+
+        const newPersonality = {
+            id: id,
+            name: name,
+            image: image,
+            text: `I am a randomly generated ${name.toLowerCase()}.`,
+            voice: { lang: "en-US", pitch: Math.random() * 1.5 + 0.5, rate: Math.random() * 1.5 + 0.5 }
+        };
+
+        this.state.importedPersonalities.push(newPersonality);
+        this.saveState();
+        this.renderPersonalities();
+        this.showToast(`✨ Generated: ${name}`);
+        this.playSound('success');
     }
 
     renderStories() {
@@ -2128,6 +2371,82 @@ class MemeApp {
             });
         }
 
+        const inputArea = document.querySelector('.chat-input-area');
+        if (!inputArea.querySelector('.quick-replies')) {
+             const quickReplies = document.createElement('div');
+             quickReplies.className = 'quick-replies';
+             quickReplies.style.display = 'flex';
+             quickReplies.style.gap = '5px';
+             quickReplies.style.marginBottom = '10px';
+             quickReplies.style.overflowX = 'auto';
+             quickReplies.style.padding = '5px';
+
+             ['LOL', 'Based', 'True', 'Cringe', 'W', 'L'].forEach(text => {
+                 const chip = document.createElement('button');
+                 chip.innerText = text;
+                 chip.style.padding = '5px 10px';
+                 chip.style.borderRadius = '15px';
+                 chip.style.border = '1px solid #555';
+                 chip.style.background = 'var(--secondary-bg)';
+                 chip.style.color = 'var(--text-color)';
+                 chip.style.cursor = 'pointer';
+                 chip.onclick = () => {
+                     document.getElementById('chat-input').value = text;
+                     app.sendChatMessage();
+                 };
+                 quickReplies.appendChild(chip);
+             });
+             const modalContent = document.querySelector('#chat-modal .modal-content');
+             modalContent.insertBefore(quickReplies, inputArea);
+        }
+
+        if (!inputArea.querySelector('.sticker-btn')) {
+            const stickerBtn = document.createElement('button');
+            stickerBtn.className = 'action-btn secondary sticker-btn';
+            stickerBtn.style.padding = '10px 15px';
+            stickerBtn.style.borderRadius = '50%';
+            stickerBtn.title = 'Send Sticker';
+            stickerBtn.innerHTML = '<i class="fas fa-smile"></i>';
+            stickerBtn.onclick = () => {
+                const existingPicker = document.getElementById('chat-sticker-picker');
+                if(existingPicker) {
+                    existingPicker.remove();
+                    return;
+                }
+                const picker = document.createElement('div');
+                picker.id = 'chat-sticker-picker';
+                picker.style.position = 'absolute';
+                picker.style.bottom = '70px';
+                picker.style.left = '20px';
+                picker.style.background = 'var(--card-bg)';
+                picker.style.border = '1px solid #555';
+                picker.style.padding = '10px';
+                picker.style.borderRadius = '10px';
+                picker.style.display = 'grid';
+                picker.style.gridTemplateColumns = 'repeat(5, 1fr)';
+                picker.style.gap = '5px';
+                picker.style.maxHeight = '200px';
+                picker.style.overflowY = 'auto';
+
+                ['😂','🔥','💀','❤️','👍','👎','🤡','👀','🎉','💯'].forEach(emoji => {
+                    const btn = document.createElement('button');
+                    btn.innerText = emoji;
+                    btn.style.fontSize = '1.5rem';
+                    btn.style.background = 'transparent';
+                    btn.style.border = 'none';
+                    btn.style.cursor = 'pointer';
+                    btn.onclick = () => {
+                        app.sendSticker(emoji);
+                        picker.remove();
+                    };
+                    picker.appendChild(btn);
+                });
+
+                inputArea.appendChild(picker);
+            };
+            inputArea.insertBefore(stickerBtn, inputArea.firstChild);
+        }
+
         this.renderChat();
     }
 
@@ -2161,6 +2480,23 @@ class MemeApp {
         }, delay);
     }
 
+    sendSticker(emoji) {
+        if (!this.currentChatPersonality) return;
+        const pid = this.currentChatPersonality.id;
+
+        this.state.conversations[pid].push({ role: 'user', text: emoji, type: 'sticker' });
+        this.renderChat();
+        this.saveState();
+
+        setTimeout(() => {
+             const response = this.generateChatResponse(this.currentChatPersonality, emoji);
+             this.state.conversations[pid].push({ role: 'bot', text: response });
+             this.renderChat();
+             this.saveState();
+             this.playSound('pop');
+        }, 1000);
+    }
+
     renderChat() {
         if (!this.currentChatPersonality) return;
         const pid = this.currentChatPersonality.id;
@@ -2187,7 +2523,14 @@ class MemeApp {
                 div.style.borderBottomLeftRadius = '2px';
             }
 
-            div.innerText = msg.text;
+            if (msg.type === 'sticker') {
+                div.style.fontSize = '3rem';
+                div.style.background = 'transparent';
+                div.style.padding = '0';
+                div.innerText = msg.text;
+            } else {
+                div.innerText = msg.text;
+            }
             container.appendChild(div);
         });
 
@@ -2238,6 +2581,29 @@ class MemeApp {
         if (user.name === 'The Coder') return this.getRandomItem(["It works on my machine.", "Did you try turning it off and on again?", "Compiling...", "Undefined is not a function.", "I need coffee."]);
         if (user.name === 'The Artist') return this.getRandomItem(["It's abstract.", "Check out my SoundCloud.", "I'm working on a new project.", "Creativity takes courage.", "Support small artists!"]);
         if (user.name === 'The Normie') return this.getRandomItem(["What is a meme?", "Is this funny?", "I don't get it.", "Minions are hilarious!", "LOL!"]);
+
+
+        if (user.name === 'The Ninja') return this.getRandomItem(["...", "*Vanishes*", "You didn't see me.", "Stealth is key."]);
+        if (user.name === 'The Pirate') return this.getRandomItem(["Yarrr!", "Shiver me timbers!", "Where's the rum?", "Walk the plank!"]);
+        if (user.name === 'The Cowboy') return this.getRandomItem(["Yeehaw!", "There's a snake in my boot!", "Reach for the sky.", "Howdy."]);
+        if (user.name === 'The Vampire') return this.getRandomItem(["I don't drink... wine.", "The night is young.", "Bleh bleh bleh."]);
+        if (user.name === 'The Zombie') return this.getRandomItem(["Brains...", "Urrghhh...", "Tasty..."]);
+        if (user.name === 'The Ghost') return this.getRandomItem(["Boo!", "Ooooooo...", "I see dead memes."]);
+        if (user.name === 'The Superhero') return this.getRandomItem(["Up, up, and away!", "Justice never sleeps.", "I'm here to save the thread."]);
+        if (user.name === 'The Villain') return this.getRandomItem(["Mwahahaha!", "Everything is going according to plan.", "You can't stop me."]);
+        if (user.name === 'The Detective') return this.getRandomItem(["The game is afoot.", "Just one more thing...", "Elementary.", "I suspect foul play."]);
+        if (user.name === 'The Spy') return this.getRandomItem(["Classified.", "For your eyes only.", "The name's Bond...", "Mission accomplished."]);
+        if (user.name === 'The Princess') return this.getRandomItem(["Once upon a time...", "Where is my Prince Charming?", "Dreams do come true."]);
+        if (user.name === 'The King') return this.getRandomItem(["I decree it!", "Bow before me.", "Bring me my crown."]);
+        if (user.name === 'The Queen') return this.getRandomItem(["Off with their heads!", "Let them eat cake.", "We are not amused."]);
+        if (user.name === 'The Jester') return this.getRandomItem(["*Jingles bells*", "Why so serious?", "I'm just fooling around!"]);
+        if (user.name === 'The Viking') return this.getRandomItem(["Valhalla awaits!", "For Odin!", "Skål!"]);
+        if (user.name === 'The Samurai') return this.getRandomItem(["Honor is everything.", "The sword is the soul.", "Discipline."]);
+        if (user.name === 'The Caveman') return this.getRandomItem(["Ooga booga.", "Me hungry.", "Fire good."]);
+        if (user.name === 'The Time Traveler') return this.getRandomItem(["What year is it?", "I've seen the future.", "Don't blink.", "Great Scott!"]);
+        if (user.name === 'The Philosopher') return this.getRandomItem(["I think, therefore I am.", "The unexamined meme is not worth posting.", "What is truth?"]);
+        if (user.name === 'The Scientist') return this.getRandomItem(["Eureka!", "According to my calculations...", "It's science!", "Fascinating."]);
+        if (user.name === 'The Math Teacher') return this.getRandomItem(["Show your work.", "It's simple algebra.", "Pay attention in class."]);
 
         // Expanded Personalities
         if (user.name === 'Plato') return this.getRandomItem(["The unexamined meme is not worth posting.", "What is the form of the perfect meme?", "Truth lies in the abstract."]);

@@ -4,419 +4,1330 @@
     "name": "Doge",
     "image": "https://i.imgflip.com/4t0m5.jpg",
     "text": "Much wow. Such meme. Very personality.",
-    "voice": { "lang": "en-US", "pitch": 1.2, "rate": 0.8 }
+    "voice": {
+      "lang": "en-US",
+      "pitch": 1.2,
+      "rate": 0.8
+    }
   },
   {
     "id": "p2",
     "name": "Grumpy Cat",
     "image": "https://i.imgflip.com/8p0a.jpg",
     "text": "I had fun once. It was awful.",
-    "voice": { "lang": "en-US", "pitch": 0.5, "rate": 0.5 }
+    "voice": {
+      "lang": "en-US",
+      "pitch": 0.5,
+      "rate": 0.5
+    }
   },
   {
     "id": "p3",
     "name": "Pepe",
     "image": "https://i.imgflip.com/1h7in3.jpg",
     "text": "Feels good man.",
-    "voice": { "lang": "en-US", "pitch": 1.0, "rate": 1.0 }
+    "voice": {
+      "lang": "en-US",
+      "pitch": 1.0,
+      "rate": 1.0
+    }
   },
   {
     "id": "p4",
     "name": "Success Kid",
     "image": "https://i.imgflip.com/1bhk.jpg",
     "text": "Task added to backlog. Done.",
-    "voice": { "lang": "en-US", "pitch": 1.5, "rate": 1.2 }
+    "voice": {
+      "lang": "en-US",
+      "pitch": 1.5,
+      "rate": 1.2
+    }
   },
   {
     "id": "p5",
     "name": "SpongeBob",
     "image": "https://i.imgflip.com/1otk96.jpg",
     "text": "ImAgInE nOt UsInG tHiS mEmE.",
-    "voice": { "lang": "en-US", "pitch": 1.8, "rate": 1.1 }
+    "voice": {
+      "lang": "en-US",
+      "pitch": 1.8,
+      "rate": 1.1
+    }
   },
   {
     "id": "p6",
     "name": "Yoda",
     "image": "https://i.imgflip.com/2p4q.jpg",
     "text": "Meme, you must. Funny, it is.",
-    "voice": { "lang": "en-US", "pitch": 0.8, "rate": 0.7 }
+    "voice": {
+      "lang": "en-US",
+      "pitch": 0.8,
+      "rate": 0.7
+    }
   },
   {
     "id": "p7",
     "name": "Drake",
     "image": "https://i.imgflip.com/30b1gx.jpg",
     "text": "Old memes? Nah. New memes? Yeah.",
-    "voice": { "lang": "en-US", "pitch": 1.0, "rate": 1.0 }
+    "voice": {
+      "lang": "en-US",
+      "pitch": 1.0,
+      "rate": 1.0
+    }
   },
   {
     "id": "p8",
     "name": "Distracted Boyfriend",
     "image": "https://i.imgflip.com/1ur9b0.jpg",
     "text": "Me looking at other memes while this one is right here.",
-    "voice": { "lang": "en-US", "pitch": 1.0, "rate": 1.1 }
+    "voice": {
+      "lang": "en-US",
+      "pitch": 1.0,
+      "rate": 1.1
+    }
   },
   {
     "id": "p9",
     "name": "Philosoraptor",
     "image": "https://i.imgflip.com/2ybua0.jpg",
     "text": "If a meme falls in the forest and no one likes it, is it funny?",
-    "voice": { "lang": "en-US", "pitch": 0.7, "rate": 0.9 }
+    "voice": {
+      "lang": "en-US",
+      "pitch": 0.7,
+      "rate": 0.9
+    }
   },
   {
     "id": "p10",
     "name": "Bad Luck Brian",
     "image": "https://i.imgflip.com/1bip.jpg",
     "text": "Posts a meme. Internet goes down.",
-    "voice": { "lang": "en-US", "pitch": 1.3, "rate": 1.1 }
+    "voice": {
+      "lang": "en-US",
+      "pitch": 1.3,
+      "rate": 1.1
+    }
   },
   {
     "id": "p11",
     "name": "Hide the Pain Harold",
     "image": "https://i.imgflip.com/26am.jpg",
     "text": "Smiling through the cringe.",
-    "voice": { "lang": "en-US", "pitch": 0.9, "rate": 0.9 }
+    "voice": {
+      "lang": "en-US",
+      "pitch": 0.9,
+      "rate": 0.9
+    }
   },
   {
     "id": "p12",
     "name": "Karen",
     "image": "https://i.kym-cdn.com/entries/icons/original/000/030/157/womanyellingcat.jpg",
     "text": "I'd like to speak to the admin of this group.",
-    "voice": { "lang": "en-US", "pitch": 1.4, "rate": 1.3 }
+    "voice": {
+      "lang": "en-US",
+      "pitch": 1.4,
+      "rate": 1.3
+    }
   },
   {
     "id": "p13",
     "name": "Giga Chad",
     "image": "https://i.imgflip.com/4q3tsl.jpg",
     "text": "Yes, I enjoy memes. How could you tell?",
-    "voice": { "lang": "en-US", "pitch": 0.4, "rate": 0.8 }
+    "voice": {
+      "lang": "en-US",
+      "pitch": 0.4,
+      "rate": 0.8
+    }
   },
   {
     "id": "p14",
     "name": "Nyan Cat",
     "image": "https://i.imgflip.com/4h0p.jpg",
     "text": "Nyanyanyanyanyanyanya!",
-    "voice": { "lang": "en-US", "pitch": 2.0, "rate": 1.5 }
+    "voice": {
+      "lang": "en-US",
+      "pitch": 2.0,
+      "rate": 1.5
+    }
   },
   {
     "id": "p15",
     "name": "Troll Face",
     "image": "https://i.imgflip.com/1t915.jpg",
     "text": "Problem?",
-    "voice": { "lang": "en-US", "pitch": 1.6, "rate": 1.2 }
+    "voice": {
+      "lang": "en-US",
+      "pitch": 1.6,
+      "rate": 1.2
+    }
   },
   {
     "id": "p16",
     "name": "Rick Astley",
     "image": "https://i.imgflip.com/26jxvz.jpg",
     "text": "Never gonna give you up.",
-    "voice": { "lang": "en-GB", "pitch": 1.0, "rate": 1.0 }
+    "voice": {
+      "lang": "en-GB",
+      "pitch": 1.0,
+      "rate": 1.0
+    }
   },
   {
     "id": "p17",
     "name": "Batman",
     "image": "https://i.imgflip.com/39t1o.jpg",
     "text": "I'm Batman.",
-    "voice": { "lang": "en-US", "pitch": 0.3, "rate": 0.8 }
+    "voice": {
+      "lang": "en-US",
+      "pitch": 0.3,
+      "rate": 0.8
+    }
   },
   {
     "id": "p18",
     "name": "Joker",
     "image": "https://i.imgflip.com/345v97.jpg",
     "text": "We live in a society.",
-    "voice": { "lang": "en-US", "pitch": 1.1, "rate": 0.9 }
+    "voice": {
+      "lang": "en-US",
+      "pitch": 1.1,
+      "rate": 0.9
+    }
   },
   {
     "id": "p19",
     "name": "Sherlock",
     "image": "https://i.imgur.com/of9x9E8.jpg",
     "text": "Elementary, my dear Watson.",
-    "voice": { "lang": "en-GB", "pitch": 0.9, "rate": 1.1 }
+    "voice": {
+      "lang": "en-GB",
+      "pitch": 0.9,
+      "rate": 1.1
+    }
   },
   {
     "id": "p20",
     "name": "Gandalf",
     "image": "https://i.imgflip.com/1op9.jpg",
     "text": "You shall not pass!",
-    "voice": { "lang": "en-GB", "pitch": 0.6, "rate": 0.9 }
+    "voice": {
+      "lang": "en-GB",
+      "pitch": 0.6,
+      "rate": 0.9
+    }
   },
   {
     "id": "p21",
     "name": "The Skeptic",
     "image": "https://robohash.org/skeptic?set=set1",
     "text": "I doubt that's true.",
-    "voice": { "lang": "en-US", "pitch": 0.9, "rate": 0.9 }
+    "voice": {
+      "lang": "en-US",
+      "pitch": 0.9,
+      "rate": 0.9
+    }
   },
   {
     "id": "p22",
     "name": "The Hype Beast",
     "image": "https://robohash.org/hype?set=set1",
-    "text": "Let's gooooo! 🔥",
-    "voice": { "lang": "en-US", "pitch": 1.2, "rate": 1.1 }
+    "text": "Let's gooooo! \ud83d\udd25",
+    "voice": {
+      "lang": "en-US",
+      "pitch": 1.2,
+      "rate": 1.1
+    }
   },
   {
     "id": "p23",
     "name": "The Lurker",
     "image": "https://robohash.org/lurker?set=set1",
     "text": "...",
-    "voice": { "lang": "en-US", "pitch": 0.5, "rate": 0.5 }
+    "voice": {
+      "lang": "en-US",
+      "pitch": 0.5,
+      "rate": 0.5
+    }
   },
   {
     "id": "p24",
     "name": "The Bot",
     "image": "https://robohash.org/bot?set=set1",
     "text": "Beep boop. I am a human.",
-    "voice": { "lang": "en-US", "pitch": 1.5, "rate": 1.5 }
+    "voice": {
+      "lang": "en-US",
+      "pitch": 1.5,
+      "rate": 1.5
+    }
   },
   {
     "id": "p25",
     "name": "The Mod",
     "image": "https://robohash.org/mod?set=set1",
     "text": "Thread locked.",
-    "voice": { "lang": "en-US", "pitch": 0.8, "rate": 0.8 }
+    "voice": {
+      "lang": "en-US",
+      "pitch": 0.8,
+      "rate": 0.8
+    }
   },
   {
     "id": "p26",
     "name": "The Influencer",
     "image": "https://robohash.org/influencer?set=set4",
-    "text": "Link in bio! ✨",
-    "voice": { "lang": "en-US", "pitch": 1.3, "rate": 1.0 }
+    "text": "Link in bio! \u2728",
+    "voice": {
+      "lang": "en-US",
+      "pitch": 1.3,
+      "rate": 1.0
+    }
   },
   {
     "id": "p27",
     "name": "The Gamer",
     "image": "https://robohash.org/gamer?set=set1",
     "text": "GG EZ.",
-    "voice": { "lang": "en-US", "pitch": 1.1, "rate": 1.2 }
+    "voice": {
+      "lang": "en-US",
+      "pitch": 1.1,
+      "rate": 1.2
+    }
   },
   {
     "id": "p28",
     "name": "The Coder",
     "image": "https://robohash.org/coder?set=set1",
     "text": "It works on my machine.",
-    "voice": { "lang": "en-US", "pitch": 1.0, "rate": 1.0 }
+    "voice": {
+      "lang": "en-US",
+      "pitch": 1.0,
+      "rate": 1.0
+    }
   },
   {
     "id": "p29",
     "name": "The Artist",
     "image": "https://robohash.org/artist?set=set1",
     "text": "Check out my SoundCloud.",
-    "voice": { "lang": "en-US", "pitch": 1.1, "rate": 0.9 }
+    "voice": {
+      "lang": "en-US",
+      "pitch": 1.1,
+      "rate": 0.9
+    }
   },
   {
     "id": "p30",
     "name": "The Normie",
     "image": "https://robohash.org/normie?set=set1",
     "text": "What is a meme?",
-    "voice": { "lang": "en-US", "pitch": 1.0, "rate": 1.0 }
+    "voice": {
+      "lang": "en-US",
+      "pitch": 1.0,
+      "rate": 1.0
+    }
   },
   {
     "id": "p31",
     "name": "Plato",
     "image": "https://robohash.org/plato?set=set2",
     "text": "The meme is a shadow of the truth.",
-    "voice": { "lang": "en-US", "pitch": 0.8, "rate": 0.9 }
+    "voice": {
+      "lang": "en-US",
+      "pitch": 0.8,
+      "rate": 0.9
+    }
   },
   {
     "id": "p32",
     "name": "Shakespeare",
     "image": "https://robohash.org/shakespeare?set=set2",
     "text": "To meme or not to meme.",
-    "voice": { "lang": "en-GB", "pitch": 1.0, "rate": 1.0 }
+    "voice": {
+      "lang": "en-GB",
+      "pitch": 1.0,
+      "rate": 1.0
+    }
   },
   {
     "id": "p33",
     "name": "Einstein",
     "image": "https://robohash.org/einstein?set=set2",
     "text": "Relativity is key to a good meme.",
-    "voice": { "lang": "de-DE", "pitch": 1.0, "rate": 1.0 }
+    "voice": {
+      "lang": "de-DE",
+      "pitch": 1.0,
+      "rate": 1.0
+    }
   },
   {
     "id": "p34",
     "name": "Cleopatra",
     "image": "https://robohash.org/cleopatra?set=set4",
     "text": "I rule the meme empire.",
-    "voice": { "lang": "en-US", "pitch": 1.2, "rate": 1.0 }
+    "voice": {
+      "lang": "en-US",
+      "pitch": 1.2,
+      "rate": 1.0
+    }
   },
   {
     "id": "p35",
     "name": "Lincoln",
     "image": "https://robohash.org/lincoln?set=set2",
     "text": "Four score and seven memes ago.",
-    "voice": { "lang": "en-US", "pitch": 0.7, "rate": 0.9 }
+    "voice": {
+      "lang": "en-US",
+      "pitch": 0.7,
+      "rate": 0.9
+    }
   },
   {
     "id": "p36",
     "name": "The Doomer",
     "image": "https://robohash.org/doomer?set=set1",
     "text": "It's over. Or is it?",
-    "voice": { "lang": "en-US", "pitch": 0.5, "rate": 0.8 }
+    "voice": {
+      "lang": "en-US",
+      "pitch": 0.5,
+      "rate": 0.8
+    }
   },
   {
     "id": "p37",
     "name": "The Zoomer",
     "image": "https://robohash.org/zoomer?set=set1",
     "text": "No cap fr fr.",
-    "voice": { "lang": "en-US", "pitch": 1.4, "rate": 1.2 }
+    "voice": {
+      "lang": "en-US",
+      "pitch": 1.4,
+      "rate": 1.2
+    }
   },
   {
     "id": "p38",
     "name": "The Boomer",
     "image": "https://robohash.org/boomer?set=set1",
     "text": "BACK IN MY DAY MEMES WERE COMICS.",
-    "voice": { "lang": "en-US", "pitch": 0.6, "rate": 0.8 }
+    "voice": {
+      "lang": "en-US",
+      "pitch": 0.6,
+      "rate": 0.8
+    }
   },
   {
     "id": "p39",
     "name": "The Reply Guy",
     "image": "https://robohash.org/replyguy?set=set1",
     "text": "Actually, you're wrong.",
-    "voice": { "lang": "en-US", "pitch": 1.1, "rate": 1.1 }
+    "voice": {
+      "lang": "en-US",
+      "pitch": 1.1,
+      "rate": 1.1
+    }
   },
   {
     "id": "p40",
     "name": "The Simp",
     "image": "https://robohash.org/simp?set=set1",
-    "text": "Queen! 👑",
-    "voice": { "lang": "en-US", "pitch": 1.2, "rate": 1.0 }
+    "text": "Queen! \ud83d\udc51",
+    "voice": {
+      "lang": "en-US",
+      "pitch": 1.2,
+      "rate": 1.0
+    }
   },
   {
     "id": "p41",
     "name": "The Stan",
     "image": "https://robohash.org/stan?set=set1",
     "text": "We have no choice but to stan.",
-    "voice": { "lang": "en-US", "pitch": 1.3, "rate": 1.1 }
+    "voice": {
+      "lang": "en-US",
+      "pitch": 1.3,
+      "rate": 1.1
+    }
   },
   {
     "id": "p42",
     "name": "Dracula",
     "image": "https://robohash.org/dracula?set=set2",
     "text": "I want to suck your... likes.",
-    "voice": { "lang": "en-US", "pitch": 0.6, "rate": 0.9 }
+    "voice": {
+      "lang": "en-US",
+      "pitch": 0.6,
+      "rate": 0.9
+    }
   },
   {
     "id": "p43",
     "name": "Alien",
     "image": "https://robohash.org/alien?set=set2",
     "text": "Take me to your leader.",
-    "voice": { "lang": "en-US", "pitch": 1.8, "rate": 1.2 }
+    "voice": {
+      "lang": "en-US",
+      "pitch": 1.8,
+      "rate": 1.2
+    }
   },
   {
     "id": "p44",
     "name": "Robot",
     "image": "https://robohash.org/robot?set=set1",
     "text": "01001000 01101001",
-    "voice": { "lang": "en-US", "pitch": 0.5, "rate": 0.5 }
+    "voice": {
+      "lang": "en-US",
+      "pitch": 0.5,
+      "rate": 0.5
+    }
   },
   {
     "id": "p45",
     "name": "Wizard",
     "image": "https://robohash.org/wizard?set=set2",
     "text": "A wizard is never late.",
-    "voice": { "lang": "en-US", "pitch": 0.7, "rate": 0.9 }
+    "voice": {
+      "lang": "en-US",
+      "pitch": 0.7,
+      "rate": 0.9
+    }
   },
   {
     "id": "p46",
     "name": "Knight",
     "image": "https://robohash.org/knight?set=set2",
     "text": "Deus Vult!",
-    "voice": { "lang": "en-US", "pitch": 0.8, "rate": 1.0 }
+    "voice": {
+      "lang": "en-US",
+      "pitch": 0.8,
+      "rate": 1.0
+    }
   },
   {
     "id": "p47",
     "name": "Cat",
     "image": "https://robohash.org/cat?set=set4",
     "text": "Meow.",
-    "voice": { "lang": "en-US", "pitch": 1.5, "rate": 1.2 }
+    "voice": {
+      "lang": "en-US",
+      "pitch": 1.5,
+      "rate": 1.2
+    }
   },
   {
     "id": "p48",
     "name": "Monkey",
     "image": "https://robohash.org/monkey?set=set4",
     "text": "Ooh ooh ah ah.",
-    "voice": { "lang": "en-US", "pitch": 1.1, "rate": 1.1 }
+    "voice": {
+      "lang": "en-US",
+      "pitch": 1.1,
+      "rate": 1.1
+    }
   },
   {
     "id": "p49",
     "name": "Penguin",
     "image": "https://robohash.org/penguin?set=set4",
     "text": "Noot noot.",
-    "voice": { "lang": "en-US", "pitch": 1.2, "rate": 1.0 }
+    "voice": {
+      "lang": "en-US",
+      "pitch": 1.2,
+      "rate": 1.0
+    }
   },
   {
     "id": "p50",
     "name": "Doctor",
     "image": "https://robohash.org/doctor?set=set2",
     "text": "Take two memes and call me in the morning.",
-    "voice": { "lang": "en-US", "pitch": 1.0, "rate": 1.0 }
+    "voice": {
+      "lang": "en-US",
+      "pitch": 1.0,
+      "rate": 1.0
+    }
   },
   {
     "id": "p51",
     "name": "Lawyer",
     "image": "https://robohash.org/lawyer?set=set2",
     "text": "It depends.",
-    "voice": { "lang": "en-US", "pitch": 0.9, "rate": 1.0 }
+    "voice": {
+      "lang": "en-US",
+      "pitch": 0.9,
+      "rate": 1.0
+    }
   },
   {
     "id": "p52",
     "name": "Chef",
     "image": "https://robohash.org/chef?set=set2",
     "text": "Finally, some good food.",
-    "voice": { "lang": "en-US", "pitch": 1.1, "rate": 1.0 }
+    "voice": {
+      "lang": "en-US",
+      "pitch": 1.1,
+      "rate": 1.0
+    }
   },
   {
     "id": "p53",
     "name": "Mechanic",
     "image": "https://robohash.org/mechanic?set=set2",
     "text": "It's gonna cost ya.",
-    "voice": { "lang": "en-US", "pitch": 0.8, "rate": 0.9 }
+    "voice": {
+      "lang": "en-US",
+      "pitch": 0.8,
+      "rate": 0.9
+    }
   },
   {
     "id": "p54",
     "name": "Pilot",
     "image": "https://robohash.org/pilot?set=set2",
     "text": "This is your captain speaking.",
-    "voice": { "lang": "en-US", "pitch": 1.0, "rate": 1.0 }
+    "voice": {
+      "lang": "en-US",
+      "pitch": 1.0,
+      "rate": 1.0
+    }
   },
   {
     "id": "p55",
     "name": "Astronaut",
     "image": "https://robohash.org/astronaut?set=set2",
     "text": "Houston, we have a problem.",
-    "voice": { "lang": "en-US", "pitch": 1.0, "rate": 1.0 }
+    "voice": {
+      "lang": "en-US",
+      "pitch": 1.0,
+      "rate": 1.0
+    }
   },
   {
     "id": "p56",
     "name": "Crypto Bro",
     "image": "https://robohash.org/crypto?set=set1",
     "text": "HODL.",
-    "voice": { "lang": "en-US", "pitch": 1.1, "rate": 1.1 }
+    "voice": {
+      "lang": "en-US",
+      "pitch": 1.1,
+      "rate": 1.1
+    }
   },
   {
     "id": "p57",
     "name": "NFT Artist",
     "image": "https://robohash.org/nft?set=set1",
     "text": "Right click save is theft.",
-    "voice": { "lang": "en-US", "pitch": 1.2, "rate": 1.0 }
+    "voice": {
+      "lang": "en-US",
+      "pitch": 1.2,
+      "rate": 1.0
+    }
   },
   {
     "id": "p58",
     "name": "Hacker",
     "image": "https://robohash.org/hacker?set=set1",
     "text": "I'm in.",
-    "voice": { "lang": "en-US", "pitch": 0.7, "rate": 1.0 }
+    "voice": {
+      "lang": "en-US",
+      "pitch": 0.7,
+      "rate": 1.0
+    }
   },
   {
     "id": "p59",
     "name": "Gym Rat",
     "image": "https://robohash.org/gym?set=set2",
     "text": "Do you even lift?",
-    "voice": { "lang": "en-US", "pitch": 0.8, "rate": 1.0 }
+    "voice": {
+      "lang": "en-US",
+      "pitch": 0.8,
+      "rate": 1.0
+    }
   },
   {
     "id": "p60",
     "name": "Traveler",
     "image": "https://robohash.org/travel?set=set2",
     "text": "Wanderlust.",
-    "voice": { "lang": "en-US", "pitch": 1.0, "rate": 1.0 }
+    "voice": {
+      "lang": "en-US",
+      "pitch": 1.0,
+      "rate": 1.0
+    }
+  },
+  {
+    "id": "p61",
+    "name": "The Ninja",
+    "image": "https://robohash.org/ninja?set=set1",
+    "text": "...",
+    "voice": {
+      "lang": "en-US",
+      "pitch": 0.5,
+      "rate": 1.2
+    }
+  },
+  {
+    "id": "p62",
+    "name": "The Pirate",
+    "image": "https://robohash.org/pirate?set=set1",
+    "text": "Yarrr matey!",
+    "voice": {
+      "lang": "en-GB",
+      "pitch": 0.6,
+      "rate": 0.9
+    }
+  },
+  {
+    "id": "p63",
+    "name": "The Cowboy",
+    "image": "https://robohash.org/cowboy?set=set1",
+    "text": "Howdy partner.",
+    "voice": {
+      "lang": "en-US",
+      "pitch": 0.7,
+      "rate": 0.9
+    }
+  },
+  {
+    "id": "p64",
+    "name": "The Vampire",
+    "image": "https://robohash.org/vampire?set=set1",
+    "text": "I vant to suck your blood.",
+    "voice": {
+      "lang": "en-US",
+      "pitch": 0.6,
+      "rate": 0.8
+    }
+  },
+  {
+    "id": "p65",
+    "name": "The Zombie",
+    "image": "https://robohash.org/zombie?set=set1",
+    "text": "Brains...",
+    "voice": {
+      "lang": "en-US",
+      "pitch": 0.4,
+      "rate": 0.5
+    }
+  },
+  {
+    "id": "p66",
+    "name": "The Ghost",
+    "image": "https://robohash.org/ghost?set=set1",
+    "text": "Boo!",
+    "voice": {
+      "lang": "en-US",
+      "pitch": 1.5,
+      "rate": 1.0
+    }
+  },
+  {
+    "id": "p67",
+    "name": "The Superhero",
+    "image": "https://robohash.org/superhero?set=set1",
+    "text": "I'm here to save the day!",
+    "voice": {
+      "lang": "en-US",
+      "pitch": 1.2,
+      "rate": 1.1
+    }
+  },
+  {
+    "id": "p68",
+    "name": "The Villain",
+    "image": "https://robohash.org/villain?set=set1",
+    "text": "Mwahahaha!",
+    "voice": {
+      "lang": "en-US",
+      "pitch": 0.5,
+      "rate": 0.9
+    }
+  },
+  {
+    "id": "p69",
+    "name": "The Detective",
+    "image": "https://robohash.org/detective?set=set1",
+    "text": "The game is afoot.",
+    "voice": {
+      "lang": "en-GB",
+      "pitch": 0.9,
+      "rate": 1.0
+    }
+  },
+  {
+    "id": "p70",
+    "name": "The Spy",
+    "image": "https://robohash.org/spy?set=set1",
+    "text": "The name's Bond...",
+    "voice": {
+      "lang": "en-GB",
+      "pitch": 0.8,
+      "rate": 1.0
+    }
+  },
+  {
+    "id": "p71",
+    "name": "The Princess",
+    "image": "https://robohash.org/princess?set=set4",
+    "text": "Once upon a time...",
+    "voice": {
+      "lang": "en-US",
+      "pitch": 1.4,
+      "rate": 1.1
+    }
+  },
+  {
+    "id": "p72",
+    "name": "The King",
+    "image": "https://robohash.org/king?set=set2",
+    "text": "I rule this land.",
+    "voice": {
+      "lang": "en-GB",
+      "pitch": 0.6,
+      "rate": 0.9
+    }
+  },
+  {
+    "id": "p73",
+    "name": "The Queen",
+    "image": "https://robohash.org/queen?set=set4",
+    "text": "Off with their heads!",
+    "voice": {
+      "lang": "en-GB",
+      "pitch": 1.3,
+      "rate": 1.1
+    }
+  },
+  {
+    "id": "p74",
+    "name": "The Jester",
+    "image": "https://robohash.org/jester?set=set1",
+    "text": "*Jingles bells*",
+    "voice": {
+      "lang": "en-GB",
+      "pitch": 1.5,
+      "rate": 1.3
+    }
+  },
+  {
+    "id": "p75",
+    "name": "The Viking",
+    "image": "https://robohash.org/viking?set=set2",
+    "text": "Valhalla awaits!",
+    "voice": {
+      "lang": "en-US",
+      "pitch": 0.6,
+      "rate": 1.0
+    }
+  },
+  {
+    "id": "p76",
+    "name": "The Samurai",
+    "image": "https://robohash.org/samurai?set=set1",
+    "text": "Honor is everything.",
+    "voice": {
+      "lang": "ja-JP",
+      "pitch": 0.7,
+      "rate": 0.9
+    }
+  },
+  {
+    "id": "p77",
+    "name": "The Caveman",
+    "image": "https://robohash.org/caveman?set=set2",
+    "text": "Ooga booga.",
+    "voice": {
+      "lang": "en-US",
+      "pitch": 0.5,
+      "rate": 0.7
+    }
+  },
+  {
+    "id": "p78",
+    "name": "The Time Traveler",
+    "image": "https://robohash.org/time?set=set1",
+    "text": "What year is it?",
+    "voice": {
+      "lang": "en-US",
+      "pitch": 1.1,
+      "rate": 1.2
+    }
+  },
+  {
+    "id": "p79",
+    "name": "The Philosopher",
+    "image": "https://robohash.org/philosopher?set=set2",
+    "text": "I think, therefore I am.",
+    "voice": {
+      "lang": "en-US",
+      "pitch": 0.9,
+      "rate": 0.9
+    }
+  },
+  {
+    "id": "p80",
+    "name": "The Scientist",
+    "image": "https://robohash.org/scientist?set=set2",
+    "text": "Eureka!",
+    "voice": {
+      "lang": "en-US",
+      "pitch": 1.0,
+      "rate": 1.1
+    }
+  },
+  {
+    "id": "p81",
+    "name": "The Math Teacher",
+    "image": "https://robohash.org/math?set=set1",
+    "text": "Show your work.",
+    "voice": {
+      "lang": "en-US",
+      "pitch": 1.0,
+      "rate": 0.9
+    }
+  },
+  {
+    "id": "p82",
+    "name": "The Oracle",
+    "image": "https://robohash.org/oracle?set=set1",
+    "text": "I foresee many likes in your future.",
+    "voice": {
+      "lang": "en-US",
+      "pitch": 0.8,
+      "rate": 0.8
+    }
+  },
+  {
+    "id": "p83",
+    "name": "The Time Lord",
+    "image": "https://robohash.org/timelord?set=set2",
+    "text": "Wibbly wobbly, timey wimey stuff.",
+    "voice": {
+      "lang": "en-GB",
+      "pitch": 1.1,
+      "rate": 1.2
+    }
+  },
+  {
+    "id": "p84",
+    "name": "The Bard",
+    "image": "https://robohash.org/bard?set=set4",
+    "text": "Toss a coin to your memer.",
+    "voice": {
+      "lang": "en-GB",
+      "pitch": 1.4,
+      "rate": 1.0
+    }
+  },
+  {
+    "id": "p85",
+    "name": "The Alchemist",
+    "image": "https://robohash.org/alchemist?set=set1",
+    "text": "I can turn lead into gold... memes.",
+    "voice": {
+      "lang": "en-US",
+      "pitch": 0.7,
+      "rate": 0.9
+    }
+  },
+  {
+    "id": "p86",
+    "name": "The Gladiator",
+    "image": "https://robohash.org/gladiator?set=set2",
+    "text": "Are you not entertained?!",
+    "voice": {
+      "lang": "en-US",
+      "pitch": 0.5,
+      "rate": 1.1
+    }
+  },
+  {
+    "id": "p87",
+    "name": "The Sensei",
+    "image": "https://robohash.org/sensei?set=set1",
+    "text": "Patience, grasshopper.",
+    "voice": {
+      "lang": "en-US",
+      "pitch": 0.6,
+      "rate": 0.8
+    }
+  },
+  {
+    "id": "p88",
+    "name": "The Conspiracy Theorist",
+    "image": "https://robohash.org/conspiracy?set=set1",
+    "text": "The birds work for the bourgeoisie.",
+    "voice": {
+      "lang": "en-US",
+      "pitch": 1.5,
+      "rate": 1.5
+    }
+  },
+  {
+    "id": "p89",
+    "name": "The Fitness Coach",
+    "image": "https://robohash.org/fitness?set=set1",
+    "text": "No pain, no gain! Let's get these reps!",
+    "voice": {
+      "lang": "en-US",
+      "pitch": 1.2,
+      "rate": 1.3
+    }
+  },
+  {
+    "id": "p90",
+    "name": "The DJ",
+    "image": "https://robohash.org/dj?set=set1",
+    "text": "Drop the bass!",
+    "voice": {
+      "lang": "en-US",
+      "pitch": 1.0,
+      "rate": 1.1
+    }
+  },
+  {
+    "id": "p91",
+    "name": "The Mad Scientist",
+    "image": "https://robohash.org/madscientist?set=set2",
+    "text": "It's alive! IT'S ALIVE!",
+    "voice": {
+      "lang": "en-US",
+      "pitch": 1.8,
+      "rate": 1.4
+    }
+  },
+  {
+    "id": "p92",
+    "name": "The Cryptid",
+    "image": "https://robohash.org/cryptid?set=set1",
+    "text": "I exist. Believe it.",
+    "voice": {
+      "lang": "en-US",
+      "pitch": 0.3,
+      "rate": 0.7
+    }
+  },
+  {
+    "id": "p93",
+    "name": "The Hacker 2.0",
+    "image": "https://robohash.org/hacker2?set=set1",
+    "text": "Mainframe bypassed.",
+    "voice": {
+      "lang": "en-US",
+      "pitch": 0.8,
+      "rate": 1.0
+    }
+  },
+  {
+    "id": "p94",
+    "name": "The Space Cowboy",
+    "image": "https://robohash.org/spacecowboy?set=set2",
+    "text": "See you space cowboy...",
+    "voice": {
+      "lang": "en-US",
+      "pitch": 0.9,
+      "rate": 0.9
+    }
+  },
+  {
+    "id": "p95",
+    "name": "The Oracle of Delphi",
+    "image": "https://robohash.org/delphi?set=set4",
+    "text": "Know thyself.",
+    "voice": {
+      "lang": "el-GR",
+      "pitch": 1.0,
+      "rate": 0.8
+    }
+  },
+  {
+    "id": "p96",
+    "name": "The Fortune Teller",
+    "image": "https://robohash.org/fortune?set=set1",
+    "text": "Cross my palm with silver.",
+    "voice": {
+      "lang": "en-US",
+      "pitch": 1.3,
+      "rate": 0.9
+    }
+  },
+  {
+    "id": "p97",
+    "name": "The Librarian",
+    "image": "https://robohash.org/librarian?set=set1",
+    "text": "Shhhh! Read a book.",
+    "voice": {
+      "lang": "en-US",
+      "pitch": 1.1,
+      "rate": 0.8
+    }
+  },
+  {
+    "id": "p98",
+    "name": "The Barista",
+    "image": "https://robohash.org/barista?set=set1",
+    "text": "Venti iced caramel macchiato for... Memer?",
+    "voice": {
+      "lang": "en-US",
+      "pitch": 1.2,
+      "rate": 1.1
+    }
+  },
+  {
+    "id": "p99",
+    "name": "The Bouncer",
+    "image": "https://robohash.org/bouncer?set=set2",
+    "text": "Not on the list, mate.",
+    "voice": {
+      "lang": "en-GB",
+      "pitch": 0.5,
+      "rate": 0.9
+    }
+  },
+  {
+    "id": "p100",
+    "name": "The Critic",
+    "image": "https://robohash.org/critic?set=set1",
+    "text": "Two stars out of five. Derivative.",
+    "voice": {
+      "lang": "en-US",
+      "pitch": 0.8,
+      "rate": 1.0
+    }
+  },
+  {
+    "id": "p101",
+    "name": "The Troll King",
+    "image": "https://robohash.org/trollking?set=set2",
+    "text": "U mad?",
+    "voice": {
+      "lang": "en-US",
+      "pitch": 0.6,
+      "rate": 1.2
+    }
+  },
+  {
+    "id": "p102",
+    "name": "The Goblin",
+    "image": "https://robohash.org/goblin?set=set1",
+    "text": "Shiny shinies!",
+    "voice": {
+      "lang": "en-US",
+      "pitch": 1.8,
+      "rate": 1.3
+    }
+  },
+  {
+    "id": "p103",
+    "name": "The Fairy",
+    "image": "https://robohash.org/fairy?set=set4",
+    "text": "Pixie dust and magic!",
+    "voice": {
+      "lang": "en-US",
+      "pitch": 1.6,
+      "rate": 1.1
+    }
+  },
+  {
+    "id": "p104",
+    "name": "The Troll Under The Bridge",
+    "image": "https://robohash.org/bridge?set=set2",
+    "text": "Answer my riddles three.",
+    "voice": {
+      "lang": "en-US",
+      "pitch": 0.4,
+      "rate": 0.8
+    }
+  },
+  {
+    "id": "p105",
+    "name": "The Meme Historian",
+    "image": "https://robohash.org/historian?set=set1",
+    "text": "This format dates back to 2008.",
+    "voice": {
+      "lang": "en-US",
+      "pitch": 1.0,
+      "rate": 1.0
+    }
+  },
+  {
+    "id": "p106",
+    "name": "The Chad",
+    "image": "https://robohash.org/chad?set=set1",
+    "text": "Yes.",
+    "voice": {
+      "lang": "en-US",
+      "pitch": 0.5,
+      "rate": 0.8
+    }
+  },
+  {
+    "id": "p107",
+    "name": "The Karen",
+    "image": "https://robohash.org/karen2?set=set4",
+    "text": "This is unacceptable.",
+    "voice": {
+      "lang": "en-US",
+      "pitch": 1.5,
+      "rate": 1.2
+    }
+  },
+  {
+    "id": "p108",
+    "name": "The E-Boy",
+    "image": "https://robohash.org/eboy?set=set1",
+    "text": "Rawr xD",
+    "voice": {
+      "lang": "en-US",
+      "pitch": 1.2,
+      "rate": 1.1
+    }
+  },
+  {
+    "id": "p109",
+    "name": "The E-Girl",
+    "image": "https://robohash.org/egirl?set=set4",
+    "text": "UwU",
+    "voice": {
+      "lang": "en-US",
+      "pitch": 1.4,
+      "rate": 1.1
+    }
+  },
+  {
+    "id": "p110",
+    "name": "The Boomer 2.0",
+    "image": "https://robohash.org/boomer2?set=set2",
+    "text": "How do I open the PDF?",
+    "voice": {
+      "lang": "en-US",
+      "pitch": 0.7,
+      "rate": 0.8
+    }
+  },
+  {
+    "id": "p111",
+    "name": "The Tech Bro",
+    "image": "https://robohash.org/techbro?set=set1",
+    "text": "We're disrupting the industry.",
+    "voice": {
+      "lang": "en-US",
+      "pitch": 1.0,
+      "rate": 1.2
+    }
+  },
+  {
+    "id": "p112",
+    "name": "The Sigma Male",
+    "image": "https://robohash.org/sigma?set=set1",
+    "text": "Grindset.",
+    "voice": {
+      "lang": "en-US",
+      "pitch": 0.4,
+      "rate": 0.9
+    }
+  },
+  {
+    "id": "p113",
+    "name": "The Vsco Girl",
+    "image": "https://robohash.org/vsco?set=set4",
+    "text": "Sksksksk and I oop-",
+    "voice": {
+      "lang": "en-US",
+      "pitch": 1.5,
+      "rate": 1.3
+    }
+  },
+  {
+    "id": "p114",
+    "name": "The Goth",
+    "image": "https://robohash.org/goth?set=set4",
+    "text": "Everything is dark.",
+    "voice": {
+      "lang": "en-US",
+      "pitch": 0.8,
+      "rate": 0.9
+    }
+  },
+  {
+    "id": "p115",
+    "name": "The Skater",
+    "image": "https://robohash.org/skater?set=set1",
+    "text": "Do a kickflip!",
+    "voice": {
+      "lang": "en-US",
+      "pitch": 1.1,
+      "rate": 1.1
+    }
+  },
+  {
+    "id": "p116",
+    "name": "The Surfer",
+    "image": "https://robohash.org/surfer?set=set1",
+    "text": "Gnarly waves, dude.",
+    "voice": {
+      "lang": "en-US",
+      "pitch": 0.9,
+      "rate": 0.8
+    }
+  },
+  {
+    "id": "p117",
+    "name": "The Mountaineer",
+    "image": "https://robohash.org/mountain?set=set2",
+    "text": "Because it's there.",
+    "voice": {
+      "lang": "en-US",
+      "pitch": 1.0,
+      "rate": 1.0
+    }
+  },
+  {
+    "id": "p118",
+    "name": "The Deep Sea Diver",
+    "image": "https://robohash.org/diver?set=set1",
+    "text": "Under the sea...",
+    "voice": {
+      "lang": "en-US",
+      "pitch": 0.9,
+      "rate": 0.9
+    }
+  },
+  {
+    "id": "p119",
+    "name": "The Pilot 2",
+    "image": "https://robohash.org/pilot2?set=set1",
+    "text": "Cleared for takeoff.",
+    "voice": {
+      "lang": "en-US",
+      "pitch": 1.0,
+      "rate": 1.0
+    }
+  },
+  {
+    "id": "p120",
+    "name": "The Racecar Driver",
+    "image": "https://robohash.org/racer?set=set1",
+    "text": "I am speed.",
+    "voice": {
+      "lang": "en-US",
+      "pitch": 1.3,
+      "rate": 1.4
+    }
+  },
+  {
+    "id": "p121",
+    "name": "The Couch Potato",
+    "image": "https://robohash.org/potato?set=set1",
+    "text": "Just 5 more minutes...",
+    "voice": {
+      "lang": "en-US",
+      "pitch": 0.7,
+      "rate": 0.8
+    }
   }
 ]
