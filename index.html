@@ -123,7 +123,8 @@
     <div id="personalities-container" class="hidden">
         <h2>My Personalities 🤖</h2>
         <div style="text-align: center; margin-bottom: 20px;">
-            <a href="personalities.html" class="nav-btn" style="background: #ff4b2b; color: white; padding: 10px 20px; text-decoration: none; border-radius: 20px;">Browse & Import New Personalities</a>
+            <a href="personalities.html" class="nav-btn" style="background: #ff4b2b; color: white; padding: 10px 20px; text-decoration: none; border-radius: 20px; margin-right: 10px;">Browse & Import New Personalities</a>
+            <button class="nav-btn" onclick="app.generateRandomPersonality()" style="background: #333; color: white; padding: 10px 20px; border-radius: 20px;">Generate Random Personality ✨</button>
         </div>
         <div id="personalities-feed" class="personalities-grid"></div> <!-- Reusing grid class from personalities.html if possible, or define in css -->
         <p id="no-personalities-msg" style="display:none; color: #777;">No personalities imported yet.</p>
@@ -268,8 +269,17 @@
             <div id="chat-messages" style="flex: 1; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; gap: 10px;">
                 <!-- Messages -->
             </div>
+
+            <div class="chat-quick-replies" style="padding: 10px 15px; border-top: 1px solid #444; display: flex; gap: 10px; overflow-x: auto; white-space: nowrap; background: var(--secondary-bg);">
+                <button onclick="app.sendChatMessage('Based.')" class="nav-btn" style="padding: 5px 15px; border-radius: 15px; font-size: 0.9rem;">Based.</button>
+                <button onclick="app.sendChatMessage('Cringe.')" class="nav-btn" style="padding: 5px 15px; border-radius: 15px; font-size: 0.9rem;">Cringe.</button>
+                <button onclick="app.sendChatMessage('LMAO 💀')" class="nav-btn" style="padding: 5px 15px; border-radius: 15px; font-size: 0.9rem;">LMAO 💀</button>
+                <button onclick="app.sendChatMessage('Touch grass.')" class="nav-btn" style="padding: 5px 15px; border-radius: 15px; font-size: 0.9rem;">Touch grass.</button>
+            </div>
+
             <div class="chat-input-area" style="padding: 15px; border-top: 1px solid #444; display: flex; gap: 10px;">
                 <button onclick="app.insertMagicReply()" class="action-btn secondary" style="padding: 10px 15px; border-radius: 50%;" title="Magic Reply"><i class="fas fa-magic"></i></button>
+                <button onclick="app.sendSticker()" class="action-btn secondary" style="padding: 10px 15px; border-radius: 50%;" title="Send Sticker"><i class="fas fa-smile"></i></button>
                 <input type="text" id="chat-input" placeholder="Type a message..." style="flex: 1; padding: 10px; border-radius: 20px;" onkeydown="if(event.key === 'Enter') app.sendChatMessage()">
                 <button onclick="app.sendChatMessage()" class="action-btn primary" style="padding: 10px 15px; border-radius: 50%;"><i class="fas fa-paper-plane"></i></button>
             </div>
@@ -330,6 +340,17 @@
                         </div>
                     </div>
 
+                    <div class="control-row">
+                        <div class="control-group half">
+                             <label>Stroke Width</label>
+                             <input type="number" id="stroke-width" min="1" max="15" value="2" oninput="app.drawCanvas()">
+                        </div>
+                        <div class="control-group half">
+                            <label>Stroke Color</label>
+                            <input type="color" id="stroke-color" value="#000000" oninput="app.drawCanvas()">
+                        </div>
+                    </div>
+
                     <div class="control-group">
                         <label>Filters</label>
                         <div class="filter-buttons">
@@ -338,6 +359,8 @@
                             <button onclick="app.applyFilter('sepia')" class="filter-btn" style="filter: sepia(1); background: #f4ecd8; color: #5b4636;">Sepia</button>
                             <button onclick="app.applyFilter('invert')" class="filter-btn" style="filter: invert(1); background: white; color: black;">Invert</button>
                             <button onclick="app.applyFilter('contrast')" class="filter-btn">Fried 🍟</button>
+                            <button onclick="app.applyFilter('blur')" class="filter-btn" style="filter: blur(2px);">Blur</button>
+                            <button onclick="app.applyFilter('alien')" class="filter-btn" style="filter: hue-rotate(90deg);">Alien 👽</button>
                         </div>
                     </div>
 
@@ -358,7 +381,10 @@
                         <div class="sticker-options" id="sticker-options">
                             <!-- Injected by JS -->
                         </div>
-                        <button onclick="app.clearStickers()" style="font-size: 0.8rem; background: #333; color: white; width: 100%; padding: 5px; margin-top: 5px; border-radius: 5px;">Clear Stickers</button>
+                        <div style="display: flex; gap: 5px; margin-top: 5px;">
+                            <button onclick="app.clearStickers()" style="flex: 1; font-size: 0.8rem; background: #333; color: white; padding: 5px; border-radius: 5px;">Clear</button>
+                            <button onclick="app.stickerBomb()" style="flex: 1; font-size: 0.8rem; background: #ff4b2b; color: white; padding: 5px; border-radius: 5px;">💣 Bomb!</button>
+                        </div>
                     </div>
 
                     <button class="action-btn secondary" onclick="app.generateMagicCaption()" style="width: 100%; margin-top: 5px; margin-bottom: 10px;">✨ Magic Caption</button>
