@@ -334,7 +334,47 @@ class MemeApp {
             "Me trying to explain my dreams.",
             "When the food is too hot but you eat it anyway.",
             "Me remembering something embarrassing I did 5 years ago.",
-            "When you accidentally hit reply all."
+            "When you accidentally hit reply all.",
+            "When you find out there's no more pizza left 🍕",
+            "Me trying to explain my code to a rubber duck 🦆",
+            "That moment you hit deploy on a Friday 😬",
+            "When the bug is actually a feature ✨",
+            "Me pretending to work while looking at memes 👀",
+            "My reaction when the tests pass on the first try 🤯",
+            "When you copy paste code from StackOverflow and it works 🔥",
+            "My brain during a 3-hour meeting 😴",
+            "Me looking at my bank account after buying coffee ☕",
+            "When you finally fix that CSS bug 🎨",
+            "My cat judging me for my life choices 😼",
+            "Me trying to learn a new JS framework 😫",
+            "When you realize you forgot the semicolon ;",
+            "Me looking for motivation like 🕵️‍♂️",
+            "When the imposter syndrome hits hard 🙃",
+            "Me waiting for my code to compile ⏳",
+            "When you accidentally drop the production database 💥",
+            "My code works but I don't know why 🤔",
+            "Me trying to remember my passwords 🔐",
+            "When you see a typo in production 🙈",
+            "Me trying to center a div 🎯",
+            "When the client changes the requirements again 🔄",
+            "Me pretending to understand Regex 🧩",
+            "When you find a fix but it breaks 10 other things 💥",
+            "My reaction when I see legacy code 😱",
+            "Me trying to exit Vim 🆘",
+            "When you merge a PR without review 🚀",
+            "Me trying to explain what an API is 🗣️",
+            "When you realize it's only Tuesday 📅",
+            "Me trying to ignore the error logs 🙉",
+            "When you get a 500 Internal Server Error 🚒",
+            "Me trying to write tests 📝",
+            "When you finally understand promises 🤝",
+            "Me looking at my git history 📜",
+            "When you see someone using spaces instead of tabs 🤢",
+            "Me trying to debug a race condition 🏎️",
+            "When you accidentally delete the master branch 💣",
+            "Me trying to explain Docker to my mom 🐳",
+            "When you find out the API is down 📉",
+            "Me trying to stay awake during a zoom call 😴"
         ];
 
         this.stickers = ["🔥", "😂", "💀", "🤡", "😱", "🎉", "🥶", "👀", "💯", "🤔", "🤣", "👍", "❤️", "✨", "🚀",
@@ -418,7 +458,10 @@ class MemeApp {
             'whitepeopletwitter', 'blackpeopletwitter', 'youseeingthisshit', 'rareinsults', 'brandnewsentence', 'technicallythetruth',
             'TIHI', 'Tinder', 'MurderedByWords', 'blursedimages',
             'gaming', 'aww', 'pics', 'gifs', 'mildlyinteresting', 'interestingasfuck', 'NatureIsFuckingLit', 'technology', 'science',
-            'EarthPorn', 'food', 'Art', 'OldSchoolCool', 'CatastrophicFailure', 'IdiotsInCars', 'oddlysatisfying', 'crappydesign'
+            'EarthPorn', 'food', 'Art', 'OldSchoolCool', 'CatastrophicFailure', 'IdiotsInCars', 'oddlysatisfying', 'crappydesign',
+            'ProgrammerHumor', 'memes', 'dankmemes', 'BikiniBottomTwitter', 'PrequelMemes', 'Animemes', 'HistoryMemes',
+            'me_irl', 'funny', 'aww', 'gaming', 'pics', 'gifs', 'mildlyinteresting', 'interestingasfuck',
+            'WTF', 'oddlysatisfying', 'NatureIsFuckingLit', 'crappydesign', 'facepalm', 'Tinder', 'softwaregore'
         ];
 
         this.classicMemes = [
@@ -501,7 +544,60 @@ class MemeApp {
             'https://i.imgflip.com/1ur9b0.jpg', // Distracted Boyfriend
             'https://i.imgflip.com/1bhk.jpg', // Success Kid
             'https://i.imgflip.com/261o3j.jpg', // Bernie I Am Once Again Asking
-            'https://i.imgflip.com/1bhf.jpg' // Brace Yourselves
+            'https://i.imgflip.com/1bhf.jpg',
+            'https://i.imgflip.com/1g8my4.jpg', // Two Buttons
+            'https://i.imgflip.com/1ur9b0.jpg', // Distracted Boyfriend
+            'https://i.imgflip.com/1bhk.jpg', // Success Kid
+            'https://i.imgflip.com/261o3j.jpg', // Bernie I Am Once Again Asking
+            'https://i.imgflip.com/1bhf.jpg', // Brace Yourselves
+            'https://i.imgflip.com/345v97.jpg', // Joker
+            'https://i.imgflip.com/1ihk.jpg',   // Facepalm
+            'https://i.imgflip.com/2gnnjh.jpg', // Drew Scanlon Reaction
+            'https://i.imgflip.com/3vzej.jpg',  // The Rock Driving
+            'https://i.imgflip.com/21uy0f.jpg', // Grandma Finds The Internet
+            'https://i.imgflip.com/46e43q.jpg', // Always Has Been
+            'https://i.imgflip.com/1tl71a.jpg', // Left Exit 12 Off Ramp
+            'https://i.imgflip.com/43a45p.jpg', // Bern Sanders
+            'https://i.imgflip.com/54hjww.jpg', // Anakin Padme
+            'https://i.imgflip.com/9vct.jpg',   // Jack Sparrow being chased
+            'https://i.imgflip.com/2wifvo.jpg', // Car drifting
+            'https://i.imgflip.com/1o00in.jpg', // Futurama Fry
+            'https://i.imgflip.com/1bij.jpg',   // First World Problems
+            'https://i.imgflip.com/2CPw.jpg',   // Am I The Only One Around Here
+            'https://i.imgflip.com/1bh3.jpg',   // Simpson Bush Hiding
+            'https://i.imgflip.com/261o3j.jpg', // Bernie I Am Once Again Asking
+            'https://i.imgflip.com/3lmzyx.jpg', // Woman Yelling At Cat (Variation)
+            'https://i.imgflip.com/2odckz.jpg', // Tuxedo Winnie The Pooh
+            'https://i.imgflip.com/1h7in3.jpg', // Pepe
+            'https://i.imgflip.com/49z6c.jpg',  // Surprised Pikachu
+            'https://i.imgflip.com/2za3u1.jpg', // Surprised Koala
+            'https://i.imgflip.com/3qqcim.jpg', // Flex Tape
+            'https://i.imgflip.com/2kbn1e.jpg', // Don't Make Me Tap The Sign
+            'https://i.imgflip.com/1op9.jpg',   // Gandalf
+            'https://i.imgflip.com/1bgw.jpg',   // Y U No
+            'https://i.imgflip.com/1bh8.jpg',   // Winter is Coming
+            'https://i.imgflip.com/1bhf.jpg',   // Brace Yourselves
+            'https://i.imgflip.com/1bhm.jpg',   // Aliens Guy
+            'https://i.imgflip.com/1bh9.jpg',   // Gangnam Style
+            'https://i.imgflip.com/1bhq.jpg',   // Anchorman I Don't Believe You
+            'https://i.imgflip.com/1bhs.jpg',    // Dr Evil Laser
+            'https://i.imgflip.com/33e92f.jpg', // Confused Math Lady
+            'https://i.imgflip.com/1op9.jpg',   // You Shall Not Pass (Gandalf)
+            'https://i.imgflip.com/22bdq6.jpg', // Distracted Boyfriend
+            'https://i.imgflip.com/2cp1.jpg',   // Cheezburger Cat
+            'https://i.imgflip.com/3l60ph.jpg', // Stonks
+            'https://i.imgflip.com/2odckz.jpg', // Buff Doge vs Cheems
+            'https://i.imgflip.com/1bgw.jpg',   // Y U NO
+            'https://i.imgflip.com/1bh3.jpg',   // First World Problems
+            'https://i.imgflip.com/1b4243.jpg', // Toughest Guy in Prison
+            'https://i.imgflip.com/2kbn1e.jpg', // Don't Make Me Tap The Sign
+            'https://i.imgflip.com/390s2y.jpg', // UNO Draw 25 Cards
+            'https://i.imgflip.com/1c1uej.jpg', // Sad Pablo Escobar
+            'https://i.imgflip.com/319g4i.jpg', // I am once again asking
+            'https://i.imgflip.com/49z6c.jpg',  // Surprised Pikachu
+            'https://i.imgflip.com/2fm6x.jpg',  // Skeptical African Kid
+            'https://i.imgflip.com/1ii4oc.jpg', // This Is Fine
+            'https://i.imgflip.com/2t8r9a.jpg'  // Woman Yelling At Cat
         ];
 
         this.sounds = {
@@ -1554,6 +1650,31 @@ class MemeApp {
         });
     }
 
+    generateRandomPersonality() {
+        const adjectives = ["Epic", "Cosmic", "Mystic", "Quantum", "Neon", "Retro", "Cyber", "Dark", "Light", "Chaos", "Order", "Meme", "Dank", "Based"];
+        const nouns = ["Overlord", "Ninja", "Wizard", "Knight", "Pirate", "Hacker", "Bot", "Ghost", "Alien", "Mutant", "Cyborg", "Entity", "Being", "God"];
+        const phrases = ["I am inevitable.", "Memes are my lifeblood.", "Do not question the elevated one.", "I have seen the edge of the internet.", "Too dank to handle."];
+
+        const randomName = `${this.getRandomItem(adjectives)} ${this.getRandomItem(nouns)}`;
+        const randomId = `rp_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`;
+        const randomImage = `https://robohash.org/${randomId}?set=set${Math.floor(Math.random() * 5) + 1}`;
+        const randomText = this.getRandomItem(phrases);
+
+        const newPersonality = {
+            id: randomId,
+            name: randomName,
+            image: randomImage,
+            text: randomText,
+            voice: { lang: 'en-US', pitch: Math.random() * 1.5 + 0.5, rate: Math.random() * 0.5 + 0.8 }
+        };
+
+        this.state.importedPersonalities.push(newPersonality);
+        this.saveState();
+        this.renderPersonalities();
+        this.showToast(`✨ Generated ${randomName}!`);
+        this.playSound('success');
+    }
+
     renderPersonalities() {
         this.personalitiesFeed.innerHTML = '';
         if (this.state.importedPersonalities.length === 0) {
@@ -2264,6 +2385,14 @@ class MemeApp {
         this.drawCanvas();
     }
 
+    stickerBomb() {
+        if (!this.memeEditorState || !this.memeEditorState.image) return;
+        for (let i = 0; i < 20; i++) {
+            const randomSticker = this.getRandomItem(this.stickers);
+            this.addSticker(randomSticker);
+        }
+    }
+
     applyFilter(filterType) {
         if (!this.memeEditorState) return;
         this.memeEditorState.filter = filterType;
@@ -2281,6 +2410,8 @@ class MemeApp {
         this.memeEditorState.bottomText = document.getElementById('bottom-text').value.toUpperCase();
         this.memeEditorState.fontSize = parseInt(document.getElementById('text-size').value);
         this.memeEditorState.color = document.getElementById('text-color').value;
+        this.memeEditorState.strokeWidth = parseInt(document.getElementById('stroke-width').value) || 2;
+        this.memeEditorState.strokeColor = document.getElementById('stroke-color').value || '#000000';
         const fontFamily = document.getElementById('font-family').value;
 
         // Resize canvas to match image aspect ratio but keep max width 500
@@ -2295,6 +2426,8 @@ class MemeApp {
             case 'sepia': ctx.filter = 'sepia(100%)'; break;
             case 'invert': ctx.filter = 'invert(100%)'; break;
             case 'contrast': ctx.filter = 'contrast(200%) saturate(200%)'; break; // Deep Fry
+            case 'blur': ctx.filter = 'blur(2px)'; break;
+            case 'alien': ctx.filter = 'hue-rotate(90deg)'; break;
         }
 
         // Draw Image
@@ -2323,8 +2456,8 @@ class MemeApp {
 
         // Text Styles
         ctx.fillStyle = this.memeEditorState.color;
-        ctx.strokeStyle = 'black';
-        ctx.lineWidth = Math.max(2, this.memeEditorState.fontSize / 15);
+        ctx.strokeStyle = this.memeEditorState.strokeColor;
+        ctx.lineWidth = this.memeEditorState.strokeWidth;
         ctx.font = `bold ${this.memeEditorState.fontSize}px ${fontFamily}, sans-serif`;
         ctx.textAlign = 'center';
 
@@ -2810,16 +2943,18 @@ class MemeApp {
         this.currentChatPersonality = null;
     }
 
-    sendChatMessage() {
+    sendChatMessage(textParam = null) {
         const input = document.getElementById('chat-input');
-        const text = input.value.trim();
+        const text = textParam !== null ? textParam : input.value.trim();
         if (!text || !this.currentChatPersonality) return;
 
         const pid = this.currentChatPersonality.id;
 
         // Add user message
         this.state.conversations[pid].push({ role: 'user', text: text });
-        input.value = '';
+        if (textParam === null) {
+             input.value = '';
+        }
         this.renderChat();
         this.saveState();
 
@@ -2833,6 +2968,11 @@ class MemeApp {
             this.saveState();
             this.playSound('pop');
         }, delay);
+    }
+
+    sendSticker() {
+        const sticker = this.getRandomItem(this.stickers);
+        this.sendChatMessage(sticker);
     }
 
     renderChat() {
